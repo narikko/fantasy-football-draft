@@ -66,7 +66,7 @@ async def on_reaction_add(reaction, user):
                 
                 player_id = player_embed.footer.text.split(", ")[1]
                 playerids.append(player_id)
-                userids.append(user.name)
+                usernames.append(user.name)
 
                 await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
 

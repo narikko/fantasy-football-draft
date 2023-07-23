@@ -23,3 +23,21 @@ def handle_responses(msg) -> discord.Embed:
         embed.set_footer(text="Football Roll Bot, " + player_id)
 
         return embed
+    
+    if p_msg.split()[0] == "%v":
+        for line in f:
+            if (p_msg.split()[1] in line) and (p_msg.split()[2] in line):
+                player_info = line.split(", ")
+                player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+                break
+         embed = discord.Embed(
+            title=player_name,
+            description=player_club + "\n" + player_nationality,
+            color=0xAF0000
+        )
+        
+        embed.add_field(name= player_value, value="", inline=False)
+        embed.set_image(url=player_imageURL)
+        embed.set_footer(text="Football Roll Bot, " + player_id)
+        
+        return embed

@@ -24,20 +24,20 @@ def handle_responses(msg) -> discord.Embed:
 
         return embed
     
-    if p_msg.split()[0] == "%v":
-        for line in players_list:
+    if p_msg.startswith("%v"):
+        for line in players_list:  # Use players_list instead of f
             if (p_msg.split()[1] in line) and (p_msg.split()[2] in line):
                 player_info = line.split(", ")
                 player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
-                
-                embed = discord.Embed(
-                    title=player_name,
-                    description=player_club + "\n" + player_nationality,
-                    color=0xAF0000
-                )
-                
-                embed.add_field(name=player_value, value="", inline=False)
-                embed.set_image(url=player_imageURL)
-                embed.set_footer(text="Football Roll Bot, " + player_id)
+                break
+        embed = discord.Embed(
+            title=player_name,
+            description=player_club + "\n" + player_nationality,
+            color=0xAF0000
+        )
 
-                return embed
+        embed.add_field(name=player_value, value="", inline=False)
+        embed.set_image(url=player_imageURL)
+        embed.set_footer(text="Football Roll Bot, " + player_id)
+
+        return embed

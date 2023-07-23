@@ -27,6 +27,9 @@ def handle_responses(msg) -> discord.Embed:
     if p_msg.startswith("%v"):
         search_terms = p_msg.split()[1:]
         print("Search terms:", search_terms)
+        
+        if not search_terms:
+            return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
 
         for line in players_list:
             if all(term in line.lower() for term in search_terms):

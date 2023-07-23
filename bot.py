@@ -46,7 +46,7 @@ async def on_reaction_add(reaction, user):
     print("Emoji:", reaction.emoji)
     print("Embeds:", reaction.message.embeds)
 
-    if reaction.message.author == client.user:
+    if user == client.user:
         print("Bot message.")
         return
 

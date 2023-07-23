@@ -3,6 +3,10 @@ import responses
 
 user_collections = {}
 
+TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+
 async def send_message(msg, user_msg, is_private):
     try:
         response = responses.handle_responses(user_msg)
@@ -12,10 +16,6 @@ async def send_message(msg, user_msg, is_private):
         print(e)
         
 def run_discord_bot():
-    TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
-    intents = discord.Intents.default()
-    client = discord.Client(intents=intents)
-    
     @client.event
     async def on_ready():
         print(f'{client.user} is now running!')

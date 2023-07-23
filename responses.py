@@ -24,9 +24,8 @@ def handle_responses(msg) -> discord.Embed:
 
         return embed
     
-    if msg.split()[0] == "%v":
-        p_msg = msg.lower()
-        for line in f:
+    if p_msg.split()[0] == "%v":
+        for line in players_list:
             if (p_msg.split()[1] in line) and (p_msg.split()[2] in line):
                 player_info = line.split(", ")
                 player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info

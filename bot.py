@@ -54,7 +54,7 @@ async def on_reaction_add(reaction, user):
 
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]
-        
+
         for field in player_embed.fields:
             if field.value == "**React with any emoji to claim!**":
                 print("Player claimed:", player_embed.title)
@@ -63,12 +63,13 @@ async def on_reaction_add(reaction, user):
                     user_collections[user.id] = []
 
                 user_collections[user.id].append(player_embed)
-                
+
                 player_id = player_embed.footer.text.split(", ")[1]
                 playerids.append(player_id)
                 usernames.append(user.name)
 
                 await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
+
 
     
         

@@ -1,5 +1,6 @@
 import random
 import discord
+import bot
 
 def handle_responses(msg) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
@@ -7,10 +8,21 @@ def handle_responses(msg) -> discord.Embed:
     
     p_msg = msg.lower()
     
+    claimed = False
+    
     if p_msg == "%r":
         rolled_player = random.choice(players_list)
         player_info = rolled_player.strip().split(", ")
         player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        
+        i = 0
+        claimed_user = ""
+        for playerid in bot.playerids:
+            if player_id == playerid:
+                claimed = True
+                claimed_user = bot.usernames[i]
+                break
+            i += 1
         
         embed = discord.Embed(
             title=player_name,
@@ -21,6 +33,9 @@ def handle_responses(msg) -> discord.Embed:
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
         embed.set_footer(text="Football Roll Bot, " + player_id)
+        
+        player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
+        embed.add_field(value=player_status, inline=False)
 
         return embed
     

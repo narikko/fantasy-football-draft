@@ -44,7 +44,7 @@ async def on_reaction_add(reaction, user):
     if reaction.message.author == client.user:
         return
 
-    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
+    if isinstance(reaction.message.embeds[0], discord.Embed):
         player_embed = reaction.message.embeds[0]
 
         if user.id not in user_collections:

@@ -41,11 +41,18 @@ def run_discord_bot():
             
 @client.event
 async def on_reaction_add(reaction, user):
+    print("Reaction added by:", user)
+    print("Message author:", reaction.message.author)
+    print("Emoji:", reaction.emoji)
+    print("Embeds:", reaction.message.embeds)
+
     if reaction.message.author == client.user:
+        print("Bot message.")
         return
 
     if isinstance(reaction.message.embeds[0], discord.Embed):
         player_embed = reaction.message.embeds[0]
+        print("Player claimed:", player_embed.title)
 
         if user.id not in user_collections:
             user_collections[user.id] = []
@@ -53,6 +60,7 @@ async def on_reaction_add(reaction, user):
         user_collections[user.id].append(player_embed)
 
         await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
+
     
         
     

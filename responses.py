@@ -25,11 +25,16 @@ def handle_responses(msg) -> discord.Embed:
         return embed
     
     if p_msg.startswith("%v"):
-        for line in players_list:  # Use players_list instead of f
-            if (p_msg.split()[1] in line) and (p_msg.split()[2] in line):
-                player_info = line.split(", ")
+        search_terms = p_msg.split()[1:]
+        print("Search terms:", search_terms)
+
+        for line in players_list:
+            if all(term in line.lower() for term in search_terms):
+                player_info = line.strip().split(", ")
                 player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+                print("Player found:", player_name)
                 break
+
         embed = discord.Embed(
             title=player_name,
             description=player_club + "\n" + player_nationality,

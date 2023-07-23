@@ -30,7 +30,7 @@ def handle_responses(msg) -> discord.Embed:
                 player_info = line.split(", ")
                 player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                 break
-         embed = discord.Embed(
+        embed = discord.Embed(
             title=player_name,
             description=player_club + "\n" + player_nationality,
             color=0xAF0000

@@ -37,20 +37,22 @@ def run_discord_bot():
         else:
             await send_message(msg, user_msg, is_private=False)
             
-    @client.event
-    async def on_reaction_add(reaction, user):
-        if reaction.message.author == client.user:
-            return
+    client.run(TOKEN)
+            
+@client.event
+async def on_reaction_add(reaction, user):
+    if reaction.message.author == client.user:
+        return
 
-        if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
-            player_embed = reaction.message.embeds[0]
+    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
+        player_embed = reaction.message.embeds[0]
 
-            if user.id not in user_collections:
-                user_collections[user.id] = []
+        if user.id not in user_collections:
+            user_collections[user.id] = []
 
-            user_collections[user.id].append(player_embed)
+        user_collections[user.id].append(player_embed)
 
-            await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
+        await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
     
         
-    client.run(TOKEN)
+    

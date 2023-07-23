@@ -20,6 +20,6 @@ def handle_responses(msg) -> discord.Embed:
         
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
-        embed.set_footer("Football Roll Bot, " + player_id)
+        embed.set_footer(text="Football Roll Bot, " + player_id)
 
         return embed

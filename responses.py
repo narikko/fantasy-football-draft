@@ -35,7 +35,7 @@ def handle_responses(msg) -> discord.Embed:
         embed.set_footer(text="Football Roll Bot, " + player_id)
         
         player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
-        embed.add_field(value=player_status, inline=False)
+        embed.description += ("\n" + player_status) 
 
         return embed
     

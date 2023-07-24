@@ -52,7 +52,7 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
 
-    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
+    if isinstance(reaction.message.embeds[0], discord.Embed):
         player_embed = reaction.message.embeds[0]
 
         if "**React with any emoji to claim!**" in player_embed.description.text:

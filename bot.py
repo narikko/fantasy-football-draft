@@ -55,7 +55,7 @@ async def on_reaction_add(reaction, user):
     if isinstance(reaction.message.embeds[0], discord.Embed):
         player_embed = reaction.message.embeds[0]
 
-        if "**React with any emoji to claim!**" in player_embed.description.text:
+        if "**React with any emoji to claim!**" in player_embed.description:
             print("Player claimed:", player_embed.title)
 
             if user.id not in user_collections:

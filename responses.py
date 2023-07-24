@@ -76,6 +76,8 @@ def handle_responses(msg) -> discord.Embed:
         
         if claimed:
             player_status = f"**Claimed by {claimed_user}**" 
-            embed.description += ("\n" + player_status) 
+            embed.description += ("\n" + player_status)
+            
+        print(claimed)
 
         return embed

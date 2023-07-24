@@ -60,21 +60,19 @@ async def on_reaction_add(reaction, user):
         if player_id in playerids:
             claimed = True
             
-        if not claimed:
-            for field in player_embed.fields:
-                if field.value == "**React with any emoji to claim!**":
-                    print("Player claimed:", player_embed.title)
+        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description):
+            print("Player claimed:", player_embed.title)
 
-                    if user.id not in user_collections:
-                        user_collections[user.id] = []
+            if user.id not in user_collections:
+                user_collections[user.id] = []
 
-                    user_collections[user.id].append(player_embed)
+            user_collections[user.id].append(player_embed)
 
-                    player_id = player_embed.footer.text.split(", ")[1]
-                    playerids.append(player_id)
-                    usernames.append(user.name)
+            player_id = player_embed.footer.text.split(", ")[1]
+            playerids.append(player_id)
+            usernames.append(user.name)
 
-                    await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
+            await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
 
 
     

@@ -54,8 +54,13 @@ async def on_reaction_add(reaction, user):
 
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]
-
-        if "**React with any emoji to claim!**" in player_embed.description:
+        player_id = player_embed.footer.text.split(", ")[1]
+        
+        claimed = False 
+        if player_id in playerids:
+            claimed = True
+            
+        if not claimed:
             print("Player claimed:", player_embed.title)
 
             if user.id not in user_collections:

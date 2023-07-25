@@ -18,7 +18,7 @@ async def send_message(msg, user_msg, is_private):
     except Exception as e:
         print(e)
 
-async def show_collection(user, page_num):
+async def show_collection(user, msg, page_num):
     if user.id not in user_current_page:
         user_current_page[user.id] = 0
         
@@ -27,7 +27,7 @@ async def show_collection(user, page_num):
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
-            collection_msg = await user.send(embed=embed_to_show)
+            collection_msg = await msg.channel.send(embed=embed_to_show)
             await collection_msg.add_reaction("⬅️")  
             await collection_msg.add_reaction("➡️")
         else:
@@ -56,9 +56,9 @@ def run_discord_bot():
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
             if len(user_msg.split()) == 1:
-                await show_collection(msg.author, 0)
+                await show_collection(msg.author, msg, 0)
             else:
-                await show_collection(msg.author, int(user_msg.split()[1]))
+                await show_collection(msg.author, msg, int(user_msg.split()[1]))
         else:
             await send_message(msg, user_msg, is_private=False)
             

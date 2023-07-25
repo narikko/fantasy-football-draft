@@ -27,7 +27,7 @@ async def show_collection(user, page_num):
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
-            collection_msg = await user.channel.send(embed=embed_to_show)
+            collection_msg = await user.send(embed=embed_to_show)
             await collection_msg.add_reaction("⬅️")  
             await collection_msg.add_reaction("➡️")
         else:

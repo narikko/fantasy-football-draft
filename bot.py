@@ -82,15 +82,21 @@ async def on_reaction_add(reaction, user):
                     user_current_page[user.id] = len(user_collections[user.id]) - 1
                 else:                        
                     user_current_page[user.id] -= 1
+                    
+                current_page = user_current_page[user.id]
+                await show_collection(user, reaction.message, current_page)
+                return
             elif reaction.emoji == "➡️":
                 if user_current_page[user.id] == len(user_collections[user.id]) - 1:
                     user_current_page[user.id] = 0
                 else:
                     user_current_page[user.id] += 1
+                
+                current_page = user_current_page[user.id]
+                await show_collection(user, reaction.message, current_page)
+                return
 
-            current_page = user_current_page[user.id]
-            await show_collection(user, reaction.message, current_page)
-            return
+            
 
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]

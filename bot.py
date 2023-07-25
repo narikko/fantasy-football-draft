@@ -4,6 +4,7 @@ import responses
 user_collections = {}
 playerids= []
 usernames = []
+user_current_page = {}
 
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
@@ -16,7 +17,24 @@ async def send_message(msg, user_msg, is_private):
             
     except Exception as e:
         print(e)
+
+async def show_collection(user, page_num):
+    if user.id not in user_current_page:
+        user_current_page[user.id] = 0
         
+    if user.id in user_collections:
+        collection = user_collections[user.id]
+        if 0 <= page_num < len(collection):
+            user_current_page[user.id] = page_num
+            embed_to_show = collection[page_num]
+            collection_msg = await user.send(embed_to_show)
+            await collection_msg.add_reaction("⬅️")  
+            await collection_msg.add_reaction("➡️")
+        else:
+            await user.send("Page not found.")
+    else:
+        await user.send("No players found in your collection.")
+            
 def run_discord_bot():
     @client.event
     async def on_ready():
@@ -36,6 +54,11 @@ def run_discord_bot():
         if user_msg[0] == "?":
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)
+        elif user_msg.startswith("%c"):
+            if len(user_msg.split()) == 1:
+                await show_collection(msg.author, 0)
+            else:
+                await show_collection(msg.author, int(user_msg.split()[1]))
         else:
             await send_message(msg, user_msg, is_private=False)
             
@@ -51,6 +74,22 @@ async def on_reaction_add(reaction, user):
     if user == client.user:
         print("Bot message.")
         return
+    
+    if reaction.emoji == "⬅️":
+        if user_current_page[user.id] == 0:
+            user_current_page[user.id] = len(user_collections[user.id] - 1
+        else:                        
+            user_current_page[user.id] -= 1
+        
+        await show_collection_page(user, user_current_page[user.id])
+    
+    elif reaction.emoji == "➡️":
+        if user_current_page[user.id] == len(user_collections[user.id] - 1):
+            user_current_page[user.id] = 0
+        else:
+            user_current_page[user.id] += 1
+        
+        await show_collection_page(user, user_current_page[user.id])
 
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]

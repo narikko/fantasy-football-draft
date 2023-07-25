@@ -75,7 +75,7 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
     
-    iif reaction.message.author == client.user: 
+    if reaction.message.author == client.user: 
         if user.id in user_current_page: 
             if reaction.emoji == "⬅️":  
                 if user_current_page[user.id] == 0:

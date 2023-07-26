@@ -21,15 +21,17 @@ async def send_message(msg, user_msg, is_private):
 async def show_collection(user, msg, page_num):
     if user.id not in user_current_page:
         user_current_page[user.id] = 0
-        
+
     if user.id in user_collections:
         collection = user_collections[user.id]
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
             collection_msg = await msg.channel.send(embed=embed_to_show)
-            await collection_msg.add_reaction("⬅️")  
+            await collection_msg.add_reaction("⬅️")
             await collection_msg.add_reaction("➡️")
+
+            await msg.delete()
         else:
             await user.send("Page not found.")
     else:

@@ -81,20 +81,17 @@ async def on_reaction_add(reaction, user):
                 if user_current_page[user.id] == 0:
                     user_current_page[user.id] = len(user_collections[user.id]) - 1
                 else:                        
-                    user_current_page[user.id] -= 1
-                    
-                current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page)
-                return
+                    user_current_page[user.id] -= 1            
+                
             elif reaction.emoji == "➡️":
                 if user_current_page[user.id] == len(user_collections[user.id]) - 1:
                     user_current_page[user.id] = 0
                 else:
                     user_current_page[user.id] += 1
-                
-                current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page)
-                return
+            
+            current_page = user_current_page[user.id]
+            await show_collection(user, reaction.message, current_page)
+            return
 
             
 

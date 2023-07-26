@@ -70,9 +70,7 @@ def run_discord_bot():
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
-            print(collection_messages)
             collection_messages = {}
-            print(collection_messages)
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0)
             else:

@@ -64,6 +64,8 @@ def run_discord_bot():
         
         print(f"{username} said: '{user_msg}' ({channel})")
         
+        global collection_messages
+        
         if user_msg[0] == "?":
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)

@@ -2,9 +2,12 @@ import discord
 import responses
 
 user_collections = {}
+user_current_page = {}
+collection_messages = {}
+
 playerids= []
 usernames = []
-user_current_page = {}
+
 
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
@@ -28,16 +31,20 @@ async def show_collection(user, msg, page_num):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
 
-            if msg.content:  # Check if the original message has content
-                await msg.edit(embed=embed_to_show)
+            if user.id in collection_messages:
+                collection_msg = collection_messages[user.id]
+                await collection_msg.edit(embed=embed_to_show)
             else:
                 collection_msg = await msg.channel.send(embed=embed_to_show)
-                await collection_msg.add_reaction("⬅️")
-                await collection_msg.add_reaction("➡️")
+                collection_messages[user.id] = collection_msg
+
+            await collection_msg.add_reaction("⬅️")
+            await collection_msg.add_reaction("➡️")
         else:
             await user.send("Page not found.")
     else:
         await user.send("No players found in your collection.")
+
             
 def run_discord_bot():
     @client.event

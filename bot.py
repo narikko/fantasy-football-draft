@@ -97,7 +97,7 @@ def run_discord_bot():
             if len(user_msg.split()) == 1:
                 await msg.channel.send("Please specify who you wish to remove from your collection.")
             else:
-                player_name = user_msg[4:].split()
+                player_name = user_msg[4:].strip()
                 await remove_player(msg.author, msg, player_name)
         else:
             await send_message(msg, user_msg, is_private=False)

@@ -27,11 +27,13 @@ async def show_collection(user, msg, page_num):
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
-            collection_msg = await msg.channel.send(embed=embed_to_show)
-            await collection_msg.add_reaction("⬅️")
-            await collection_msg.add_reaction("➡️")
 
-            await msg.delete()
+            if msg.content:  # Check if the original message has content
+                await msg.edit(embed=embed_to_show)
+            else:
+                collection_msg = await msg.channel.send(embed=embed_to_show)
+                await collection_msg.add_reaction("⬅️")
+                await collection_msg.add_reaction("➡️")
         else:
             await user.send("Page not found.")
     else:

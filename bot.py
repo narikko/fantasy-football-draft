@@ -126,6 +126,8 @@ async def on_reaction_add(reaction, user):
 
             if user.id not in user_collections:
                 user_collections[user.id] = []
+                
+            player_embed.description = player_embed.description.replace("**React with any emoji to claim!**", f"**Claimed by {user.name}**") 
 
             user_collections[user.id].append(player_embed)
 

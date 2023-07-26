@@ -56,9 +56,19 @@ async def remove_player(user, msg, player):
             if embed.title == player:
                 removed_embed = collection.pop(i)
                 removed = True
+                
+                removed_player_id = removed_embed.footer.text.split(", ")[1]
+                j = 0
+                for playerid in playerids:
+                    if removed_player_id == playerid:
+                        playerids.pop(j)
+                        usernames.pop(j)
+                    j += 1
+                
                 await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
                 break
             i += 1
+            
         if not removed:
             await msg.channel.send(f"{player} was not found in your collection.")
     else:

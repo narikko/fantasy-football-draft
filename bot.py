@@ -33,9 +33,11 @@ async def show_collection(user, msg, page_num):
 
             if user.id in collection_messages:
                 collection_msg = collection_messages[user.id]
+                await collection_msg.clear_reactions()
                 await collection_msg.edit(embed=embed_to_show)
             else:
                 collection_msg = await msg.channel.send(embed=embed_to_show)
+                await collection_msg.clear_reactions()
                 collection_messages[user.id] = collection_msg
 
             await collection_msg.add_reaction("⬅️")
@@ -95,7 +97,6 @@ async def on_reaction_add(reaction, user):
                     user_current_page[user.id] -= 1
                 
                 current_page = user_current_page[user.id]
-                await reaction.remove()
                 await show_collection(user, reaction.message, current_page)
                 return
                 
@@ -106,7 +107,6 @@ async def on_reaction_add(reaction, user):
                     user_current_page[user.id] += 1
                     
                 current_page = user_current_page[user.id]
-                await reaction.remove()
                 await show_collection(user, reaction.message, current_page)
                 return
             

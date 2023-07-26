@@ -43,11 +43,29 @@ async def show_collection(user, msg, page_num):
             await collection_msg.add_reaction("⬅️")
             await collection_msg.add_reaction("➡️")
         else:
-            await user.send("Page not found.")
+            await msg.channel.send("Page not found.")
     else:
-        await user.send("No players found in your collection.")
+        await msg.channel.send("No players found in your collection.")
 
-            
+async def remove_player(user, msg, player):
+    if user.id in user_collections:
+        collection = user_collections[user.id]
+        i = 0
+        removed = False
+        for embed in collection:
+            if embed.title == player:
+                removed_embed = collection.pop(i)
+                removed = True
+                await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
+                break
+            i += 1
+        if not removed:
+            await msg.channel.send(f"{player} was not found in your collection.")
+    else:
+        await msg.channel.send("No players found in your collection.")
+        
+                
+
 def run_discord_bot():
     @client.event
     async def on_ready():
@@ -75,6 +93,12 @@ def run_discord_bot():
                 await show_collection(msg.author, msg, 0)
             else:
                 await show_collection(msg.author, msg, int(user_msg.split()[1]))
+        elif user_msg.startswith("%rm"):
+            if len(user_msg.split()) == 1:
+                await msg.channel.send("Please specify who you wish to remove from your collection.")
+            else:
+                player_name = user_msg[4:].split()
+                await remove_player(msg.author, msg, player_name)
         else:
             await send_message(msg, user_msg, is_private=False)
             

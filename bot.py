@@ -63,7 +63,7 @@ async def remove_player(user, msg, player):
         if found_player:
             confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? (y/n/yes/no)")
             try:
-                response = await bot.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+                response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()
                 if response_content == 'yes' or response_content == 'y':
                     removed_embed = collection.pop(i)

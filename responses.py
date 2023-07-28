@@ -13,7 +13,7 @@ def handle_responses(msg) -> discord.Embed:
     if p_msg == "%r":
         rolled_player = random.choice(players_list)
         player_info = rolled_player.strip().split(", ")
-        player_name, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
         
         i = 0
         claimed_user = ""
@@ -26,7 +26,7 @@ def handle_responses(msg) -> discord.Embed:
         
         embed = discord.Embed(
             title=player_name,
-            description=player_club + "\n" + player_nationality,
+            description=player_club + "\n" + player_nationality + "\n" + player_positions,
             color=0xAF0000
         )
         

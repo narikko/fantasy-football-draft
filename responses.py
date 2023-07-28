@@ -97,7 +97,7 @@ def handle_responses(msg, user) -> discord.Embed:
         
         if user.id not in user_teams:
             embed = discord.Embed(
-                title=f"{user}'s Starting XI",
+                title=f"{user.name}'s Starting XI",
                 description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland",
                 color=0xAF0000
             )

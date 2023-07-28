@@ -1,5 +1,6 @@
 import discord
 import responses
+import asyncio
 
 user_collections = {}
 user_current_page = {}

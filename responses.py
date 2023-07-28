@@ -160,6 +160,7 @@ def handle_responses(msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
+            return
 
         for player in collection:
             if all(term.lower() in player.title.lower() for term in search_terms):

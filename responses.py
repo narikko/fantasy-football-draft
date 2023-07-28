@@ -162,12 +162,17 @@ def handle_responses(msg, user) -> discord.Embed:
                         elif (pos == "GK") and (p_msg.split()[1] == "gk"):
                             correct_pos = True
                             break
-                        else:
-                            return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
+                        
                     if correct_pos:
                         break
-            else:
-                return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
+                    else:
+                        return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
+           
+           if correct_player:
+                break
+
+        if not correct_player:
+            return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
         
         if correct_player and correct_pos:
             new_embed = discord.Embed(

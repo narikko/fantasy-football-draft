@@ -167,8 +167,8 @@ def handle_responses(msg, user) -> discord.Embed:
                         break
                     else:
                         return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
-           
-           if correct_player:
+            
+            if correct_player:
                 break
 
         if not correct_player:

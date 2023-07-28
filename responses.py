@@ -158,7 +158,8 @@ def handle_responses(msg, user) -> discord.Embed:
                         break
             else:
                 return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
-            
+        
+        print(sel_player)
         if correct_player and correct_pos:
             for field1 in embed.fields:
                 if field1.name.lower() == p_msg.split()[1]:

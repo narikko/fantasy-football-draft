@@ -159,11 +159,18 @@ def handle_responses(msg, user) -> discord.Embed:
             else:
                 return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
         
-        print(sel_player)
         if correct_player and correct_pos:
-            for field1 in embed.fields:
-                if field1.name.strip().lower() == p_msg.split()[1]:
-                    print("Updating value for:", field1.name.strip().lower())
-                    field1.value = sel_player
-        
-        return embed
+            new_embed = discord.Embed(
+            title=embed.title,
+            description=embed.description,
+            color=embed.color
+            )
+
+        for field in embed.fields:
+            if field.name.strip().lower() == p_msg.split()[1]:
+                new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
+            else:
+                new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+
+        return new_embed
+

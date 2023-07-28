@@ -51,29 +51,41 @@ async def remove_player(user, msg, player):
     if user.id in user_collections:
         collection = user_collections[user.id]
         i = 0
-        removed = False
+        found_player = None
+        
         for embed in collection:
             if embed.title == player:
-                removed_embed = collection.pop(i)
-                removed = True
-                
-                removed_player_id = removed_embed.footer.text.split(", ")[1]
-                j = 0
-                for playerid in playerids:
-                    if removed_player_id == playerid:
-                        playerids.pop(j)
-                        usernames.pop(j)
-                    j += 1
-                
-                await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
-                await responses.handle_responses(f"%t rm {removed_embed.title}", msg.author)
+                found_player = embed
                 break
             i += 1
             
-        if not removed:
+        if found_player:
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? (y/n/yes/no)")
+            try:
+                response = await bot.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+                response_content = response.content.lower()
+                if response_content == 'yes' or response_content == 'y':
+                    removed_embed = collection.pop(i)
+                    
+                    removed_player_id = removed_embed.footer.text.split(", ")[1]
+                    j = 0
+                    for playerid in playerids:
+                        if removed_player_id == playerid:
+                            playerids.pop(j)
+                            usernames.pop(j)
+                        j += 1
+                    
+                    await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
+                    await responses.handle_responses(f"%t rm {removed_embed.title}", msg.author)
+                elif response_content == 'no' or response_content == 'n':
+                    await msg.channel.send("Removal cancelled.")
+            except asyncio.TimeoutError:
+                await msg.channel.send("Confirmation timed out. Removal cancelled.")
+        else:
             await msg.channel.send(f"{player} was not found in your collection.")
     else:
         await msg.channel.send("No players found in your collection.")
+
         
                 
 

@@ -66,6 +66,7 @@ async def remove_player(user, msg, player):
                     j += 1
                 
                 await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
+                await responses.handle_responses(f"%t rm {removed_embed.title}", msg.author)
                 break
             i += 1
             

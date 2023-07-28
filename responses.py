@@ -3,6 +3,7 @@ import discord
 import bot
 
 user_teams = {}
+user_team_players = {}
 
 def handle_responses(msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
@@ -142,7 +143,24 @@ def handle_responses(msg, user) -> discord.Embed:
         correct_player = False
         correct_pos = False
         sel_player = ""
+        
+        if p_msg.split()[1] == "rm":
+            new_embed = discord.Embed(
+                title=user_teams[user.id].title,
+                description=user_teams[user.id].description,
+                color=user_teams[user.id].color
+            )
             
+            for field in user_teams[user.id].fields:
+                if field.name.strip().lower() == p_msg.split()[2]:
+                    new_embed.add_field(name=field.name, value="", inline=field.inline)
+                elif all(term.lower() in field.value.strip().lower() for term in search_terms):
+                     new_embed.add_field(name=field.name, value="", inline=field.inline)
+                else:
+                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+
+            user_teams[user.id] = new_embed
+
         for player in collection:
             if all(term.lower() in player.title.lower() for term in search_terms):
                 correct_player = True

@@ -115,7 +115,7 @@ def handle_responses(msg, user) -> discord.Embed:
             embed.add_field(name="\u200b", value="\u200b", inline=False)
             
             embed.add_field(name="\u200b", value="\u200b", inline=True)
-            embed.add_field(name="M3", value ="", inline=True)
+            embed.add_field(name="M4", value ="", inline=True)
             embed.add_field(name="\u200b", value="\u200b", inline=True)
             
             embed.add_field(name="\u200b", value="\u200b", inline=False)

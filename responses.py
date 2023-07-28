@@ -122,10 +122,11 @@ def handle_responses(msg, user) -> discord.Embed:
         embed.add_field(name="GK", value="", inline=True)
         embed.add_field(name="\u200b", value="\u200b", inline=True)
         
-        search_terms = []
-        if len(p_msg.split()) >= 3:
-            search_terms = p_msg.split()[2:]
-            print("Search terms:", search_terms)
+        if len(p_msg.split()) == 1:
+            return embed
+       
+        search_terms = p_msg.split()[2:]
+        print("Search terms:", search_terms)
             
         collection = bot.user_collections[user.id]
         correct_player = False

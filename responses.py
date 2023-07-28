@@ -161,7 +161,7 @@ def handle_responses(msg, user) -> discord.Embed:
             
         if correct_player and correct_pos:
             for field1 in embed.fields:
-                if field1.name == p_msg.split()[1]:
+                if field1.name.lower() == p_msg.split()[1]:
                     field1.value = sel_player
         
         return embed

@@ -126,9 +126,6 @@ def handle_responses(msg, user) -> discord.Embed:
         search_terms = p_msg.split()[2:]
         print("Search terms:", search_terms)
             
-        if not search_terms:
-            return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
-            
         collection = bot.user_collections[user.id]
         correct_player = False
         correct_pos = False

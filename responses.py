@@ -139,18 +139,23 @@ def handle_responses(msg, user) -> discord.Embed:
                 sel_player = player.title
                 for field in player.fields:
                     positions = field.name.split("/")
-                    print(positions)
                     for pos in positions:
                         if (pos in forward_pos) and (p_msg.split()[1] in fpos):
                             correct_pos = True
+                            break
                         elif (pos in midfield_pos) and (p_msg.split()[1] in mpos):
                             correct_pos = True
+                            break
                         elif (pos in defense_pos) and (p_msg.split()[1] in dpos):
                             correct_pos = True
+                            break
                         elif (pos == "GK") and (p_msg.split()[1] == "gk"):
-                            correct_pos = True 
+                            correct_pos = True
+                            break
                         else:
                             return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
+                    if correct_pos:
+                        break
             else:
                 return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
             

@@ -171,17 +171,17 @@ def handle_responses(msg, user) -> discord.Embed:
         
         if correct_player and correct_pos:
             new_embed = discord.Embed(
-            title=embed.title,
-            description=embed.description,
-            color=embed.color
+                title=user_teams[user.id].title,
+                description=user_teams[user.id].description,
+                color=user_teams[user.id].color
             )
 
-        for field in embed.fields:
-            if field.name.strip().lower() == p_msg.split()[1]:
-                new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
-            else:
-                new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
-        
-        user_teams[user.id] = new_embed
-        return user_teams[user.id]
+            for field in user_teams[user.id].fields:
+                if field.name.strip().lower() == p_msg.split()[1]:
+                    new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
+                else:
+                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+
+            user_teams[user.id] = new_embed
+            return user_teams[user.id]
 

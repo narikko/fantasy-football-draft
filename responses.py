@@ -90,8 +90,8 @@ def handle_responses(msg, user) -> discord.Embed:
         defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW"]
         
         fpos = ["f1", "f2", "f3"]
-        mpos = ["m1", "m2", "m3"]
-        dpos = ["d1", "d2", "d3", "d4"]
+        mpos = ["m1", "m2", "m3", "m4"]
+        dpos = ["d1", "d2", "d3"]
         
         embed = discord.Embed(
             title=f"{user}'s Starting XI",
@@ -111,10 +111,15 @@ def handle_responses(msg, user) -> discord.Embed:
         
         embed.add_field(name="\u200b", value="\u200b", inline=False)
         
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        embed.add_field(name="M3", value ="", inline=True)
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+        
         embed.add_field(name="D1", value ="", inline=True)
         embed.add_field(name="D2", value ="", inline=True)
         embed.add_field(name="D3", value ="", inline=True)
-        embed.add_field(name="D4", value ="", inline=True)
         
         embed.add_field(name="\u200b", value="\u200b", inline=False)
         

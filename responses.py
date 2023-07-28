@@ -139,6 +139,7 @@ def handle_responses(msg, user) -> discord.Embed:
                 sel_player = player.title
                 for field in player.fields:
                     positions = field.name.split("/")
+                    print(positions)
                     for pos in positions:
                         if (pos in forward_pos) and (p_msg.split()[1] in fpos):
                             correct_pos = True

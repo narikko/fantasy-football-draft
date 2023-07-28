@@ -2,7 +2,7 @@ import random
 import discord
 import bot
 
-def handle_responses(msg) -> discord.Embed:
+def handle_responses(msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
     
@@ -26,10 +26,11 @@ def handle_responses(msg) -> discord.Embed:
         
         embed = discord.Embed(
             title=player_name,
-            description=player_club + "\n" + player_nationality + "\n" + player_positions,
+            description=player_club + "\n" + player_nationality,
             color=0xAF0000
         )
         
+        embed.add_field(name=f"\{player_positions}", value="\u200b", inline=False)
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
         embed.set_footer(text="Football Roll Bot, " + player_id)
@@ -69,7 +70,8 @@ def handle_responses(msg) -> discord.Embed:
             description=player_club + "\n" + player_nationality,
             color=0xAF0000
         )
-
+        
+        embed.add_field(name=f"\{player_positions}", value="\u200b", inline=False)
         embed.add_field(name=player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
         embed.set_footer(text="Football Roll Bot, " + player_id)
@@ -80,4 +82,81 @@ def handle_responses(msg) -> discord.Embed:
             
         print(claimed)
 
+        return embed
+    
+    if p_msg.startswith("%t"):
+        forward_pos = ["LW", "ST", "RW", "CF"]
+        midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
+        defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW"]
+        
+        fpos = ["f1", "f2", "f3"]
+        mpos = ["m1", "m2", "m3"]
+        dpos = ["d1", "d2", "d3", "d4"]
+        
+        embed = discord.Embed(
+            title=f"{user}'s Starting XI",
+            description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland"
+            color=0xAF0000
+        )
+        
+        embed.add_field(name="F1", value ="", inline=True)
+        embed.add_field(name="F2", value ="", inline=True)
+        embed.add_field(name="F3", value ="", inline=True)
+        
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+        
+        embed.add_field(name="M1", value ="", inline=True)
+        embed.add_field(name="M2", value ="", inline=True)
+        embed.add_field(name="M3", value ="", inline=True)
+        
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+        
+        embed.add_field(name="D1", value ="", inline=True)
+        embed.add_field(name="D2", value ="", inline=True)
+        embed.add_field(name="D3", value ="", inline=True)
+        embed.add_field(name="D4", value ="", inline=True)
+        
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
+        
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        embed.add_field(name="GK", value="", inline=True)
+        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        
+        
+        search_terms = p_msg.split()[2:]
+        print("Search terms:", search_terms)
+            
+        if not search_terms:
+            return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
+            
+        collection = bot.user_collections[user.id]
+        correct_player = False
+        correct_pos = False
+        sel_player = ""
+            
+        for player in collection:
+            if all(term in player.title for term in search_terms):
+                correct_player = True
+                sel_player = player.title
+                for field in player.fields:
+                    positions = field.name.split("/")
+                    for pos in positions:
+                        if (pos in forward_pos) and (p_msg.split()[1] in fpos):
+                            correct_pos = True
+                        elif (pos in midfield_pos) and (p_msg.split()[1] in mpos):
+                            correct_pos = True
+                        elif (pos in defense_pos) and (p_msg.split()[1] in dpos):
+                            correct_pos = True
+                        elif (pos == "GK") and (p_msg.split()[1] == "GK"):
+                            correct_pos = True 
+                        else:
+                            return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
+            else:
+                return discord.Embed(title="Error", description="Player not found in your collection.", color=0xFF0000)
+            
+        if correct_player and correct_pos:
+            for field1 in embed.fields:
+                if field1.name == p_msg.split()[1]:
+                    field1.value = sel_player
+        
         return embed

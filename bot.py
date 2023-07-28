@@ -15,7 +15,7 @@ client = discord.Client(intents=intents)
 
 async def send_message(msg, user_msg, is_private):
     try:
-        response = responses.handle_responses(user_msg)
+        response = responses.handle_responses(user_msg, msg.author)
         await msg.author.send(embed=response) if is_private else await msg.channel.send(embed=response)
             
     except Exception as e:

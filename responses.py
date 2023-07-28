@@ -134,7 +134,7 @@ def handle_responses(msg, user) -> discord.Embed:
         sel_player = ""
             
         for player in collection:
-            if all(term in player.title for term in search_terms):
+            if all(term.lower() in player.title.lower() for term in search_terms):
                 correct_player = True
                 sel_player = player.title
                 for field in player.fields:
@@ -146,7 +146,7 @@ def handle_responses(msg, user) -> discord.Embed:
                             correct_pos = True
                         elif (pos in defense_pos) and (p_msg.split()[1] in dpos):
                             correct_pos = True
-                        elif (pos == "GK") and (p_msg.split()[1] == "GK"):
+                        elif (pos == "GK") and (p_msg.split()[1] == "gk"):
                             correct_pos = True 
                         else:
                             return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)

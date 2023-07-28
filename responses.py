@@ -2,6 +2,8 @@ import random
 import discord
 import bot
 
+user_teams = {}
+
 def handle_responses(msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
@@ -93,42 +95,45 @@ def handle_responses(msg, user) -> discord.Embed:
         mpos = ["m1", "m2", "m3", "m4"]
         dpos = ["d1", "d2", "d3"]
         
-        embed = discord.Embed(
-            title=f"{user}'s Starting XI",
-            description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland",
-            color=0xAF0000
-        )
-        
-        embed.add_field(name="F1", value ="", inline=True)
-        embed.add_field(name="F2", value ="", inline=True)
-        embed.add_field(name="F3", value ="", inline=True)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=False)
-        
-        embed.add_field(name="M1", value ="", inline=True)
-        embed.add_field(name="M2", value ="", inline=True)
-        embed.add_field(name="M3", value ="", inline=True)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=False)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=True)
-        embed.add_field(name="M3", value ="", inline=True)
-        embed.add_field(name="\u200b", value="\u200b", inline=True)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=False)
-        
-        embed.add_field(name="D1", value ="", inline=True)
-        embed.add_field(name="D2", value ="", inline=True)
-        embed.add_field(name="D3", value ="", inline=True)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=False)
-        
-        embed.add_field(name="\u200b", value="\u200b", inline=True)
-        embed.add_field(name="GK", value="", inline=True)
-        embed.add_field(name="\u200b", value="\u200b", inline=True)
+        if user.id not in user_teams:
+            embed = discord.Embed(
+                title=f"{user}'s Starting XI",
+                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland",
+                color=0xAF0000
+            )
+            
+            embed.add_field(name="F1", value ="", inline=True)
+            embed.add_field(name="F2", value ="", inline=True)
+            embed.add_field(name="F3", value ="", inline=True)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=False)
+            
+            embed.add_field(name="M1", value ="", inline=True)
+            embed.add_field(name="M2", value ="", inline=True)
+            embed.add_field(name="M3", value ="", inline=True)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=False)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=True)
+            embed.add_field(name="M3", value ="", inline=True)
+            embed.add_field(name="\u200b", value="\u200b", inline=True)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=False)
+            
+            embed.add_field(name="D1", value ="", inline=True)
+            embed.add_field(name="D2", value ="", inline=True)
+            embed.add_field(name="D3", value ="", inline=True)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=False)
+            
+            embed.add_field(name="\u200b", value="\u200b", inline=True)
+            embed.add_field(name="GK", value="", inline=True)
+            embed.add_field(name="\u200b", value="\u200b", inline=True)
+            
+            user_teams[user.id] = embed
         
         if len(p_msg.split()) == 1:
-            return embed
+            return user_teams[user.id]
        
         search_terms = p_msg.split()[2:]
         print("Search terms:", search_terms)
@@ -176,6 +181,7 @@ def handle_responses(msg, user) -> discord.Embed:
                 new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
             else:
                 new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
-
-        return new_embed
+        
+        user_teams[user.id] = new_embed
+        return user_teams[user.id]
 

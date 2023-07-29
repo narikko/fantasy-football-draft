@@ -48,6 +48,7 @@ def handle_responses(msg, user) -> discord.Embed:
         search_terms = p_msg.split()[1:]
         print("Search terms:", search_terms)
         legend = False
+        loop_legend = True
         
         if not search_terms:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
@@ -57,10 +58,11 @@ def handle_responses(msg, user) -> discord.Embed:
                 player_info = line.strip().split(", ")
                 player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                 print("Player found:", player_name)
+                loop_legend = False
                 break
             
         for line in legends_list:
-            if all(term in line.lower() for term in search_terms):
+            if all(term in line.lower() for term in search_terms) and loop_legend:
                 player_info = line.strip().split(", ")
                 player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                 print("Player found:", player_name)

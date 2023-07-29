@@ -3,7 +3,6 @@ import discord
 import bot
 
 user_teams = {}
-user_team_players = {}
 
 def handle_responses(msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
@@ -201,6 +200,8 @@ def handle_responses(msg, user) -> discord.Embed:
             )
 
             for field in user_teams[user.id].fields:
+                if field.value.strip().lower() == sel_player:
+                    new_embed.add_field(name=field.name, value="", inline=field.inline)
                 if field.name.strip().lower() == p_msg.split()[1]:
                     new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
                 else:

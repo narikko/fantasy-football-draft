@@ -203,6 +203,7 @@ def handle_responses(msg, user) -> discord.Embed:
                 if field.value.strip().lower() == sel_player.lower():
                     if field.name.strip().lower() != p_msg.split()[1]:
                         new_embed.add_field(name=field.name, value="", inline=field.inline)
+                        continue 
                     
                 if field.name.strip().lower() == p_msg.split()[1]:
                     new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)

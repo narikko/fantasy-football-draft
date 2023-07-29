@@ -47,6 +47,7 @@ def handle_responses(msg, user) -> discord.Embed:
     if p_msg.startswith("%v"):
         search_terms = p_msg.split()[1:]
         print("Search terms:", search_terms)
+        legend = False
         
         if not search_terms:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
@@ -63,6 +64,7 @@ def handle_responses(msg, user) -> discord.Embed:
                 player_info = line.strip().split(", ")
                 player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                 print("Player found:", player_name)
+                legend = True
                 break
             
         claimed = False
@@ -76,20 +78,37 @@ def handle_responses(msg, user) -> discord.Embed:
                 break
             i += 1
         
-        embed = discord.Embed(
-            title=player_name,
-            description=player_club + "\n" + player_nationality,
-            color=0xAF0000
-        )
-        
-        embed.add_field(name=player_positions, value="", inline=False)
-        embed.add_field(name=player_value, value="", inline=False)
-        embed.set_image(url=player_imageURL)
-        embed.set_footer(text="Football Roll Bot, " + player_id)
-        
-        if claimed:
-            player_status = f"**Claimed by {claimed_user}**" 
-            embed.description += ("\n" + player_status)
+        if not legend:
+            embed = discord.Embed(
+                title=player_name,
+                description=player_club + "\n" + player_nationality,
+                color=0xAF0000
+            )
+            
+            embed.add_field(name=player_positions, value="", inline=False)
+            embed.add_field(name=player_value, value="", inline=False)
+            embed.set_image(url=player_imageURL)
+            embed.set_footer(text="Football Roll Bot, " + player_id)
+            
+            if claimed:
+                player_status = f"**Claimed by {claimed_user}**" 
+                embed.description += ("\n" + player_status)
+        else:
+            embed = discord.Embed(
+                title=player_name,
+                description=player_club + "\n" + player_nationality,
+                color=0xFFD700
+            )
+            
+            embed.add_field(name=player_positions, value="", inline=False)
+            embed.add_field(name=player_value, value="", inline=False)
+            embed.set_image(url=player_imageURL)
+            embed.set_footer(text="Football Roll Bot, " + player_id)
+            
+            if claimed:
+                player_status = f"**Claimed by {claimed_user}**" 
+                embed.description += ("\n" + player_status)
+            
             
         print(claimed)
 

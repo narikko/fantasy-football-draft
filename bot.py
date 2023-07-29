@@ -99,7 +99,7 @@ async def remove_player(user, msg, player):
         
 async def trade_player(user, msg, player, mention):
     user_id = user.id
-    other_id = extract_user_id(mention)
+    other_id = await extract_user_id(mention)
     
     user_collection = user_collections[user_id]
     other_collection = user_collections[other_id]

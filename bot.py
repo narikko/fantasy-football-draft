@@ -1,6 +1,7 @@
 import discord
 import responses
 import asyncio
+import re
 
 user_collections = {}
 user_current_page = {}
@@ -13,6 +14,15 @@ usernames = []
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
+
+async def extract_user_id(mention):
+    pattern = r"<@!?(\d+)>"
+    match = re.match(pattern, mention)
+    if match:
+        user_id = match.group(1)
+        return int(user_id)
+    else:
+        return None
 
 async def send_message(msg, user_msg, is_private):
     try:
@@ -86,10 +96,119 @@ async def remove_player(user, msg, player):
             await msg.channel.send(f"{player} was not found in your collection.")
     else:
         await msg.channel.send("No players found in your collection.")
-
         
+async def trade_player(user, msg, player, mention):
+    user_id = user.id
+    other_id = extract_user_id(mention)
+    
+    user_collection = user_collections[user_id]
+    other_collection = user_collections[other_id]
+    
+    user_embed_trade = None
+    other_embed_trade = None
+    
+    user_i = 0
+    other_i = 0
+    
+    for embed in user_collection:
+        if embed.title == player:
+            user_embed_trade = embed
+            break
+        user_i += 1
+    
+    if not user_embed_trade:
+        await msg.channel.send("You do not have that player in your collection.")
+        return
+    
+    repeat = True
+    while repeat:
+        trade_msg = await msg.channel.send(f"<@{other_id}> Please enter the player you would like to trade or type n/no to decline.")
+        
+        def check_response(m):
+            return m.author.id == other_id and m.channel == msg.channel
+        
+        try:
+            response = await client.wait_for('message', timeout=180, check=check_response)
+            response_content = response.content.lower()
+            
+            if response_content == "n" or response_content == "no":
+                await msg.channel.send("Trade cancelled.")
+                repeat = False
+            else:
+                for embed in other_collection:
+                    if embed.title.lower() == response_content:
+                        other_embed_trade = embed
+                        repeat = False
+                        break
+                    other_i += 1
+                    else:
+                        await msg.channel.send(f"<@{other_id} Could not find that player in your collection. Please try again.")
+                          
+        except asyncio.TimeoutError:
+            await msg.channel.send(f"<@{other_id}> You took too long to respond. Trade cancelled.")
+            return
+        
+        user_confirm = False
+        
+        if other_embed_trade:
+            confirmation_msg = await msg.channel.send(f"{user.mention} You are trading {user_embed_trade.title} for {other_embed_trade.title}. Do you confirm this trade? (y/n/yes/no)")
+            
+            def check_user_response(m):
+                    return m.author.id == user_id and m.channel == msg.channel
+            
+            try:
+                response = await client.wait_for('message', timeout=100, check=check_user_response)
+                response_content = response.content.lower()
+                if response_content == 'yes' or response_content == 'y':
+                    user_confirm = True
+                elif response_content == 'no' or response_content == 'n':
+                    await msg.channel.send("Trade cancelled.")
+            except asyncio.TimeoutError:
+                await msg.channel.send("Confirmation timed out. Trade cancelled.")
+        
+        if user_confirm:
+            confirmation_msg = await msg.channel.send(f"<@{other_id}> You are trading {other_embed_trade.title} for {user_embed_trade.title}. Do you confirm this trade? (y/n/yes/no)")
+            
+            def check_response(m):
+                return m.author.id == other_id and m.channel == msg.channel
+        
+            try:
+                response = await client.wait_for('message', timeout=100, check=check_response)
+                response_content = response.content.lower()
                 
-
+                if response_content == 'yes' or response_content == 'y':
+                    j = 0
+                    
+                    user_removed = user_collection.pop(user_i)
+                    other_removed = other_collection.pop(other_i)
+                    
+                    user_removed_playerid = user_removed.footer.text.split(", ")[1]
+                    other_removed_playerid = other_removed.footer.text.split(", ")[1]
+                    
+                    for playerid in playerids:
+                        if user_removed_playerid == playerid:
+                            playerids.pop(j)
+                            usernames.pop(j)
+                        if other_removed_playerid == playerid:
+                            playerids.pop(j)
+                            usernames.pop(j)
+                        j += 1
+                    
+                    
+                    user_removed.description = user_removed.description.replace(f"**Claimed by {user.name}**", f"**Claimed by {mention.name}**") 
+                    other_removed.description = other_removed.description.replace(f"**Claimed by {mention.name}**", f"**Claimed by {user.name}**")
+                    
+                    user_collections[user_id].append(other_removed)
+                    user_collections[other_id].append(user_removed)
+                    
+                    await msg.channel.send("Trade successful!")
+                    
+                elif response_content == 'no' or response_content == 'n':
+                    await msg.channel.send("Trade cancelled.")
+            
+            except asyncio.TimeoutError:
+                await msg.channel.send("Confirmation timed out. Trade cancelled.")
+                
 def run_discord_bot():
     @client.event
     async def on_ready():
@@ -123,6 +242,11 @@ def run_discord_bot():
             else:
                 player_name = user_msg[4:].strip()
                 await remove_player(msg.author, msg, player_name)
+        
+        elif user_msg.startswith("%trade"):
+            mention = user_msg.split()[1]
+            player_to_trade = " ".join(user_msg.split()[2:])
+            await trade_player(msg.author, msg, player_to_trade, mention)
         else:
             await send_message(msg, user_msg, is_private=False)
             

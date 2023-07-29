@@ -6,7 +6,9 @@ user_teams = {}
 
 def handle_responses(msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
+    g = open('legends_list.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
+    legends_list = g.readlines()
     
     p_msg = msg.lower()
     
@@ -50,6 +52,13 @@ def handle_responses(msg, user) -> discord.Embed:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
 
         for line in players_list:
+            if all(term in line.lower() for term in search_terms):
+                player_info = line.strip().split(", ")
+                player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+                print("Player found:", player_name)
+                break
+            
+        for line in legends_list:
             if all(term in line.lower() for term in search_terms):
                 player_info = line.strip().split(", ")
                 player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info

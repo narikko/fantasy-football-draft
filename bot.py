@@ -101,6 +101,8 @@ async def trade_player(user, msg, player, mention):
     user_id = user.id
     other_id = await extract_user_id(mention)
     
+    other_user = client.get_user(other_id)
+    
     user_collection = user_collections[user_id]
     other_collection = user_collections[other_id]
     
@@ -195,8 +197,8 @@ async def trade_player(user, msg, player, mention):
                         j += 1
                     
                     
-                    user_removed.description = user_removed.description.replace(f"**Claimed by {user.name}**", f"**Claimed by {mention.name}**") 
-                    other_removed.description = other_removed.description.replace(f"**Claimed by {mention.name}**", f"**Claimed by {user.name}**")
+                    user_removed.description = user_removed.description.replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
+                    other_removed.description = other_removed.description.replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
                     
                     user_collections[user_id].append(other_removed)
                     user_collections[other_id].append(user_removed)

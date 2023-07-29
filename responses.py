@@ -200,6 +200,8 @@ def handle_responses(msg, user) -> discord.Embed:
             )
 
             for field in user_teams[user.id].fields:
+                print("Field value:", field.value.strip().lower())
+                print("Selected player:", sel_player)
                 if field.value.strip().lower() == sel_player:
                     print("it worked")
                     new_embed.add_field(name=field.name, value="", inline=field.inline)

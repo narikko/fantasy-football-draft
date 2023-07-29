@@ -200,13 +200,13 @@ def handle_responses(msg, user) -> discord.Embed:
             )
 
             for field in user_teams[user.id].fields:
-                replace = False
                 if field.value.strip().lower() == sel_player.lower():
-                    new_embed.add_field(name=field.name, value="", inline=field.inline)
-                    replace = True
+                    if field.name.strip().lower() != p_msg.split()[1]:
+                        new_embed.add_field(name=field.name, value="", inline=field.inline)
+                    
                 if field.name.strip().lower() == p_msg.split()[1]:
                     new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
-                elif not replace:
+                else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed

@@ -5085,7 +5085,7 @@ Danny Batth, CB, Sunderland, England, Value: 120, https://fifastatic.fifaindex.c
 Florent Hanin, LB/LM/LWB, Paris FC, France, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194846.png, 05085
 Ehsan Haji Safi, LB/CM/CB, AEK Athens, Iran, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194354.png, 05086
 Daniel Ayala, CB, Blackburn Rovers, Spain, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194334.png, 05087
-Pelé (Guinea Bissau), CDM/CM, FC Famalicão, Guinea Bissau, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194020.png, 05088
+Pelé(Guinea Bissau), CDM/CM, FC Famalicão, Guinea Bissau, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194020.png, 05088
 Necip Uysal, CB/CDM/RB, Beşiktaş, Turkey, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193945.png, 05089
 Tom Lees, CB, Huddersfield, England, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193569.png, 05090
 Sebastián Prediger, CDM/CM, Tigre, Argentina, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193535.png, 05091

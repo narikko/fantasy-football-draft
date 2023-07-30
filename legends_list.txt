@@ -1,6 +1,6 @@
 Lionel Messi (Prime), RW, FC Barcelona, Argentina, Value: 1500, https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2015/06/07/1608439-34166200-2560-1440.jpg, 18146 
 Cristiano Ronaldo (Prime), LW, Real Madrid, Portugal, Value: 1500, https://www.mensjournal.com/.image/t_share/MTk2MTM1ODIyMDM1NDYxNjM3/cristiano-ronaldo-real-madrid-champions-league.jpg, 18147
-Pelé, CF, Santos, Brazil, Value: 1500, https://i.guim.co.uk/img/media/e641241d1c136732ac625348f85e4cbe3180850c/0_159_2511_1507/master/2511.jpg, 18148
+Pelé, CF, Santos, Brazil, Value: 1500, https://www.sportsnet.ca/wp-content/uploads/2014/06/WC_1970.jpg, 18148
 Diego Maradona, CAM, Napoli FC, Argentina, Value: 1500, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2017/03/maradona86.jpg, 18149
 Zinedine Zidane, CAM, Real Madrid, France, Value: 1300, https://pbs.twimg.com/media/CjY3noKXIAA9rZu.jpg, 18150
 Johan Cruyff, CF/CAM, Ajax/FC Barcelona, Netherlands, Value: 1300, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt6208719b8aa55c7f/62fed65e81992935c2e84852/jq2yyzvabv761039zb60jy9u4.jpg, 18151
@@ -11,18 +11,18 @@ Ronaldo Nazário, ST, Real Madrid/Inter, Brazil, Value: 1300, https://assets.goa
 Gerd Müller, ST/CF, FC Bayern München, West Germany, Value: 1250, https://cdn.artphotolimited.com/images/5f60bc53bd40b8173f11e855/1000x1000/gerd-muller-celebrates-his-second-goal.jpg, 18156
 Alfredo Di Stéfano, ST/CF, Real Madrid, Argentina, Value: 1250, https://cdn1.i-scmp.com/sites/default/files/2014/07/08/808215c8aa372543c7a2a90c934bde31.jpg, 18157
 Michel Platini, CAM, Juventus, France, Value: 1250, https://footballmakeshistory.eu/wp-content/uploads/2022/12/Michel_Platini1920x1280.jpg, 18158
-Zico, CAM, Flamengo, Brazil, Value: 1250, https://best100football.files.wordpress.com/2020/09/zico_brazil.jpg, 18159
+Zico (Brazil), CAM, Flamengo, Brazil, Value: 1250, https://best100football.files.wordpress.com/2020/09/zico_brazil.jpg, 18159
 Garrincha, RW, Botafogo, Brazil, Value: 1200, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2021/08/garrincha.jpg, 18160
 Bobby Charlton, CM/CAM, Manchester Utd, England, Value: 1200, https://www.irishnews.com/picturesarchive/irishnews/irishnews/2018/10/10/174404085-fe6c1c91-21db-4228-b1ff-a67390c97714.jpeg, 18161
 Paolo Maldini, LB/CB, Milan, Italy, Value: 1200, https://www.sportsnet.ca/wp-content/uploads/2015/06/paolo_maldini720.jpg, 18162
-Romário, ST, Vasco da Gama/PSV/FC Barcelona, Value: 1200, https://copaamerica.com/wp-content/uploads/000_APP2001032829719.jpg, 18163
+Romário (born 1966), ST, Vasco da Gama/PSV/FC Barcelona, Brazil, Value: 1200, https://copaamerica.com/wp-content/uploads/000_APP2001032829719.jpg, 18163
 Giuseppe Meazza, ST, Inter, Italy, Value: 1200, https://icdn.sempreinter.com/wp-content/uploads/2018/08/Meazza-e1535065427823.jpg, 18164
 Ronaldinho, LW/CAM, FC Barcelona, Brazil, Value: 1200, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blta0b651a34b44d5fc/60dbd8dc22d24e38a38b5f26/f32a20235b7c8a97cf370120f607bbb8a78f1dbe.jpg, 18165
 Andrés Iniesta, CM, FC Barcelona, Spain, Value: 1100, https://cdn.resfu.com/media/img_news/agencia-efe_multimedia_4294621.multimedia.photos.16688017.file.jpg, 18166
-Franco Baresi, CB, Milan, Italy, Value: 1100, https://i.guim.co.uk/img/media/d4427b65b1585de9cf6c8387677ef4626a3efd0b/0_0_4755_3171/master/4755.jpg, 18167
-Marco van Basten, ST, Ajax/Milan, Netherlands, Value: 1100, https://iffhs.com/images/legend-images/18/1.jpg, 18168
+Franco Baresi, CB, Milan, Italy, Value: 1100, https://m.media-amazon.com/images/M/MV5BNWZmOWNmNTgtNmM5OC00YzVmLTk2M2UtMmZiMDZhOTgyMWI4XkEyXkFqcGdeQXVyMjUyNDk2ODc@._V1_FMjpg_UX1000_.jpg, 18167
+Marco van Basten, ST, Ajax/Milan, Netherlands, Value: 1100, https://fifpro.org/media/thxf1uaw/marco-van-basten-2.jpg, 18168
 Eusébio, CF, SL Benfica, Portugal, Value: 1100, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2018/04/eusebio.jpg, 18169
-Xavi, CM, FC Barcelona, Spain, Value: 1100, https://i.guim.co.uk/img/media/23c74a4280d361f41ab9a8aeceb63ba04d9924ce/0_268_3500_2101/master/3500.jpg, 18170
+Xavi (Spain), CM, FC Barcelona, Spain, Value: 1100, https://i2-prod.mirror.co.uk/incoming/article11608094.ece/ALTERNATES/s615b/FBL-EUR-C1-BARCELONA-CELTIC.jpg, 18170
 Carlos Alberto, RB/RWB, Santos, Brazil, Value: 1100, https://i.ytimg.com/vi/lk2Zl5riddw/hq720.jpg, 18171
 Ruud Gullit, CF/RW, Milan, Netherlands, Value: 1100, https://tmssl.akamaized.net/images/foto/galerie/ruud-gullit-nationalmannschaft-action-1572957777-27173.jpg, 18172
 Sócrates, CAM, Corinthians, Brazil, Value: 1100, https://www.newframe.com/wp-content/uploads/2019/12/6Dec_S%C3%B3crates_IH-1.jpg, 18173
@@ -34,27 +34,27 @@ Valentino Mazzola, CF/CAM, Torino, Italy, Value: 1100, https://i0.wp.com/thesefo
 Matthias Sindelar, CF, Austria Wien, Austria, Value: 1100, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2015/05/matthias-sindelar-014.jpg, 18179
 Luis Suárez (Spain), CAM, FC Barcelona/Inter, Spain, Value: 1100, https://media.cnn.com/api/v1/images/stellar/prod/230710103443-01-luis-surez-obit.jpg, 18180
 Paco Gento, LW, Real Madrid, Spain, Value: 1100, https://www.whatahowler.com/wp-content/uploads/2016/10/08aa7-1yj29wnp_ipj3ffryn-qkta.jpeg, 18181
-Bobby Moore, CB, West Ham, England, Value: 1100, https://i.guim.co.uk/img/media/325f7b298e9d48e23cedc77055ca56bdba2ec5d1/0_0_2886_1732/master/2886.jpg, 18182
-Michael Laudrup, CAM/CF/LW, Juventus/FC Barcelona, Denmark, Value: 1100, https://i.guim.co.uk/img/media/e4790facf7e52d0183345e58a4276e125ffda29d/50_201_3688_2213/master/3688.jpg, 18183
+Bobby Moore, CB, West Ham, England, Value: 1100, https://tuttocalcio360.altervista.org/wp-content/uploads/2020/04/moore.jpg, 18182
+Michael Laudrup, CAM/CF/LW, Juventus/FC Barcelona, Denmark, Value: 1100, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt3b3840bad08250a0/62feac6b6894f733513bbfde/2664782.jpg, 18183
 Roberto Baggio, CF/CAM, Juventus, Italy, Value: 1100, https://historyofsoccer.info/wp-content/uploads/2021/09/roberto-baggio-italian-soccer-player.jpeg, 18184
 Kenny Dalglish, CF, Celtic/Liverpool, Scotland, Value: 1100, https://www.thisisanfield.com/wp-content/uploads/PA-144669-copy-2.jpg, 18185
 Paolo Rossi, ST, Vicenza/Juventus, Italy, Value: 1100, https://media.cnn.com/api/v1/images/stellar/prod/201209234313-01-paolo-rossi-file.jpg, 18186
 Nándor Hidegkuti, CF/CAM, MTK Hungária, Hungary, Value: 1100, https://airnewsonline.com/wp-content/uploads/Nandor-Hidegkuti.jpeg, 18187
 Günter Netzer, CAM, Borussia Mönchengladbach/Real Madrid, West Germany, Value: 1100, https://tmssl.akamaized.net/images/foto/galerie/gunter-netzer-borussia-monchengladbach-1971-1600075801-47223.jpg, 18188
 Gianluigi Buffon, GK, Juventus, Italy, Value: 1100, https://www.si.com/.image/t_share/MTY4MDI3MTg2MzAzMjgwNDAx/italian-goalkeeper-gianluigi-buffon-kiss-5b0d607d3467accf57000005jpg.jpg, 18189
-Didi, CM, Fluminense, Brazil, Value: 1100, https://i.ytimg.com/vi/fKlPlN4b-oU/maxresdefault.jpg, 18190
+Didi (Brazil), CM, Fluminense, Brazil, Value: 1100, https://i.ytimg.com/vi/fKlPlN4b-oU/maxresdefault.jpg, 18190
 Rivellino, CAM, Corinthians, Brazil, Value: 1100, https://www.fifamuseum.com/assets/images/8/2616735_L1-3f2e7f31.jpg, 18191
 Kevin Keegan, CF, Liverpool/Hamburger SV, England, Value: 1100, https://tmssl.akamaized.net/images/foto/galerie/kevin-keegan-hamburger-sv-1589800440-38957.jpg, 18192
 Thierry Henry, ST/LW, Arsenal, France, Value: 1100, https://d3nfwcxd527z59.cloudfront.net/content/uploads/2021/08/23125057/Thierry-Henry-Arsenal-4.jpg, 18193
 Dennis Bergkamp, CF/CAM, Ajax/Arsenal, Netherlands, Value: 1050, https://d3nfwcxd527z59.cloudfront.net/content/uploads/2021/05/19165610/Dennis-Bergkamp-Arsenal-1.jpg, 18194
 Ronald Koeman, CB/CM, FC Barcelona, Netherlands, Value: 1050, https://i.ytimg.com/vi/eYooKXsbaew/maxresdefault.jpg, 18195
-Dani Alves, RB, FC Barcelona, Brazil, Value: 1050, https://prod-media.beinsports.com/image/1683762703651_e55ff7d4-03d3-45b0-9ab4-0945245bc0ba.jpg, 18196
+Dani Alves, RB, FC Barcelona, Brazil, Value: 1050, https://barcauniversal.com/wp-content/uploads/2020/03/fbl-esp-cup-barcelona-villanovense-1000x600.jpg, 18196
 Eric Cantona, CF, Manchester Utd, France, Value: 1050, https://tmssl.akamaized.net/images/foto/galerie/eric-cantona-manchester-united-1590149539-39314.jpg, 18197
 Cafu, RB/RWB, Roma/Milan, Brazil, Value: 1050, https://digitalhub.fifa.com/m/65656366da806b38/original/bza89gsilvdcp9ipwnqe-jpg.jpg, 18198
 Wayne Rooney, ST/CF/CAM, Manchester Utd, England, Value: 1050, https://ichef.bbci.co.uk/news/1024/cpsprodpb/fab0/live/05142570-1f94-11ec-b25d-efb40510a7e6.jpg, 18199
 Philipp Lahm, RB/LB/CDM, FC Bayern München, Germany, Value: 1050, https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprodmigration%2Fweb%2Fbin%2F81741f8a-43c1-3891-b42f-8aa161f47649.jpg, 18200
 Alan Shearer, ST, Newcastle Utd, England, Value: 1050, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt02aa2c3401eae7de/60e08680a970630a7c1e5069/abc8c15417c886487ee641edb0df4b8fae6371cb.jpg, 18201
-Roberto Carlos, RB, Real Madrid, Brazil, Value: 1050, https://cdn.mos.cms.futurecdn.net/iqHNxkUb9Le5bsRYiNXvNo.jpg, 18202
+Roberto Carlos (Brazil), RB, Real Madrid, Brazil, Value: 1050, https://cdn.mos.cms.futurecdn.net/iqHNxkUb9Le5bsRYiNXvNo.jpg, 18202
 Peter Schmeichel, GK, Manchester Utd, Denmark, Value: 1050, https://www.thesun.co.uk/wp-content/uploads/2023/04/times-photograph-marc-aspland-21-1167049.jpg, 18203
 Javier Zanetti, RB/RM/CM, Inter, Argentina, Value: 1050, https://tmssl.akamaized.net/images/foto/galerie/javier-zanetti-jubel-inter-2009-1592311048-41572.jpg, 18204
 Kaká, CAM, Milan/Real Madrid, Brazil, Value: 1050, https://i.pinimg.com/1200x/22/3a/46/223a46e33bff808b6411caa3b27c4b9e.jpg, 18205

@@ -273,7 +273,6 @@ Ivan Rakitić, CM/CDM, Sevilla FC, Croatia, Value: 540, https://fifastatic.fifai
 Kasper Schmeichel, GK, OGC Nice, Denmark, Value: 540, https://fifastatic.fifaindex.com/FIFA23/players/163587.png, 00273
 Raúl Albiol, CB, Villarreal CF, Spain, Value: 540, https://fifastatic.fifaindex.com/FIFA23/players/157481.png, 00274
 Giorgio Chiellini, CB, LAFC, Italy, Value: 540, https://fifastatic.fifaindex.com/FIFA23/players/138956.png, 00275
-Zlatan Ibrahimović, ST, Milan, Sweden, Value: 540, https://fifastatic.fifaindex.com/FIFA23/players/41236.png, 00276
 Jeremie Frimpong, RB/RWB/RM, Leverkusen, Netherlands, Value: 542, https://fifastatic.fifaindex.com/FIFA23/players/253149.png, 00277
 Nuno Mendes, LB/LWB, Paris SG, Portugal, Value: 546, https://fifastatic.fifaindex.com/FIFA23/players/252145.png, 00278
 Sven Botman, CB, Newcastle Utd, Netherlands, Value: 542, https://fifastatic.fifaindex.com/FIFA23/players/251809.png, 00279
@@ -836,7 +835,6 @@ Jonny Evans, CB, Leicester City, Northern Ireland, Value: 200, https://fifastati
 Dante, CB, OGC Nice, Brazil, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/158625.png, 00836
 Héctor Herrera, CM/CDM, Houston Dynamo, Mexico, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/156519.png, 00837
 Alfredo Talavera, GK, Free Agents, Mexico, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/156433.png, 00838
-Gianluigi Buffon, GK, Parma, Italy, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/1179.png, 00839
 Vinicius Souza, CDM/CM, RCD Espanyol, Brazil, Value: 204, https://fifastatic.fifaindex.com/FIFA23/players/262929.png, 00840
 Fábio Vieira, CAM/RW, Arsenal, Portugal, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/256958.png, 00841
 Josip Šutalo, CB, Dinamo Zagreb, Croatia, Value: 206, https://fifastatic.fifaindex.com/FIFA23/players/256325.png, 00842

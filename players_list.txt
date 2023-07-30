@@ -14,8 +14,8 @@ Virgil van Dijk, CB, Liverpool, Netherlands, Value: 890, https://fifastatic.fifa
 Harry Kane, ST, Spurs, England, Value: 890, https://fifastatic.fifaindex.com/FIFA23/players/202126.png, 00014
 Jan Oblak, GK, Atlético de Madrid, Slovenia, Value: 892, https://fifastatic.fifaindex.com/FIFA23/players/200389.png, 00015
 Casemiro, CDM, Manchester Utd, Brazil, Value: 890, https://fifastatic.fifaindex.com/FIFA23/players/200145.png, 00016
-Neymar Jr, LW, Paris SG, Brazil, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/190871.png, 00017
-Manuel Neuer, GK, FC Bayern München, Germany, Value: 890, https://fifastatic.fifaindex.com/FIFA23/players/167495.png, 00018
+Neymar Jr, LW, Paris SG, Brazil, Value: 950, https://fifastatic.fifaindex.com/FIFA23/players/190871.png, 00017
+Manuel Neuer, GK, FC Bayern München, Germany, Value: 930, https://fifastatic.fifaindex.com/FIFA23/players/167495.png, 00018
 Rúben Dias, CB, Manchester City, Portugal, Value: 886, https://fifastatic.fifaindex.com/FIFA23/players/239818.png, 00019
 Gianluigi Donnarumma, GK, Paris SG, Italy, Value: 888, https://fifastatic.fifaindex.com/FIFA23/players/230621.png, 00020
 Bernardo Silva, CAM/CM, Manchester City, Portugal, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/218667.png, 00021
@@ -24,7 +24,7 @@ Marquinhos, CB, Paris SG, Brazil, Value: 884, https://fifastatic.fifaindex.com/F
 Heung Min Son, LW/LM/ST, Spurs, Korea Republic, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/200104.png, 00024
 Marc-André ter Stegen, GK, FC Barcelona, Germany, Value: 882, https://fifastatic.fifaindex.com/FIFA23/players/192448.png, 00025
 Toni Kroos, CM/CDM, Real Madrid, Germany, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/182521.png, 00026
-Luka Modrić, CM, Real Madrid, Croatia, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/177003.png, 00027
+Luka Modrić, CM, Real Madrid, Croatia, Value: 910, https://fifastatic.fifaindex.com/FIFA23/players/177003.png, 00027
 Cristiano Ronaldo, ST, Al Nassr, Portugal, Value: 1200, https://fifastatic.fifaindex.com/FIFA23/players/20801.png, 00028
 Rodri, CDM, Manchester City, Spain, Value: 874, https://fifastatic.fifaindex.com/FIFA23/players/231866.png, 00029
 Frenkie de Jong, CM, FC Barcelona, Netherlands, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/228702.png, 00030
@@ -5085,7 +5085,7 @@ Danny Batth, CB, Sunderland, England, Value: 120, https://fifastatic.fifaindex.c
 Florent Hanin, LB/LM/LWB, Paris FC, France, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194846.png, 05085
 Ehsan Haji Safi, LB/CM/CB, AEK Athens, Iran, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194354.png, 05086
 Daniel Ayala, CB, Blackburn Rovers, Spain, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194334.png, 05087
-Pelé(Guinea Bissau), CDM/CM, FC Famalicão, Guinea Bissau, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194020.png, 05088
+Judilson Mamadu Tuncará Gomes, CDM/CM, FC Famalicão, Guinea Bissau, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/194020.png, 05088
 Necip Uysal, CB/CDM/RB, Beşiktaş, Turkey, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193945.png, 05089
 Tom Lees, CB, Huddersfield, England, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193569.png, 05090
 Sebastián Prediger, CDM/CM, Tigre, Argentina, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/193535.png, 05091

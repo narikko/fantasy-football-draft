@@ -1,3 +1,4 @@
 Lionel Messi (Prime), RW, FC Barcelona, Argentina, Value: 1500, https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2015/06/07/1608439-34166200-2560-1440.jpg, 18146 
 Cristiano Ronaldo (Prime), LW, Real Madrid, Portugal, Value: 1500, https://www.mensjournal.com/.image/t_share/MTk2MTM1ODIyMDM1NDYxNjM3/cristiano-ronaldo-real-madrid-champions-league.jpg, 18147
 Pelé, CF, Santos, Brazil, Value: 1500, https://i.guim.co.uk/img/media/e641241d1c136732ac625348f85e4cbe3180850c/0_159_2511_1507/master/2511.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=6aa349f9c60082e576a80a3c6186dd30, 18148
+Diego Maradona, Napoli FC, Argentina, Value: 1500, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2017/03/maradona86.jpg?fit=1600%2C1053&ssl=1, 18149

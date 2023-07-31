@@ -1,6 +1,7 @@
 import random
 import discord
 import bot
+import unidecode
 
 user_teams = {}
 
@@ -52,23 +53,30 @@ def handle_responses(msg, user) -> discord.Embed:
         
         if not search_terms:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
+        
+        def search_player(search_terms):
+            normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+            player_info = []
 
-        for line in players_list:
-            if all(term in line.lower() for term in search_terms):
-                player_info = line.strip().split(", ")
-                player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
-                print("Player found:", player_name)
-                loop_legend = False
-                break
+            for line in players_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line for term in normalized_search_terms):
+                    loop_legend = False
+                    player_info = line.strip().split(", ")
+                    break
             
-        for line in legends_list:
-            if all(term in line.lower() for term in search_terms) and loop_legend:
-                player_info = line.strip().split(", ")
-                player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
-                print("Player found:", player_name)
-                legend = True
-                break
-            
+            for line in legends_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line for term in normalized_search_terms) and loop_legend:
+                    legend = True
+                    player_info = line.strip().split(", ")
+                    break
+                
+            return player_info
+        
+        player_info = search_player(search_terms)
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        
         claimed = False
         
         i = 0

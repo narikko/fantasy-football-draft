@@ -1047,7 +1047,6 @@ Jérôme Boateng, CB, OL, Germany, Value: 190, https://fifastatic.fifaindex.com/
 Maxi Moralez, CAM/CM, Racing Club, Argentina, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/183895.png, 01049
 Anthony Modeste, ST, Borussia Dortmund, France, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/182212.png, 01050
 Sergio Asenjo, GK, R. Valladolid CF, Spain, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/178750.png, 01051
-Mesut Özil, CAM/RM, Başakşehir, Germany, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/176635.png, 01052
 Kévin Gameiro, ST, Strasbourg, France, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/176600.png, 01053
 Andrés Guardado, CDM, Real Betis, Mexico, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/171897.png, 01054
 Salvatore Sirigu, GK, Fiorentina, Italy, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/168435.png, 01055
@@ -2902,7 +2901,6 @@ James McArthur, CDM/CM, Crystal Palace, Scotland, Value: 150, https://fifastatic
 Wayne Hennessey, GK, Nott'm Forest, Wales, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/170084.png, 02904
 Andreas Ulmer, LB, RB Salzburg, Austria, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/169324.png, 02905
 Alessandro Diamanti, CAM, Western United, Italy, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/163925.png, 02906
-Cesc Fàbregas, CM/CAM/CDM, Como, Spain, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/162895.png, 02907
 Mauro Boselli, ST, Estudiantes, Argentina, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/161938.png, 02908
 Lorenzo Cinterio, RW/ST, LDU Quito, Ecuador, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/159986.png, 02909
 Valber Albarado, CAM/LM/CM, América de Cali, Colombia, Value: 150, https://fifastatic.fifaindex.com/FIFA23/players/159985.png, 02910

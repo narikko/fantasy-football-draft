@@ -93,8 +93,8 @@ Nemanja Vidić, CB, Manchester Utd, Serbia, Value: 1050, https://imgresizer.euro
 Cesc Fàbregas, CM/CAM, Arsenal/FC Barcelona/Chelsea, Spain, Value: 1000, https://ichef.bbci.co.uk/onesport/cps/624/cpsprodpb/1690A/production/_130262429_gettyimages-102811264.jpg, 18237
 Ruud van Nistelrooy, ST, Manchester Utd, Netherlands, Value: 1050, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2015/10/rvn.png, 18238
 David Beckham, RM/CM, Manchester Utd/Real Madrid, England, Value: 1050, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt3a48501789cdf113/60db790b47339c0fc01c188c/3e947186d512164cf8dbe0987a865dd2b714eea6.png, 18239
-Marcelo, LB, Real Madrid, Brazil, Value: 1050, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltc33add0d8ad9dea1/6292bd1cd530fd146b938748/Marcelo_Real_Madrid_Liverpool_Champions_League_trophy_2022.jpg, 18240
-Raúl, CF, Real Madrid, Spain, Value: 1050, https://www.egypttoday.com/siteimages/Larg/48173.jpg, 18241
+Marcelo (Brazil), LB, Real Madrid, Brazil, Value: 1050, https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltc33add0d8ad9dea1/6292bd1cd530fd146b938748/Marcelo_Real_Madrid_Liverpool_Champions_League_trophy_2022.jpg, 18240
+Raúl (born 1977), CF, Real Madrid, Spain, Value: 1050, https://www.egypttoday.com/siteimages/Larg/48173.jpg, 18241
 Fernando Torres, ST, Atlético de Madrid/Liverpool/Chelsea, Spain, Value: 1000, https://a.espncdn.com/photo/2017/0627/r224857_1296x729_16-9.jpg, 18242
 Mesut Özil, CAM, Real Madrid/Arsenal, Germany, Value: 1000, https://images2.minutemediacdn.com/image/fetch/https%3A%2F%2Fpaininthearsenal.com%2Fwp-content%2Fuploads%2Fgetty-images%2F2017%2F07%2F1052761936.jpeg, 18243
 Miroslav Klose, ST, SV Werder Bremen/FC Bayern München/Lazio, Germany, Value: 1000, https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2016/11/01/1961237-41220225-2560-1440.jpg, 18244

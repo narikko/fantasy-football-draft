@@ -77,7 +77,7 @@ Claude Makélélé, CDM, Chelsea, France, Value: 1050, https://tmssl.akamaized.n
 Frank Lampard, CM/CAM, Chelsea, England, Value: 1050, https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/Chelseas-British-midfielder-Frank-Lampa-24c06e7736aaf69a775376dc0e08a810.jpg, 18221
 Patrick Vieira, CDM, Arsenal, France, Value: 1050, https://tmssl.akamaized.net/images/foto/galerie/patrick-vieira-fc-arsenal-1504638348-11820.jpg?lm=1504638361, 18222
 Francesco Totti, CF, Roma, Italy, Value: 1050, https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/Claudio-Villa-Archive-d1798c32755177e35530355f56045bc7.jpg, 18223
-Franck Ribéry, LW, FC Bayern München, France, Value: 1050, https://img.bleacherreport.net/img/images/photos/002/465/539/169483487_crop_north.jpg, 18224
+Franck Ribéry, LW, FC Bayern München, France, Value: 1050, https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2013/08/29/1083102-18762615-2560-1440.jpg, 18224
 Didier Drogba, ST, Chelsea, Ivory Coast, Value: 1050, https://pbs.twimg.com/media/Eg9k38XX0AkYIKj.jpg, 18225
 Vincent Kompany, CB, Manchester City, Belgium, Value: 1050, https://static.standard.co.uk/s3fs-public/thumbnails/image/2018/04/15/19/vincent-kompany-070418.jpg, 18226
 Luís Figo, RW, FC Barcelona/Real Madrid, Portugal, Value: 1050, https://www.sportsindiashow.com/wp-content/uploads/2021/12/fussball_em_2004_in_portugal_halbfinale_por-ned.jpeg, 18227

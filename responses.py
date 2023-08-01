@@ -5,6 +5,7 @@ import unidecode
 import emoji
 
 user_teams = {}
+user_team_players = {}
 
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
@@ -144,8 +145,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         return embed
     
     if p_msg.startswith("%t"):
-        if user.id not in user_teams:
-            user_teams[user.id] = []
+        if user.id not in user_team_players:
+            user_teams_players[user.id] = []
         
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
@@ -219,6 +220,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
+            
+            for player in user_team_players[user.id]:
+                if player.title == p_msg.split()[2]:
+                    user_teams_players[user.id].remove(player)
+            
             return
 
         for player in collection:
@@ -275,8 +281,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             overall_value = 0
             player_values = []
-            if len(user_teams[user.id]) == 11:
-                for player in user_teams[user.id]:
+            if len(user_teams_players[user.id]) == 11:
+                for player in user_teams_players[user.id]:
                     for fields in player.fields:
                         if "Value:" in field.name:
                             player_values.append(int(field.name.split()[1]))

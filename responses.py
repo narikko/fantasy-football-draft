@@ -11,7 +11,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     players_list = f.readlines()
     legends_list = g.readlines()
     
-    p_msg = msg.lower()
+    p_msg = user_msg.lower()
     
     claimed = False
     

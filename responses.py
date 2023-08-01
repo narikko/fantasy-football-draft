@@ -253,7 +253,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
             
             if correct_player:
-                user_teams[user.id].append(player)    
+                user_team_players[user.id].append(player)    
                 break
 
         if not correct_player:

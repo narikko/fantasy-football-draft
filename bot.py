@@ -21,7 +21,7 @@ client = discord.Client(intents=intents)
 async def display_profile(msg, user):
     profile = ""
     profile += str(user_coins[user.id]) + " \U0001f4a0"
-
+    await msg.channel.send(profile)
 
 async def extract_user_id(mention):
     pattern = r"<@!?(\d+)>"

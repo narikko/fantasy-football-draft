@@ -27,7 +27,7 @@ async def extract_user_id(mention):
 
 async def send_message(msg, user_msg, is_private):
     try:
-        response = responses.handle_responses(msg, user_msg, msg.author)
+        response = await responses.handle_responses(msg, user_msg, msg.author)
         await msg.author.send(embed=response) if is_private else await msg.channel.send(embed=response)
             
     except Exception as e:

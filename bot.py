@@ -2,6 +2,7 @@ import discord
 import responses
 import asyncio
 import re
+import emoji
 
 user_collections = {}
 user_current_page = {}
@@ -61,10 +62,14 @@ async def show_collection(user, msg, page_num):
         await msg.channel.send("No players found in your collection.")
 
 async def remove_player(user, msg, player):
+    if user.id not in user_coins:
+        user_coins[user.id] = 0
+    
     if user.id in user_collections:
         collection = user_collections[user.id]
         i = 0
         found_player = None
+        found_player_value = 0
         
         for embed in collection:
             if embed.title == player:
@@ -73,7 +78,11 @@ async def remove_player(user, msg, player):
             i += 1
             
         if found_player:
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? (y/n/yes/no)")
+            for field in found_player.fields:
+                if "Value:" in field.name:
+                    found_player_value = field.name.split()[1]
+                    
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {found_player_value} {emoji.emojize(":diamond_with_a_dot:")} (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()
@@ -88,6 +97,7 @@ async def remove_player(user, msg, player):
                             usernames.pop(j)
                         j += 1
                     
+                    user_coins[user.id] += found_player_value
                     await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
                     await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
                 elif response_content == 'no' or response_content == 'n':

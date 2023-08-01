@@ -82,7 +82,7 @@ async def remove_player(user, msg, player):
                 if "Value:" in field.name:
                     found_player_value = field.name.split()[1]
                     
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {found_player_value} {emoji.emojize(":diamond_with_a_dot:")} (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {found_player_value} \U0001f4a0 (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()

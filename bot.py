@@ -36,7 +36,7 @@ async def set_favorite_club(msg, user, club):
     for line in players_list:
         normalized_line = unidecode.unidecode(line.lower())
         club_search = " ".join(normalized_search_terms)
-        if club_search in normalized_line:
+        if club_search.lower() == normalized_line.split(", ")[2]:
             favorite_club = line.strip().split(", ")[2]
             user_favorite_club[user.id] = favorite_club
             found = True

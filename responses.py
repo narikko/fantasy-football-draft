@@ -5,7 +5,7 @@ import unidecode
 
 user_teams = {}
 
-def handle_responses(msg, user) -> discord.Embed:
+async def handle_responses(msg, user_msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
     g = open('legends_list.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
@@ -48,34 +48,44 @@ def handle_responses(msg, user) -> discord.Embed:
     if p_msg.startswith("%v"):
         search_terms = p_msg.split()[1:]
         print("Search terms:", search_terms)
-        legend = False
-        loop_legend = True
         
         if not search_terms:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
         
         def search_player(search_terms):
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
-            player_info = []
+            players_found = []
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
                 if all(term in normalized_line for term in normalized_search_terms):
-                    loop_legend = False
                     player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
                     break
             
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line for term in normalized_search_terms) and loop_legend:
-                    legend = True
+                if all(term in normalized_line for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
+                    player_info.append("legend")
+                    players_found.append(player_info)
                     break
                 
-            return player_info
+            return players_found
         
-        player_info = search_player(search_terms)
-        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        players_found = search_player(search_terms)
+        
+        if len(players_found) == 1:
+            player_info = players_found[0]
+            player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
+        else:
+            players_found_msg = f"{len(players_found)} matches:\n"
+            for players in players_found:
+                players_found_msg += players[0] + " " + players[4] + "\n"
+            
+            await msg.channel.send(players_found_msg)
+            return
         
         claimed = False
         

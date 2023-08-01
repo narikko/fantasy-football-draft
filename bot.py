@@ -27,7 +27,7 @@ async def extract_user_id(mention):
 
 async def send_message(msg, user_msg, is_private):
     try:
-        response = responses.handle_responses(user_msg, msg.author)
+        response = responses.handle_responses(msg, user_msg, msg.author)
         await msg.author.send(embed=response) if is_private else await msg.channel.send(embed=response)
             
     except Exception as e:
@@ -88,7 +88,7 @@ async def remove_player(user, msg, player):
                         j += 1
                     
                     await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
-                    await responses.handle_responses(f"%t rm {removed_embed.title}", msg.author)
+                    await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
                 elif response_content == 'no' or response_content == 'n':
                     await msg.channel.send("Removal cancelled.")
             except asyncio.TimeoutError:

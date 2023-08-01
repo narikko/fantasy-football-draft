@@ -283,7 +283,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             player_values = []
             if len(user_team_players[user.id]) == 11:
                 for player in user_team_players[user.id]:
-                    for fields in player.fields:
+                    for field in player.fields:
                         if "Value:" in field.name:
                             player_values.append(int(field.name.split()[1]))
                             break

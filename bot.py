@@ -3,11 +3,13 @@ import responses
 import asyncio
 import re
 import emoji
+import unidecode
 
 user_collections = {}
 user_current_page = {}
 collection_messages = {}
 user_coins = {}
+user_favorite_club = {}
 
 playerids= []
 usernames = []
@@ -17,6 +19,51 @@ TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Q
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
+
+async def set_favorite_club(msg, user, club):
+    if user.id not in user_favorite_club:
+        user_favorite_club[user.id] = ""
+    
+    f = open('players_list.txt', 'r', encoding='utf-8')
+    players_list = f.readlines()
+    
+    search_terms = club 
+    normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+    favorite_club = ""
+    clubs_found = []
+    found = False
+    
+    for line in players_list:
+        normalized_line = unidecode.unidecode(line.lower())
+        if all(term in normalized_line for term in normalized_search_terms):
+            favorite_club = line.strip().split(", ")[2]
+            user_favorite_club[user.id] = favorite_club
+            found = True
+            await msg.channel.send(f"{user.mention} Your favorite club has been set to {favorite_club}")
+            break
+    
+    if not found:
+        for line in players_list:
+            normalized_line = unidecode.unidecode(line.lower())
+            
+            if line.strip().split(", ")[2] not in clubs_found:
+                for term in normalized_search_terms:
+                    if term in normalized_line:
+                        club_found = line.strip().split(", ")[2]
+                        clubs_found.append(club_found)
+        
+        if len(clubs_found) == 0:
+            await msg.channel.send("Club not found in our database.")
+            return
+    
+        mult_msg = f"{len(clubs_found)} matches. Please retype the command with one of the names below.\n"
+        for clubs in clubs_found:   
+            mult_msg += clubs + "\n"
+        
+        await msg.channel.send(mult_msg)
+        return
+            
+    
 
 async def display_profile(msg, user):
     profile = ""
@@ -269,6 +316,10 @@ def run_discord_bot():
         
         elif user_msg == "%p":
             await display_profile(msg, msg.author)
+        
+        elif user_msg.startswith("%sc"):
+            club = user_msg.split()[1:]
+            await set_favorite_club(msg, msg.author, club)
         else:
             await send_message(msg, user_msg, is_private=False)
             

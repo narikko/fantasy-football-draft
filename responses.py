@@ -98,7 +98,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 break
             i += 1
         
-        if player_legend != "not legend":
+        if player_legend == "not legend":
             embed = discord.Embed(
                 title=player_name,
                 description=player_club + "\n" + player_nationality,

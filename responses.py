@@ -17,7 +17,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     claimed = False
     
     if p_msg == "%r":
-        rolled_player = random.choice(players_list)
+        chance = random.randint(0, 2000)
+        
+        if chance == 0:
+            rolled_player = random.choice(legends_list)
+        else:
+            rolled_player = random.choice(players_list)
+        
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
         player_value += " " + emoji.emojize(":diamond_with_a_dot:")
@@ -138,6 +144,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         return embed
     
     if p_msg.startswith("%t"):
+        if user.id not in user_teams:
+            user_teams[user.id] = []
+        
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
         defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW"]
@@ -238,6 +247,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
             
             if correct_player:
+                user_teams[user.id].append(player)    
                 break
 
         if not correct_player:
@@ -262,5 +272,18 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
+            
+            overall_value = 0
+            player_values = []
+            if len(user_teams[user.id]) == 11:
+                for player in user_teams[user.id]:
+                    for fields in player.fields:
+                        if "Value:" in field.name:
+                            player_values.append(int(field.name.split()[1]))
+                            break
+                        
+                overall_value = round(sum(player_values) / 11)
+                user_teams[user.id].add_field(name="Overall Value", value=overall_value, inline=False)
+                
             return user_teams[user.id]
 

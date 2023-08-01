@@ -267,7 +267,7 @@ def run_discord_bot():
             player_to_trade = " ".join(user_msg.split()[2:])
             await trade_player(msg.author, msg, player_to_trade, mention)
         
-        elif user_msg.startswith("%p"):
+        elif user_msg == "%p":
             await display_profile(msg, msg.author)
         else:
             await send_message(msg, user_msg, is_private=False)

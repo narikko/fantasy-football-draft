@@ -191,7 +191,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed.add_field(name="GK", value="", inline=True)
             embed.add_field(name="\u200b", value="\u200b", inline=True)
             
-            user_teams[user.id].add_field(name="Overall Value", value="0", inline=False)
+            embed.add_field(name="Overall Value", value="0", inline=False)
             
             user_teams[user.id] = embed
         

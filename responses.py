@@ -20,7 +20,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         rolled_player = random.choice(players_list)
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
-        player_value += emoji.emojize(":coin:")
+        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         
         i = 0
         claimed_user = ""
@@ -81,7 +81,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if len(players_found) == 1:
             player_info = players_found[0]
             player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
-            player_value += emoji.emojize(":coin:")
+            player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         else:
             players_found_msg = f"{len(players_found)} matches:\n"
             for players in players_found:

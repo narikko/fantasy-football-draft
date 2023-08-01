@@ -6,6 +6,7 @@ import re
 user_collections = {}
 user_current_page = {}
 collection_messages = {}
+user_coins = {}
 
 playerids= []
 usernames = []

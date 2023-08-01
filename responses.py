@@ -191,21 +191,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed.add_field(name="GK", value="", inline=True)
             embed.add_field(name="\u200b", value="\u200b", inline=True)
             
+            user_teams[user.id].add_field(name="Overall Value", value="0", inline=False)
+            
             user_teams[user.id] = embed
         
         if len(p_msg.split()) == 1:
-            overall_value = 0
-            player_values = []
-            if len(user_team_players[user.id]) != 0:
-                for player in user_team_players[user.id]:
-                    for field in player.fields:
-                        if "Value:" in field.name:
-                            player_values.append(int(field.name.split()[1]))
-                            break
-                            
-                overall_value = round(sum(player_values) / len(user_team_players[user.id]))
-                
-            user_teams[user.id].add_field(name="Overall Value", value=overall_value, inline=False)
             return user_teams[user.id]
        
         search_terms = p_msg.split()[2:]
@@ -290,19 +280,30 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
-            
-            overall_value = 0
-            player_values = []
-            if len(user_team_players[user.id]) != 0:
-                for player in user_team_players[user.id]:
-                    for field in player.fields:
-                        if "Value:" in field.name:
-                            player_values.append(int(field.name.split()[1]))
-                            break
+        
+        new_embed = discord.Embed(
+                title=user_teams[user.id].title,
+                description=user_teams[user.id].description,
+                color=user_teams[user.id].color
+        )
+        
+        overall_value = 0
+        player_values = []
+        if len(user_team_players[user.id]) != 0:
+            for player in user_team_players[user.id]:
+                for field in player.fields:
+                    if "Value:" in field.name:
+                        player_values.append(int(field.name.split()[1]))
+                        break
                             
-                overall_value = round(sum(player_values) / len(user_team_players[user.id]))
+            overall_value = round(sum(player_values) / len(user_team_players[user.id]))
                 
-            user_teams[user.id].add_field(name="Overall Value", value=overall_value, inline=False)
-                    
-            return user_teams[user.id]
+        for field in user_teams[user.id].fields:
+            if field.name.strip() == "Overall Value":
+                new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+            else:
+                new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
+        
+        user_teams[user.id] = new_embed
+        return user_teams[user.id]
 

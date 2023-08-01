@@ -18,6 +18,11 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+async def display_profile(msg, user):
+    profile = ""
+    profile += str(user_coins[user.id]) + " \U0001f4a0"
+
+
 async def extract_user_id(mention):
     pattern = r"<@!?(\d+)>"
     match = re.match(pattern, mention)
@@ -97,7 +102,7 @@ async def remove_player(user, msg, player):
                             usernames.pop(j)
                         j += 1
                     
-                    user_coins[user.id] += found_player_value
+                    user_coins[user.id] += int(found_player_value)
                     await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
                     await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
                 elif response_content == 'no' or response_content == 'n':
@@ -261,6 +266,9 @@ def run_discord_bot():
             mention = user_msg.split()[1]
             player_to_trade = " ".join(user_msg.split()[2:])
             await trade_player(msg.author, msg, player_to_trade, mention)
+        
+        elif user_msg.startswith("%p"):
+            await display_profile(msg, msg.author)
         else:
             await send_message(msg, user_msg, is_private=False)
             

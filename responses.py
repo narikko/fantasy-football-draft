@@ -40,6 +40,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if bot.user_favorite_club[user.id] in line:
                 num_player_club += 1
                 favorite_club_list.append(line)
+        print(num_player_club)
         
         if user_upgrades[user.id][0] != 0:
             club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))

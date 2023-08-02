@@ -401,28 +401,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                             
                 return embed
             
-            async def purchase_confirmation(price_to_upgrade):
-                if bot.user_coins[user.id] >= price_to_upgrade:
-                    confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {bot.user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
-                    try:
-                        response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
-                        response_content = response.content.lower()
-                        if response_content == 'yes' or response_content == 'y':
-                            return True
-                        elif response_content == 'no' or response_content == 'n':
-                            await msg.channel.send("Purchase cancelled.")
-                            return False
-                    except asyncio.TimeoutError:
-                        await msg.channel.send("Confirmation timed out. Purchase cancelled.")
-                        return False
-            
             if p_msg.split()[1] == "stadium":
                 if user_upgrades[user.id][0] == 5:
                     await msg.channel.send(f"{user.mention} Your stadium is already at max level!")
                     return
                 
                 price_to_upgrade = stadium_prices[user_upgrades[user.id][0]]
-                confirmed = await purchase_confirmation(price_to_upgrade)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade)
                 
                 if confirmed:
                     bot.user_coins[user.id] -= price_to_upgrade

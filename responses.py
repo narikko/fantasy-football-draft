@@ -324,7 +324,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_upgrades:
             user_upgrades[user.id] = [0,0,0,0]
         
-        if p_msg.split()[1] == "info":
+        if p_msg.split()[1] == "info" and len(p_msg.split()) != 1:
             info_msg = ""
             info_msg += "**Stadium** \U0001f3df - Increases the chances of getting a player from your favorite club.\n"
             info_msg += "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n" + "• Level 2: 2000 \U0001f4a0, 1% increase.\n" + "• Level 3: 4000 \U0001f4a0, 2% increase.\n"

@@ -338,9 +338,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                             
             overall_value = round(sum(player_values) / len(user_team_players[user.id]))
         
-        if responses.user_upgrades[user.id][2] != 0:
+        if user_upgrades[user.id][2] != 0:
             overall_value = float(overall_value)
-            overall_value += overall_value * (training_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+            overall_value += overall_value * (training_upgrades[user_upgrades[user.id][1] - 1] / 100)
             overall_value = int(overall_value)
         
         for field in user_teams[user.id].fields:

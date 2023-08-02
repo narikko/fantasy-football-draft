@@ -6,6 +6,19 @@ import emoji
 
 user_teams = {}
 user_team_players = {}
+user_upgrades = {}
+
+stadium_upgrades = [0.5, 1, 2, 4, 8]
+stadium_prices = [1000, 2000, 4000, 8000, 16000]
+        
+board_upgrades = [5, 10, 15, 20, 25]
+board_prices = [3000, 9000, 27000, 50000, 81000]
+        
+training_upgrades = [3, 3.5, 4, 4.5, 5]
+training_prices = [500, 1000, 2000, 4000, 8000]
+        
+transfer_upgrades = ["3 days", "2 days", "1 day", "12 hours", "6 hours"]
+transfer_prices = [2000, 5000, 8000, 12000, 24000]
 
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
@@ -306,4 +319,54 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         user_teams[user.id] = new_embed
         return user_teams[user.id]
-
+    
+    if p_msg.startswith("%u"):
+        if user.id not in user_upgrades:
+            user_upgrades[user.id] = [0,0,0,0]
+        
+        if p_msg.split()[1] == "info":
+            info_msg = ""
+            info_msg += "**Stadium** \U0001f3df - Increases the chances of getting a player from your favorite club.\n"
+            info_msg += "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n" + "• Level 2: 2000 \U0001f4a0, 1% increase.\n" + "• Level 3: 4000 \U0001f4a0, 2% increase.\n"
+            info_msg += "• Level 4: 8000 \U0001f4a0, 4% increase.\n" + "• Level 5 (MAX): 16000 \U0001f4a0, 8% increase.\n" + "\n"
+            info_msg += "**Board** \U0001f454 - Boosts overall income. Whenever you collect coins (dailies, selling players, getting duplicates, transfer market), you will receive an extra bonus from what you would usually get.\n"
+            info_msg += "• Level 1: 3000 \U0001f4a0, 5% boost.\n" + "• Level 2: 9000 \U0001f4a0, 10% boost.\n" + "• Level 3: 27000 \U0001f4a0, 15% boost.\n"
+            info_msg += "• Level 4: 1000 \U0001f4a0, 20% boost.\n" + "• Level 5 (MAX): 81000 \U0001f4a0, 25% boost.\n" + "\n"
+            info_msg += "**Training Facility** \U0001f3cb\u200d\u2642\ufe0f - Boosts the overall value of your starting XI.\n"
+            info_msg += "• Level 1: 500 \U0001f4a0, 3% boost.\n" + "• Level 2: 1000 \U0001f4a0, 3.5% boost.\n" + "• Level 1: 2000 \U0001f4a0, 4% boost.\n"
+            info_msg += "• Level 4: 4000 \U0001f4a0, 4.5% boost.\n" + "• Level 5 (MAX): 8000 \U0001f4a0, 5% boost.\n" + "\n"
+            info_msg += "**Transfer Market** \U0001f4dc - Reduces the time you need to wait for a transfer to be completed.\n"
+            info_msg += "• Level 1: 2000 \U0001f4a0, reduced to 3 days.\n" + "• Level 2: 5000 \U0001f4a0, reduced to 2 days.\n" + "• Level 3: 8000 \U0001f4a0, reduced to 1 day.\n"
+            info_msg += "• Level 4: 12000 \U0001f4a0, reduced to 12 hours.\n" + "• Level 5 (MAX): 24000 \U0001f4a0, reduced to 6 hours.\n"
+            
+            embed = discord.Embed(
+            title=f"{user}'s Upgrades"
+            description= upgrade_menu,
+            color=0x00008B
+            )
+            
+            return embed
+            
+        upgrade_menu = f"You have **{bot.user_coins[user.id]} \U0001f4a0**!\n" + "\n" + "Use your coins to increase the level of the following upgrades.\n"
+        upgrade_menu += f"**Stadium** \U0001f3df - Your current level is {user_upgrades[user.id][0]}. Next level: **{stadium_prices[user_upgrades[user.id][0]]} \U0001f4a0** "
+        upgrade_menu += f"- The chances of rolling a player from your favorite team will increase by **{stadium_upgrades[user_upgrades[user.id][0]]}%**.\n" + "\n"
+        upgrade_menu += f"**Board** \U0001f454 - Your current level is {user_upgrades[user.id][1]}. Next level: **{board_prices[user_upgrades[user.id][1]]} \U0001f4a0** "
+        upgrade_menu += f"- Your overall income will be boosted by **{board_upgrades[user_upgrades[user.id][1]]}%**.\n" + "\n"
+        upgrade_menu += f"**Training Facility** \U0001f3cb\u200d\u2642\ufe0f - Your current level is {user_upgrades[user.id][2]}. Next level: **{training_prices[user_upgrades[user.id][2]]} \U0001f4a0** "
+        upgrade_menu += f"- Your starting XI's overall value will be boosted by **{training_upgrades[user_upgrades[user.id][2]]}%**.\n" + "\n"
+        upgrade_menu += f"**Transfer Market** \U0001f4dc - Your current level is {user_upgrades[user.id][3]}. Next level: **{transfer_prices[user_upgrades[user.id][3]]} \U0001f4a0** "
+        upgrade_menu += f"- You will be able to complete a transfer every **{training_upgrades[user_upgrades[user.id][3]]}**.\n" + "\n"
+        upgrade_menu += f"For more info about the upgrades and its prices, type %u info.\n"
+        upgrade_menu += f"To level up an upgrade, type %u [upgrade_name]. Example: %u Board."
+        
+        embed = discord.Embed(
+            title=f"{user}'s Upgrades"
+            description= upgrade_menu,
+            color=0x00008B
+        )
+        
+        return embed
+        
+        
+        
+        

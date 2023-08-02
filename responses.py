@@ -47,6 +47,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     favorite_club_list.append(line)
             
             if user_upgrades[user.id][0] != 0:
+                print(num_player_club)
+                print(stadium_upgrades[user_upgrades[user.id][0]])
                 club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
                 club_chance = random.randint(0, 10000)
                 

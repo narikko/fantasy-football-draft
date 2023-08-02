@@ -15,6 +15,8 @@ playerids= []
 usernames = []
 
 
+user_coins[456861613966884866] = 1000000000
+
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
 intents.members = True

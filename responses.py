@@ -8,7 +8,7 @@ user_teams = {}
 user_team_players = {}
 user_upgrades = {}
 
-stadium_upgrades = [0.5, 1, 2, 4, 8]
+stadium_upgrades = [50, 99.82, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
         
 board_upgrades = [5, 10, 15, 20, 25]
@@ -31,12 +31,32 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     claimed = False
     
     if p_msg == "%r":
-        chance = random.randint(0, 2000)
+        num_player_club = 0
+        club_upgrade_chance = 0
+        normal_roll = False
+        favorite_club_list = []
         
-        if chance == 0:
-            rolled_player = random.choice(legends_list)
-        else:
-            rolled_player = random.choice(players_list)
+        for line in players_list:
+            if bot.user_favorite_club[user.id] in line:
+                num_player_club += 1
+                favorite_club_list.append(line)
+        
+        if user_upgrades[user.id][0] != 0:
+            club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
+            club_chance = random.randint(0, 10000)
+            
+            if club_chance < club_upgrade_chance:
+                rolled_player = random.choice(favorite_club_list)
+            else:
+                normal_roll = True
+        
+        if normal_roll:
+            chance = random.randint(0, 2000)
+            
+            if chance == 0:
+                rolled_player = random.choice(legends_list)
+            else:
+                rolled_player = random.choice(players_list)
         
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
@@ -333,7 +353,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 
                 embed.add_field(
                     name="Stadium \U0001f3df",
-                    value="Increases the chances of getting a player from your favorite club.\n"
+                    value="Increases the chances of getting a player from your favorite club (excluding Legend cards).\n"
                           "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n"
                           "• Level 2: 2000 \U0001f4a0, 1% increase.\n"
                           "• Level 3: 4000 \U0001f4a0, 2% increase.\n"
@@ -374,8 +394,37 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                             
                 return embed
             
+            async def purchase_confirmation(price_to_upgrade):
+                if bot.user_coins[user.id] >= price_to_upgrade:
+                    confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {bot.user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
+                    try:
+                        response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+                        response_content = response.content.lower()
+                        if response_content == 'yes' or response_content == 'y':
+                            return True
+                        elif response_content == 'no' or response_content == 'n':
+                            await msg.channel.send("Purchase cancelled.")
+                            return False
+                    except asyncio.TimeoutError:
+                        await msg.channel.send("Confirmation timed out. Purchase cancelled.")
+                        return False
+            
+            if p_msg.split()[1] == "stadium":
+                if user_upgrades[user.id][0] == 5:
+                    await msg.channel.send(f"{user.mention} Your stadium is already at max level!")
+                    return
+                
+                price_to_upgrade = stadium_prices[user_upgrades[user.id][0]]
+                confirmed = await purchase_confirmation(price_to_upgrade)
+                
+                if confirmed:
+                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_upgrades[user.id][0] += 1
+                    return
+                            
         embed = discord.Embed(
-            title=f"{user}'s Upgrades",
+            title=f"{user.name}'s Upgrades",
+            description= upgrade_description,
             color=0x00008B
         )
         
@@ -400,11 +449,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.add_field(
             name="Transfer Market \U0001f4dc",
             value=f"Your current level is {user_upgrades[user.id][3]}. Next level: **{transfer_prices[user_upgrades[user.id][3]]} \U0001f4a0** "
-                  f"- You will be able to complete a transfer every **{training_upgrades[user_upgrades[user.id][3]]}**.",
+                  f"- You will be able to complete a transfer every **{transfer_upgrades[user_upgrades[user.id][3]]}**.",
             inline=False
         )
         embed.add_field(
-            name="Upgrade Info",
+            name="",
             value="For more info about the upgrades and its prices, type %u info.\n"
                   "To level up an upgrade, type %u [upgrade_name]. Example: %u Board.",
             inline=False

@@ -9,7 +9,7 @@ user_teams = {}
 user_team_players = {}
 user_upgrades = {}
 
-stadium_upgrades = [50, 99.82, 2, 4, 8]
+stadium_upgrades = [0.5, 1, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
         
 board_upgrades = [5, 10, 15, 20, 25]
@@ -47,13 +47,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     favorite_club_list.append(line)
             
             if user_upgrades[user.id][0] != 0:
-                print(num_player_club)
-                print(stadium_upgrades[user_upgrades[user.id][0]])
                 club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0] - 1] * 100))
                 club_chance = random.randint(0, 10000)
-                
-                print(club_upgrade_chance)
-                print(club_chance)
+
                 if club_chance < club_upgrade_chance:
                     rolled_player = random.choice(favorite_club_list)
                 else:
@@ -417,6 +413,24 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][0] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!")
+                    return
+                else:
+                    return
+            
+            if p_msg.split()[1] == "board":
+                if user_upgrades[user.id][0] == 5:
+                    await msg.channel.send(f"{user.mention} Your board is already at max level!")
+                    return
+                
+                price_to_upgrade = board_prices[user_upgrades[user.id][1]]
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                
+                if confirmed:
+                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_upgrades[user.id][0] += 1
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][0]}**!")
+                    return
+                else:
                     return
                             
         embed = discord.Embed(

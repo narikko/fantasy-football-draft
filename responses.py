@@ -43,7 +43,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if user_upgrades[user.id][0] != 0:
             club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
+            print(club_upgrade_chance)
             club_chance = random.randint(0, 10000)
+            print(club_chance)
             
             if club_chance < club_upgrade_chance:
                 rolled_player = random.choice(favorite_club_list)
@@ -424,7 +426,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                             
         embed = discord.Embed(
             title=f"{user.name}'s Upgrades",
-            description= upgrade_description,
+            description= f"You have **{bot.user_coins[user.id]} \U0001f4a0**!\n" + "\n" + "Use your coins to increase the level of the following upgrades.",
             color=0x00008B
         )
         

@@ -141,6 +141,7 @@ async def remove_player(user, msg, player):
         i = 0
         found_player = None
         found_player_value = 0
+        found_player_value = float(found_player_value)
         
         for embed in collection:
             if embed.title == player:
@@ -151,7 +152,7 @@ async def remove_player(user, msg, player):
         if found_player:
             for field in found_player.fields:
                 if "Value:" in field.name:
-                    found_player_value = field.name.split()[1]
+                    found_player_value = float(field.name.split()[1])
             
             if responses.user_upgrades[user.id][1] != 0:
                 found_player_value += found_player_value * (responses.board_upgrades[responses.user_upgrades[user.id][1]] / 100)

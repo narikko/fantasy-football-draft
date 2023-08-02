@@ -340,7 +340,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             info_msg += "• Level 4: 12000 \U0001f4a0, reduced to 12 hours.\n" + "• Level 5 (MAX): 24000 \U0001f4a0, reduced to 6 hours.\n"
             
             embed = discord.Embed(
-            title=f"{user}'s Upgrades"
+            title=f"Upgrade Info",
             description=info_msg,
             color=0x00008B
             )
@@ -360,7 +360,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         upgrade_menu += f"To level up an upgrade, type %u [upgrade_name]. Example: %u Board."
         
         embed = discord.Embed(
-            title=f"{user}'s Upgrades"
+            title=f"{user}'s Upgrades",
             description= upgrade_menu,
             color=0x00008B
         )

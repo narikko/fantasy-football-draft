@@ -36,22 +36,22 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         normal_roll = False
         favorite_club_list = []
         
-        for line in players_list:
-            if bot.user_favorite_club[user.id] in line:
-                num_player_club += 1
-                favorite_club_list.append(line)
-        print(num_player_club)
-        
-        if user_upgrades[user.id][0] != 0:
-            club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
-            print(club_upgrade_chance)
-            club_chance = random.randint(0, 10000)
-            print(club_chance)
+        if bot.user_favorite_club[user.id] != "":
+            for line in players_list:
+                if bot.user_favorite_club[user.id] in line:
+                    num_player_club += 1
+                    favorite_club_list.append(line)
             
-            if club_chance < club_upgrade_chance:
-                rolled_player = random.choice(favorite_club_list)
-            else:
-                normal_roll = True
+            if user_upgrades[user.id][0] != 0:
+                club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
+                club_chance = random.randint(0, 10000)
+                
+                if club_chance < club_upgrade_chance:
+                    rolled_player = random.choice(favorite_club_list)
+                else:
+                    normal_roll = True
+        else:
+            normal_roll = True
         
         if normal_roll:
             chance = random.randint(0, 2000)

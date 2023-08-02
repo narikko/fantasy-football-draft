@@ -341,7 +341,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             embed = discord.Embed(
             title=f"{user}'s Upgrades"
-            description= upgrade_menu,
+            description=info_msg,
             color=0x00008B
             )
             

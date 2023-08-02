@@ -50,6 +50,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user.id][0]] * 100))
                 club_chance = random.randint(0, 10000)
                 
+                print(club_upgrade_chance)
+                print(club_chance)
                 if club_chance < club_upgrade_chance:
                     rolled_player = random.choice(favorite_club_list)
                 else:

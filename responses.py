@@ -337,7 +337,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         break
                             
             overall_value = round(sum(player_values) / len(user_team_players[user.id]))
-                
+        
+        if responses.user_upgrades[user.id][2] != 0:
+            overall_value = float(overall_value)
+            overall_value += overall_value * (training_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+            overall_value = int(overall_value)
+        
         for field in user_teams[user.id].fields:
             if field.name.strip() == "Overall Value":
                 new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
@@ -418,7 +423,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
             
             if p_msg.split()[1] == "board":
-                if user_upgrades[user.id][0] == 5:
+                if user_upgrades[user.id][1] == 5:
                     await msg.channel.send(f"{user.mention} Your board is already at max level!")
                     return
                 
@@ -429,6 +434,22 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][1] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][1]}**!")
+                    return
+                else:
+                    return
+            
+            if p_msg.split()[1] == "training" or (p_msg.split()[1] == "training" and p_msg.split()[2] == "facility"):
+                if user_upgrades[user.id][2] == 5:
+                    await msg.channel.send(f"{user.mention} Your board is already at max level!")
+                    return
+                
+                price_to_upgrade = training_prices[user_upgrades[user.id][2]]
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                
+                if confirmed:
+                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_upgrades[user.id][2] += 1
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][2]}**!")
                     return
                 else:
                     return

@@ -407,7 +407,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = stadium_prices[user_upgrades[user.id][0]]
-                confirmed = await bot.purchase_confirmation(price_to_upgrade, user)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
                     bot.user_coins[user.id] -= price_to_upgrade

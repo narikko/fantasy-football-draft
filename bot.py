@@ -23,7 +23,7 @@ intents.members = True
 client = discord.Client(intents=intents)
 
 
-async def purchase_confirmation(price_to_upgrade, user):
+async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:
         confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {bot.user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
         try:

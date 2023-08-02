@@ -427,7 +427,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if confirmed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][0] += 1
-                    await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!"
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!")
                     return
                             
         embed = discord.Embed(

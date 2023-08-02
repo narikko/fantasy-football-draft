@@ -3,6 +3,7 @@ import discord
 import bot
 import unidecode
 import emoji
+import asyncio
 
 user_teams = {}
 user_team_players = {}
@@ -426,11 +427,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if confirmed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][0] += 1
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!"
                     return
                             
         embed = discord.Embed(
             title=f"{user.name}'s Upgrades",
-            description= f"You have **{bot.user_coins[user.id]} \U0001f4a0**!\n" + "\n" + "Use your coins to increase the level of the following upgrades.",
+            description= f"You have **{bot.user_coins[user.id]} \U0001f4a0** !\n" + "\n" + "Use your coins to increase the level of the following upgrades.",
             color=0x00008B
         )
         

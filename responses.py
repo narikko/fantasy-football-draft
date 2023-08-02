@@ -323,29 +323,30 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     if p_msg.startswith("%u"):
         if user.id not in user_upgrades:
             user_upgrades[user.id] = [0,0,0,0]
-        
-        if p_msg.split()[1] == "info" and len(p_msg.split()) != 1:
-            info_msg = ""
-            info_msg += "**Stadium** \U0001f3df - Increases the chances of getting a player from your favorite club.\n"
-            info_msg += "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n" + "• Level 2: 2000 \U0001f4a0, 1% increase.\n" + "• Level 3: 4000 \U0001f4a0, 2% increase.\n"
-            info_msg += "• Level 4: 8000 \U0001f4a0, 4% increase.\n" + "• Level 5 (MAX): 16000 \U0001f4a0, 8% increase.\n" + "\n"
-            info_msg += "**Board** \U0001f454 - Boosts overall income. Whenever you collect coins (dailies, selling players, getting duplicates, transfer market), you will receive an extra bonus from what you would usually get.\n"
-            info_msg += "• Level 1: 3000 \U0001f4a0, 5% boost.\n" + "• Level 2: 9000 \U0001f4a0, 10% boost.\n" + "• Level 3: 27000 \U0001f4a0, 15% boost.\n"
-            info_msg += "• Level 4: 1000 \U0001f4a0, 20% boost.\n" + "• Level 5 (MAX): 81000 \U0001f4a0, 25% boost.\n" + "\n"
-            info_msg += "**Training Facility** \U0001f3cb\u200d\u2642\ufe0f - Boosts the overall value of your starting XI.\n"
-            info_msg += "• Level 1: 500 \U0001f4a0, 3% boost.\n" + "• Level 2: 1000 \U0001f4a0, 3.5% boost.\n" + "• Level 1: 2000 \U0001f4a0, 4% boost.\n"
-            info_msg += "• Level 4: 4000 \U0001f4a0, 4.5% boost.\n" + "• Level 5 (MAX): 8000 \U0001f4a0, 5% boost.\n" + "\n"
-            info_msg += "**Transfer Market** \U0001f4dc - Reduces the time you need to wait for a transfer to be completed.\n"
-            info_msg += "• Level 1: 2000 \U0001f4a0, reduced to 3 days.\n" + "• Level 2: 5000 \U0001f4a0, reduced to 2 days.\n" + "• Level 3: 8000 \U0001f4a0, reduced to 1 day.\n"
-            info_msg += "• Level 4: 12000 \U0001f4a0, reduced to 12 hours.\n" + "• Level 5 (MAX): 24000 \U0001f4a0, reduced to 6 hours.\n"
             
-            embed = discord.Embed(
-            title=f"Upgrade Info",
-            description=info_msg,
-            color=0x00008B
-            )
-            
-            return embed
+        if len(p_msg.split()) != 1:
+            if p_msg.split()[1] == "info":
+                info_msg = ""
+                info_msg += "**Stadium** \U0001f3df - Increases the chances of getting a player from your favorite club.\n"
+                info_msg += "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n" + "• Level 2: 2000 \U0001f4a0, 1% increase.\n" + "• Level 3: 4000 \U0001f4a0, 2% increase.\n"
+                info_msg += "• Level 4: 8000 \U0001f4a0, 4% increase.\n" + "• Level 5 (MAX): 16000 \U0001f4a0, 8% increase.\n" + "\n"
+                info_msg += "**Board** \U0001f454 - Boosts overall income. Whenever you collect coins (dailies, selling players, getting duplicates, transfer market), you will receive an extra bonus from what you would usually get.\n"
+                info_msg += "• Level 1: 3000 \U0001f4a0, 5% boost.\n" + "• Level 2: 9000 \U0001f4a0, 10% boost.\n" + "• Level 3: 27000 \U0001f4a0, 15% boost.\n"
+                info_msg += "• Level 4: 1000 \U0001f4a0, 20% boost.\n" + "• Level 5 (MAX): 81000 \U0001f4a0, 25% boost.\n" + "\n"
+                info_msg += "**Training Facility** \U0001f3cb\u200d\u2642\ufe0f - Boosts the overall value of your starting XI.\n"
+                info_msg += "• Level 1: 500 \U0001f4a0, 3% boost.\n" + "• Level 2: 1000 \U0001f4a0, 3.5% boost.\n" + "• Level 1: 2000 \U0001f4a0, 4% boost.\n"
+                info_msg += "• Level 4: 4000 \U0001f4a0, 4.5% boost.\n" + "• Level 5 (MAX): 8000 \U0001f4a0, 5% boost.\n" + "\n"
+                info_msg += "**Transfer Market** \U0001f4dc - Reduces the time you need to wait for a transfer to be completed.\n"
+                info_msg += "• Level 1: 2000 \U0001f4a0, reduced to 3 days.\n" + "• Level 2: 5000 \U0001f4a0, reduced to 2 days.\n" + "• Level 3: 8000 \U0001f4a0, reduced to 1 day.\n"
+                info_msg += "• Level 4: 12000 \U0001f4a0, reduced to 12 hours.\n" + "• Level 5 (MAX): 24000 \U0001f4a0, reduced to 6 hours.\n"
+                
+                embed = discord.Embed(
+                title=f"Upgrade Info",
+                description=info_msg,
+                color=0x00008B
+                )
+                
+                return embed
             
         upgrade_menu = f"You have **{bot.user_coins[user.id]} \U0001f4a0**!\n" + "\n" + "Use your coins to increase the level of the following upgrades.\n"
         upgrade_menu += f"**Stadium** \U0001f3df - Your current level is {user_upgrades[user.id][0]}. Next level: **{stadium_prices[user_upgrades[user.id][0]]} \U0001f4a0** "

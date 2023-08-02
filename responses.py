@@ -31,6 +31,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     claimed = False
     
     if p_msg == "%r":
+        if user.id not in bot.user_favorite_club:
+            bot.user_favorite_club[user.id] = ""
+            
         num_player_club = 0
         club_upgrade_chance = 0
         normal_roll = False

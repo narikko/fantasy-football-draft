@@ -133,6 +133,9 @@ async def show_collection(user, msg, page_num):
         await msg.channel.send("No players found in your collection.")
 
 async def remove_player(user, msg, player):
+    if user.id not in responses.user_upgrades:
+        responses.user_upgrades[user.id] = [0,0,0,0]
+        
     if user.id not in user_coins:
         user_coins[user.id] = 0
     

@@ -21,9 +21,6 @@ training_prices = [500, 1000, 2000, 4000, 8000]
 transfer_upgrades = ["3 days", "2 days", "1 day", "12 hours", "6 hours"]
 transfer_prices = [2000, 5000, 8000, 12000, 24000]
 
-if user.id not in user_upgrades:
-    user_upgrades[user.id] = [0,0,0,0]
-
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
     f = open('players_list.txt', 'r', encoding='utf-8')
     g = open('legends_list.txt', 'r', encoding='utf-8')
@@ -35,6 +32,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     claimed = False
     
     if p_msg == "%r":
+        if user.id not in user_upgrades:
+            user_upgrades[user.id] = [0,0,0,0]
+            
         if user.id not in bot.user_favorite_club:
             bot.user_favorite_club[user.id] = ""
             
@@ -98,6 +98,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         return embed
     
     if p_msg.startswith("%v"):
+        if user.id not in user_upgrades:
+            user_upgrades[user.id] = [0,0,0,0]
+            
         search_terms = p_msg.split()[1:]
         print("Search terms:", search_terms)
         
@@ -188,6 +191,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         return embed
     
     if p_msg.startswith("%t"):
+        if user.id not in user_upgrades:
+            user_upgrades[user.id] = [0,0,0,0]
+            
         if user.id not in user_team_players:
             user_team_players[user.id] = []
         
@@ -384,7 +390,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         user_teams[user.id] = new_embed
         return user_teams[user.id]
     
-    if p_msg.startswith("%u"):            
+    if p_msg.startswith("%u"):
+        if user.id not in user_upgrades:
+            user_upgrades[user.id] = [0,0,0,0]
+            
         if len(p_msg.split()) != 1:
             if p_msg.split()[1] == "info":              
                 embed = discord.Embed(

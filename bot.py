@@ -173,7 +173,9 @@ async def transfer_market(msg, user, player_to_list, command):
             if user_market_bool[user.id]:
                 menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(task)}**"
             else:
-                menu += "Ready to add a player from your collection" 
+                menu += "Ready to add a player from your collection"
+                
+            await msg.channel.send(menu)
                 
 async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:

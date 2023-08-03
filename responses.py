@@ -220,7 +220,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_teams:
             embed = discord.Embed(
                 title=f"{user.name}'s Starting XI",
-                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "Type %t rewards to learn about starting XI rewards.",
+                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "\n" + "Type %t rewards to learn about starting XI rewards.",
                 color=0xAF0000
             )
             
@@ -294,26 +294,26 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if field.name.strip() == "Overall Value":
                     ovl_value = field.value.strip()
                     
-            reward_info = f"The overall value of your starting XI is **{ovl_value}**!\n" + "\n" + "You must build a full team of 11 players to earn rewards.\n" + "\n"
+            reward_info = f"The overall value of your starting XI is **{ovl_value}**!\n" + "You must build a full team of 11 players to earn rewards.\n" + "\n"
             reward_info += "Build your first ever starting XI - Reward: **+1 rolls/hour**"
             if user_team_rewards[user.id][0]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 300 - Reward: **2 free claims**"
+            reward_info += "\n" + "Build a starting XI with an overall value of 300 - Reward: **2 free claims**"
             if user_team_rewards[user.id][1]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 400 - Reward: **10 boosted rolls**"
+            reward_info += "\n" + "Build a starting XI with an overall value of 400 - Reward: **10 boosted rolls**"
             if user_team_rewards[user.id][2]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 500 - Reward: **+2 rolls/hour**"    
+            reward_info += "\n" + "Build a starting XI with an overall value of 500 - Reward: **+2 rolls/hour**"    
             if user_team_rewards[user.id][3]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 600 - Reward: **+3 rolls/hour**"     
+            reward_info += "\n" + "Build a starting XI with an overall value of 600 - Reward: **+3 rolls/hour**"     
             if user_team_rewards[user.id][4]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 700 - Reward: **Acquire a random 830+ value card**"    
+            reward_info += "\n" + "Build a starting XI with an overall value of 700 - Reward: **Acquire a random 830+ value card**"    
             if user_team_rewards[user.id][5]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 800 - Reward: **Acquire a random legend card**" 
+            reward_info += "\n" + "Build a starting XI with an overall value of 800 - Reward: **Acquire a random legend card**" 
             if user_team_rewards[user.id][6]:
                 reward_info += " \u2705"
             

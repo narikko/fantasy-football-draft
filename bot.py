@@ -602,6 +602,7 @@ def run_discord_bot():
                 await transfer_market(msg, msg.author, player_to_list, command)
                 
         elif user_msg == "%o":
+            await test()
             
         else:
             await send_message(msg, user_msg, is_private=False)

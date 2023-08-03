@@ -503,7 +503,7 @@ def run_discord_bot():
             
         elif user_msg.startswith("%tm"):
             if len(user_msg.split()) == 1:
-                await transfer_market(msg, msg.author, "", "")
+                await transfer_market(msg, msg.author, [], "")
             else:
                 player_to_list = user_msg.split()[2:]
                 command = user_msg.split()[1]

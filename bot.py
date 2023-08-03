@@ -176,6 +176,7 @@ async def transfer_market(msg, user, player_to_list, command):
         return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
     def get_time_remaining(task):
+        print(task)
         if task is not None:
             print("bruh")
             time_elapsed = asyncio.get_event_loop().time() - task.get_coro().cr_frame.f_locals['starttime']

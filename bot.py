@@ -177,10 +177,11 @@ async def transfer_market(msg, user, player_to_list, command):
         
     def get_time_remaining(task):
         if task is not None and not task.done():
-            time_elapsed = time.time() - task.get_coro().cr_frame.f_locals['starttime']
+            time_elapsed = asyncio.get_event_loop().time() - task.get_coro().cr_frame.f_locals['starttime']
             time_remaining = max(0, task.get_coro().cr_frame.f_locals['seconds'] - time_elapsed)
             return format_time(time_remaining)
         return ""
+
         
     if command == "":
         menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"

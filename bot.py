@@ -29,6 +29,23 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+def test():
+    print(responses.rolled_times)
+
+async def clean_up_rolled_times():
+    while True:
+        current_time = time.time()
+        expired_players = []
+
+        for player_id, (rolled_time, expiration_time) in responses.rolled_times.items():
+            if current_time > expiration_time:
+                expired_players.append(player_id)
+
+        for player_id in expired_players:
+            del responses.rolled_times[player_id]
+
+        await asyncio.sleep(60)
+
 async def transfer_market(msg, user, player_to_list, command):
     if user.id not in responses.user_upgrades:
         responses.user_upgrades[user.id] = [0,0,0,0]
@@ -583,9 +600,13 @@ def run_discord_bot():
                 player_to_list = user_msg.split()[2:]
                 command = user_msg.split()[1]
                 await transfer_market(msg, msg.author, player_to_list, command)
+                
+        elif user_msg == "%o":
             
         else:
             await send_message(msg, user_msg, is_private=False)
+            
+    client.loop.create_task(clean_up_rolled_times())
             
     client.run(TOKEN)
             
@@ -626,11 +647,16 @@ async def on_reaction_add(reaction, user):
         player_embed = reaction.message.embeds[0]
         player_id = player_embed.footer.text.split(", ")[1]
         
+        current_time = time.time()
+        can_claim = False
+        if (current_time - responses.rolled_times[player_id][0]) < 60:
+            can_claim = True
+        
         claimed = False 
         if player_id in playerids:
             claimed = True
             
-        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description):
+        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim:
             print("Player claimed:", player_embed.title)
 
             if user.id not in user_collections:

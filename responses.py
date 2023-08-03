@@ -4,10 +4,13 @@ import bot
 import unidecode
 import emoji
 import asyncio
+import time
 
 user_teams = {}
 user_team_players = {}
 user_upgrades = {}
+
+rolled_times = {}
 
 stadium_upgrades = [0.5, 1, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
@@ -93,8 +96,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.set_footer(text="Football Roll Bot, " + player_id)
         
         player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
-        embed.description += ("\n" + player_status) 
+        embed.description += ("\n" + player_status)
+        
+        rolled_time = time.time()
+        expiration_time = rolled_time + 60
 
+        rolled_times[player_id] = (rolled_time, expiration_time)
+        
         return embed
     
     if p_msg.startswith("%v"):

@@ -132,51 +132,51 @@ async def transfer_market(msg, user, player_to_list, command):
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return
         
-        if command == "rm":
-            if user_market_bool[user.id]:
-                user_market_player[user.id] = ""
-                user_market[user.id] = 0
-                user_market_bool[user.id] = False
+    if command == "rm":
+        if user_market_bool[user.id]:
+            user_market_player[user.id] = ""
+            user_market[user.id] = 0
+            user_market_bool[user.id] = False
+            try:
+                task.cancel()
                 try:
-                    task.cancel()
-                    try:
-                        await task
-                    except:
-                        await msg.channel.send("Failed to remove player from transfer list.")
-                        return
-                        
-                except asyncio.CancelledError:
+                    await task
+                except:
                     await msg.channel.send("Failed to remove player from transfer list.")
                     return
+                        
+            except asyncio.CancelledError:
+                await msg.channel.send("Failed to remove player from transfer list.")
+                return
             
-            else:
-                await msg.channel.send("Error. You have no player listed on the transfer market.")
+        else:
+            await msg.channel.send("Error. You have no player listed on the transfer market.")
         
-        def format_time(seconds):
-            hours, remainder = divmod(seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
+    def format_time(seconds):
+        hours, remainder = divmod(seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-        def get_time_remaining(task):
-            if task is not None and not task.done():
-                time_elapsed = time.time() - task.get_coro().cr_frame.f_locals['starttime']
-                time_remaining = max(0, task.get_coro().cr_frame.f_locals['seconds'] - time_elapsed)
-                return format_time(time_remaining)
-            return ""
+    def get_time_remaining(task):
+        if task is not None and not task.done():
+            time_elapsed = time.time() - task.get_coro().cr_frame.f_locals['starttime']
+            time_remaining = max(0, task.get_coro().cr_frame.f_locals['seconds'] - time_elapsed)
+            return format_time(time_remaining)
+        return ""
         
-        if command == "":
-            menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
-            menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3]]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
-            menu += "To add a player to the transfer list, type %tm add [player_name]. You may only add one player at a time. Example: %tm add Erling Haaland\n"
-            menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
-            menu += "**Transfer List:**\n"
-            if user_market_bool[user.id]:
-                menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(task)}**"
-            else:
-                menu += "Ready to add a player from your collection!"
+    if command == "":
+        menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
+        menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3]]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+        menu += "To add a player to the transfer list, type %tm add [player_name]. You may only add one player at a time. Example: %tm add Erling Haaland\n"
+        menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
+        menu += "**Transfer List:**\n"
+        if user_market_bool[user.id]:
+            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(task)}**"
+        else:
+            menu += "Ready to add a player from your collection!"
             
-            print("Sending menu...")
-            await msg.channel.send(menu)
+        print("Sending menu...")
+        await msg.channel.send(menu)
                 
 async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:

@@ -58,9 +58,12 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     if responses.user_upgrades[user.id][3] == 1:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(30))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -70,9 +73,12 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                     elif responses.user_upgrades[user.id][3] == 2:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(172800))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -82,9 +88,12 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     elif responses.user_upgrades[user.id][3] == 3:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(86400))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -94,9 +103,12 @@ async def transfer_market(msg, user, player_to_list, command):
                         
                     elif responses.user_upgrades[user.id][3] == 4:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(43200))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -106,9 +118,12 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     elif responses.user_upgrades[user.id][3] == 5:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(21600))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -118,9 +133,12 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     else:
                         try:
+                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(432000))
-                            user_coins[user.id] += int(user_market[user.id] * 1.5)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            await task
+                            new_value = int(user_market[user.id] * 1.5)
+                            user_coins[user.id] += new_value
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
@@ -166,7 +184,11 @@ async def transfer_market(msg, user, player_to_list, command):
         
     if command == "":
         menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
-        menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3]]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+        if responses.user_upgrades[user.id][3] != 0:
+            menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3] - 1]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+        else:
+            menu += f"Here you can add a player from your collection to the transfer list, and in **5 days**, you will receive 150% of the value of the player you sold!\n" + "\n"
+            
         menu += "To add a player to the transfer list, type %tm add [player_name]. You may only add one player at a time. Example: %tm add Erling Haaland\n"
         menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
         menu += "**Transfer List:**\n"

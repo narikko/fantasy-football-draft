@@ -4,6 +4,7 @@ import asyncio
 import re
 import emoji
 import unidecode
+import time
 
 user_collections = {}
 user_current_page = {}
@@ -13,6 +14,7 @@ user_favorite_club = {}
 user_market = {}
 user_market_player = {}
 user_market_bool = {}
+user_transfer_tasks = {}
 
 playerids= []
 usernames = []
@@ -37,6 +39,9 @@ async def transfer_market(msg, user, player_to_list, command):
         
     if user.id not in user_market_player:
         user_market_player[user.id] = ""
+        
+    if user.id not in user_transfer_tasks:
+        user_transfer_tasks[user.id] = None
     
     task = None
     if command == "add":
@@ -60,13 +65,18 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(30))
+                            task.starttime = time.time()
+                            user_transfer_tasks[user.id] = task
+                            
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -75,13 +85,18 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(172800))
+                            task.starttime = time.time()
+                            user_transfer_tasks[user.id] = task
+
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -90,13 +105,17 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(86400))
+                            user_transfer_tasks[user.id] = task
+                            
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -105,13 +124,18 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(43200))
+                            task.starttime = time.time()
+                            user_transfer_tasks[user.id] = task
+                            
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -120,13 +144,18 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(21600))
+                            task.starttime = time.time()
+                            user_transfer_tasks[user.id] = task
+                            
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -135,13 +164,18 @@ async def transfer_market(msg, user, player_to_list, command):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(432000))
+                            task.starttime = time.time()
+                            user_transfer_tasks[user.id] = task
+                            
                             await task
+                            
                             new_value = int(user_market[user.id] * 1.5)
                             user_coins[user.id] += new_value
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
                             user_market_bool[user.id] = False
+                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
@@ -175,11 +209,10 @@ async def transfer_market(msg, user, player_to_list, command):
         minutes, seconds = divmod(remainder, 60)
         return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-    def get_time_remaining(task):
-        print(task)
-        if task is not None:
-            print("bruh")
-            time_elapsed = asyncio.get_event_loop().time() - task.get_coro().cr_frame.f_locals['starttime']
+    def get_time_remaining():
+        task = user_transfer_tasks[user.id]
+        if task is not None and not task.done():
+            time_elapsed = time.time() - task.starttime
             time_remaining = max(0, task.get_coro().cr_frame.f_locals['seconds'] - time_elapsed)
             return format_time(time_remaining)
         return ""
@@ -196,7 +229,7 @@ async def transfer_market(msg, user, player_to_list, command):
         menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
         menu += "**Transfer List:**\n"
         if user_market_bool[user.id]:
-            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(task)}**"
+            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining()}**"
         else:
             menu += "Ready to add a player from your collection!"
             

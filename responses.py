@@ -220,7 +220,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_teams:
             embed = discord.Embed(
                 title=f"{user.name}'s Starting XI",
-                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "Type %t rewards to learn about starting XI rewards."
+                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "Type %t rewards to learn about starting XI rewards.",
                 color=0xAF0000
             )
             

@@ -476,7 +476,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 else:
                     return
             
-            if p_msg.split()[1] == "training" or (p_msg.split()[1] == "training" and p_msg.split()[2] == "facility"):
+            if p_msg.split()[1] == "training":
                 if user_upgrades[user.id][2] == 5:
                     await msg.channel.send(f"{user.mention} Your training facility is already at max level!")
                     return
@@ -488,6 +488,22 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][2] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][2]}**!")
+                    return
+                else:
+                    return
+            
+            if p_msg.split()[1] == "transfer":
+                if user_upgrades[user.id][3] == 5:
+                    await msg.channel.send(f"{user.mention} Your training facility is already at max level!")
+                    return
+                
+                price_to_upgrade = transfer_prices[user_upgrades[user.id][3]]
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                
+                if confirmed:
+                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_upgrades[user.id][3] += 1
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][3]}**!")
                     return
                 else:
                     return

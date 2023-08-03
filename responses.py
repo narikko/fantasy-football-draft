@@ -9,6 +9,7 @@ import time
 user_teams = {}
 user_team_players = {}
 user_upgrades = {}
+user_team_rewards = {}
 
 rolled_times = {}
 
@@ -205,6 +206,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_team_players:
             user_team_players[user.id] = []
         
+        if user.id not in user_team_rewards:
+            user_team_rewards[user.id] = [False, False, False, False, False, False, False] 
+        
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
         defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW"]
@@ -216,7 +220,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_teams:
             embed = discord.Embed(
                 title=f"{user.name}'s Starting XI",
-                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland",
+                description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "Type %t rewards to learn about starting XI rewards."
                 color=0xAF0000
             )
             
@@ -283,6 +287,44 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             user_teams[user.id] = new_embed
             return user_teams[user.id]
+        
+        if p_msg.split()[1] == "rewards":
+            ovl_value = ""
+            for field in user_teams[user.id].fields:
+                if field.name.strip() == "Overall Value":
+                    ovl_value = field.value.strip()
+                    
+            reward_info = f"The overall value of your starting XI is **{ovl_value}**!\n" + "\n" + "You must build a full team of 11 players to earn rewards.\n" + "\n"
+            reward_info += "Build your first ever starting XI - Reward: **+1 rolls/hour**"
+            if user_team_rewards[user.id][0]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 300 - Reward: **2 free claims**"
+            if user_team_rewards[user.id][1]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 400 - Reward: **10 boosted rolls**"
+            if user_team_rewards[user.id][2]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 500 - Reward: **+2 rolls/hour**"    
+            if user_team_rewards[user.id][3]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 600 - Reward: **+3 rolls/hour**"     
+            if user_team_rewards[user.id][4]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 700 - Reward: **Acquire a random 830+ value card**"    
+            if user_team_rewards[user.id][5]:
+                reward_info += " \u2705"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 800 - Reward: **Acquire a random legend card**" 
+            if user_team_rewards[user.id][6]:
+                reward_info += " \u2705"
+            
+            embed = discord.Embed(
+                title=f"Starting XI Rewards Info",
+                description=reward_info,
+                color=0x00008B
+            )
+            
+            return embed
+            
        
         search_terms = p_msg.split()[2:]
         print("Search terms:", search_terms)
@@ -511,7 +553,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if confirmed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][3] += 1
-                    await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][3]}**!")
+                    await msg.channel.send(f"{user.mention} Successfully upgraded your transfer market to level **{user_upgrades[user.id][3]}**!")
                     return
                 else:
                     return

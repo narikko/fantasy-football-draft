@@ -29,8 +29,6 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
-def test():
-    print(responses.rolled_times)
 
 async def clean_up_rolled_times():
     while True:

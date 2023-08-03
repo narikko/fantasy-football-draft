@@ -46,7 +46,7 @@ async def transfer_market(msg, user, player_to_list, command):
         user_transfer_tasks[user.id] = None
         
     if user.id not in user_market_wait:
-        user_market_wait = 0
+        user_market_wait[user.id] = 0
     
     task = None
     if command == "add":

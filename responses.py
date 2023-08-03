@@ -478,7 +478,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             if p_msg.split()[1] == "training" or (p_msg.split()[1] == "training" and p_msg.split()[2] == "facility"):
                 if user_upgrades[user.id][2] == 5:
-                    await msg.channel.send(f"{user.mention} Your board is already at max level!")
+                    await msg.channel.send(f"{user.mention} Your training facility is already at max level!")
                     return
                 
                 price_to_upgrade = training_prices[user_upgrades[user.id][2]]

@@ -10,6 +10,9 @@ user_current_page = {}
 collection_messages = {}
 user_coins = {}
 user_favorite_club = {}
+user_market = {}
+user_market_player = {}
+user_market_bool = {}
 
 playerids= []
 usernames = []
@@ -22,7 +25,156 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
-
+async def transfer_market(msg, user, player_to_list, command):
+    if user.id not in responses.user_upgrades:
+        responses.user_upgrades[user.id] = [0,0,0,0]
+        
+    if user.id not in user_market:
+        user_market[user.id] = 0
+        
+    if user.id not in user_market_bool:
+        user_market_bool[user.id] = False
+        
+    if user.id not in user_market_player:
+        user_market_player[user.id] = ""
+    
+    task = None
+    if command == "add":
+        if not user_market_bool[user.id]:
+            search_terms = player_to_list
+            normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+            collection = user_collections[user.id]
+            
+            for player in collection:
+                normalized_title = unidecode.unidecode(player.title.lower())
+                if all(term.lower() in normalized_title for term in normalized_search_terms):
+                    for field in player.fields:
+                        if "Value:" in field.name:
+                            user_market[user.id] = int(field.name.split()[1])
+                            break
+                    
+                    user_market_player[user.id] = player.title
+                    user_market_bool[user.id] = True
+                    
+                    if responses.user_upgrades[user.id][3] == 1:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(30))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+                            
+                    elif responses.user_upgrades[user.id][3] == 2:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(172800))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+                    
+                    elif responses.user_upgrades[user.id][3] == 3:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(86400))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+                        
+                    elif responses.user_upgrades[user.id][3] == 4:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(43200))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+                    
+                    elif responses.user_upgrades[user.id][3] == 5:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(21600))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+                    
+                    else:
+                        try:
+                            task = asyncio.create_task(asyncio.sleep(432000))
+                            user_coins[user.id] += int(user_market[user.id] * 1.5)
+                            await msg.channel.send(f"{user.mention} {player.title} has been sold for int(user_market[user.id] * 1.5) \U0001f4a0 !")
+                            user_market_player[user.id] = ""
+                            user_market[user.id] = 0
+                            user_market_bool[user.id] = False
+                        except asyncio.CancelledError:
+                            await msg.channel.send("Failed to list player.")
+                            return
+        
+        else:
+            await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
+            return
+        
+        if command == "rm":
+            if user_market_bool[user.id]:
+                user_market_player[user.id] = ""
+                user_market[user.id] = 0
+                user_market_bool[user.id] = False
+                try:
+                    task.cancel()
+                    try:
+                        await task
+                    except:
+                        await msg.channel.send("Failed to remove player from transfer list.")
+                        return
+                        
+                except asyncio.CancelledError:
+                    await msg.channel.send("Failed to remove player from transfer list.")
+                    return
+            
+            else:
+                await msg.channel.send("Error. You have no player listed on the transfer market."
+        
+        def format_time(seconds):
+            hours, remainder = divmod(seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
+        
+        def get_time_remaining(task):
+            if task is not None and not task.done():
+                time_elapsed = time.time() - task.get_coro().cr_frame.f_locals['starttime']
+                time_remaining = max(0, task.get_coro().cr_frame.f_locals['seconds'] - time_elapsed)
+                return format_time(time_remaining)
+            return ""
+        
+        if command == "":
+            menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
+            menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3]]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+            menu += "To add a player to the transfer list, type %tm add [player_name]. You may only add one player at a time. Example: %tm add Erling Haaland\n"
+            menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
+            menu += "**Transfer List:**\n"
+            if user_market_bool[user.id]:
+                menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(task)}**"
+            else:
+                menu += "Ready to add a player from your collection" 
+                
 async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:
         confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
@@ -335,7 +487,7 @@ def run_discord_bot():
                 player_name = user_msg[4:].strip()
                 await remove_player(msg.author, msg, player_name)
         
-        elif user_msg.startswith("%trade"):
+        elif user_msg.startswith("%trade") or user_msg.startswith("%tr"):
             mention = user_msg.split()[1]
             player_to_trade = " ".join(user_msg.split()[2:])
             await trade_player(msg.author, msg, player_to_trade, mention)
@@ -346,6 +498,16 @@ def run_discord_bot():
         elif user_msg.startswith("%sc"):
             club = user_msg.split()[1:]
             await set_favorite_club(msg, msg.author, club)
+            
+        elif user_msg.startswith("%tm"):
+            player_to_list = user_msg.split()[2:]
+            command = user_msg.split()[1]
+            
+            if len(user_msg.split()) == 1:
+                await transfer_market(msg, msg.author, "", "")
+            else:
+                await transfer_market(msg, msg.author, player_to_list, command)
+            
         else:
             await send_message(msg, user_msg, is_private=False)
             

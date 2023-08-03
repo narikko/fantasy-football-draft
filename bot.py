@@ -213,7 +213,7 @@ async def transfer_market(msg, user, player_to_list, command):
         task = user_transfer_tasks[user.id]
         if task is not None and not task.done():
             time_elapsed = time.time() - task.starttime
-            time_remaining = max(0, task._coro._delay - time_elapsed)
+            time_remaining = max(0, task.get_coro().__self__._seconds - time_elapsed)
             return format_time(time_remaining)
         return ""
 

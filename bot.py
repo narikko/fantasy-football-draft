@@ -66,7 +66,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     user_market_player[user.id] = player.title
                     user_market_bool[user.id] = True
                     
-                    def wait_for_sell(time_to_wait):
+                    async def wait_for_sell(time_to_wait):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(time_to_wait))

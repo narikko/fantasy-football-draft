@@ -500,12 +500,11 @@ def run_discord_bot():
             await set_favorite_club(msg, msg.author, club)
             
         elif user_msg.startswith("%tm"):
-            player_to_list = user_msg.split()[2:]
-            command = user_msg.split()[1]
-            
             if len(user_msg.split()) == 1:
                 await transfer_market(msg, msg.author, "", "")
             else:
+                player_to_list = user_msg.split()[2:]
+                command = user_msg.split()[1]
                 await transfer_market(msg, msg.author, player_to_list, command)
             
         else:

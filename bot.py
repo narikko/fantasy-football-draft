@@ -150,7 +150,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     return
             
             else:
-                await msg.channel.send("Error. You have no player listed on the transfer market."
+                await msg.channel.send("Error. You have no player listed on the transfer market.")
         
         def format_time(seconds):
             hours, remainder = divmod(seconds, 3600)

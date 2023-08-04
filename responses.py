@@ -461,7 +461,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             else:
                 new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
         
-        if len(user_team_players) == 11:
+        if len(user_team_players[user.id]) == 11:
             if not user_team_rewards[user.id][0]:
                 user_team_rewards[user.id][0] = True
                 user_max_rolls[user.id] += 1

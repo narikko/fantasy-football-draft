@@ -348,6 +348,9 @@ async def set_favorite_club(msg, user, club):
         return
             
 async def display_profile(msg, user):
+    if user.id not in user_coins:
+        user_coins[user.id] = 0
+        
     if user.id not in responses.user_max_rolls:
         responses.user_max_rolls[user.id] = 9
             

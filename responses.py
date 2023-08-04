@@ -232,10 +232,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if user.id not in user_team_rewards:
             user_team_rewards[user.id] = [False, False, False, False, False, False, False]
-        
-        if user.id not in user_teams_value:
-            user_teams_value[user.id] = 0
-        
+
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
         defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW"]

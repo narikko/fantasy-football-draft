@@ -348,6 +348,15 @@ async def set_favorite_club(msg, user, club):
         return
             
 async def display_profile(msg, user):
+    if user.id not in responses.user_max_rolls:
+        responses.user_max_rolls[user.id] = 9
+            
+    if user.id not in responses.user_rolls:
+        responses.user_rolls[user.id] = responses.user_max_rolls[user.id]
+            
+    if user.id not in responses.user_can_claim:
+        responses.user_can_claim[user.id] = True
+        
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     

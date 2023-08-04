@@ -342,7 +342,7 @@ async def display_profile(msg, user):
     profile = ""
     
     curr_time = time.time()
-    time_left = format_time(90 - (roll_reset_time - curr_time))
+    time_left = format_time(90 - (curr_time - roll_reset_time))
     profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left}**\n"
     
     profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"

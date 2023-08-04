@@ -12,6 +12,8 @@ user_upgrades = {}
 user_team_rewards = {}
 
 rolled_times = {}
+user_max_rolls = {}
+user_rolls = {}
 
 stadium_upgrades = [0.5, 1, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
@@ -41,6 +43,19 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
         if user.id not in bot.user_favorite_club:
             bot.user_favorite_club[user.id] = ""
+            
+        if user.id not in user_max_rolls:
+            user_max_rolls[user.id] = 9
+            
+        if user.id not in user_rolls:
+            user_rolls[user.id] = user_max_rolls[user.id]
+            
+        if user_rolls[user.id] == 0:
+            curr_time = time.time()
+            time_left = 90 - (bot.roll_reset_time - curr_time)
+            await msg.channel.send(f"{user.mention} You have no rolls remaining. Your ")
+                  
+            return
             
         num_player_club = 0
         club_upgrade_chance = 0
@@ -103,6 +118,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         expiration_time = rolled_time + 60
 
         rolled_times[player_id] = (rolled_time, expiration_time)
+        
+        user_rolls[user.id] -= 1
         
         return embed
     

@@ -21,6 +21,8 @@ user_market_wait = {}
 playerids= []
 usernames = []
 
+roll_reset_time = 0
+
 
 user_coins[456861613966884866] = 1000000000
 
@@ -29,6 +31,15 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+async def roll_timer():
+    while True:
+        roll_reset_time = time.time()
+            
+        for key in responses.user_rolls:
+               responses.user_rolls[key] = responses.user_max_rolls[key]
+            
+        await asyncio.sleep(90)
+        
 
 async def clean_up_rolled_times():
     while True:
@@ -606,6 +617,7 @@ def run_discord_bot():
             await send_message(msg, user_msg, is_private=False)
             
     client.loop.create_task(clean_up_rolled_times())
+    client.loop.create_task(roll_timer())
             
     client.run(TOKEN)
             

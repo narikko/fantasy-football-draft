@@ -31,6 +31,18 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+def format_time(seconds):
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
+        
+def get_time_remaining():
+    task = user_transfer_tasks[user.id]
+    if task is not None and not task.done():
+        time_remaining = user_market_wait[user.id] - time.time()
+        return format_time(time_remaining)
+    return ""
+
 async def roll_timer():
     while True:
         roll_reset_time = time.time()
@@ -247,19 +259,6 @@ async def transfer_market(msg, user, player_to_list, command):
         else:
             await msg.channel.send("Error. You have no player listed on the transfer market.")
         
-    def format_time(seconds):
-        hours, remainder = divmod(seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
-        
-    def get_time_remaining():
-        task = user_transfer_tasks[user.id]
-        if task is not None and not task.done():
-            time_remaining = user_market_wait[user.id] - time.time()
-            return format_time(time_remaining)
-        return ""
-
-        
     if command == "":
         menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
         if responses.user_upgrades[user.id][3] != 0:
@@ -341,7 +340,12 @@ async def set_favorite_club(msg, user, club):
 
 async def display_profile(msg, user):
     profile = ""
-    profile += str(user_coins[user.id]) + " \U0001f4a0"
+    
+    curr_time = time.time()
+    time_left = format_time(90 - (roll_reset_time - curr_time))
+    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left}**\n"
+    
+    profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"
     await msg.channel.send(profile)
 
 async def extract_user_id(mention):

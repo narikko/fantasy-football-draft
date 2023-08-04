@@ -52,7 +52,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
         if user_rolls[user.id] == 0:
             curr_time = time.time()
-            time_left = bot.format_time(90 - (bot.roll_reset_time - curr_time))
+            print("Current time:", curr_time)
+            print("Roll reset time:", bot.roll_reset_time)
+            time_left = bot.format_time(90 - (curr_time - bot.roll_reset_time))
+            print("Time left:", time_left)
             await msg.channel.send(f"{user.mention} You have no rolls remaining. Your rolls will replenish in **{time_left}**.")
                   
             return

@@ -51,7 +51,7 @@ async def claim_timer():
         for key in responses.user_can_claim:
                responses.user_can_claim[key] = True
             
-        await asyncio.sleep(120)
+        await asyncio.sleep(1)
 
 async def roll_timer():
     while True:
@@ -363,7 +363,7 @@ async def display_profile(msg, user):
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     
-    time_left_claim = format_time(120 - (curr_time - claim_reset_time))
+    time_left_claim = format_time(1 - (curr_time - claim_reset_time))
     if responses.user_can_claim[user.id]:
         profile += f"You can claim now! Claim reset is in **{time_left_claim}**.\n"
     else:

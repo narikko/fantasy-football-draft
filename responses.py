@@ -231,7 +231,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             user_team_players[user.id] = []
         
         if user.id not in user_team_rewards:
-            user_team_rewards[user.id] = [False, False, False, False, False, False, False] 
+            user_team_rewards[user.id] = [False, False, False, False, False, False, False]
+        
+        if user.id not in user_teams_value:
+            user_teams_value[user.id] = 0
         
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
@@ -460,6 +463,23 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
             else:
                 new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
+        
+        if len(user_team_players) == 11:
+            if not user_team_rewards[user.id][0]:
+                user_team_rewards[user.id][0] = True
+                user_max_rolls[user.id] += 1
+                await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **+1 rolls/hour**!")
+            
+            elif overall_value >= 500  and not user_team_rewards[user.id][4]:
+                user_team_rewards[user.id][4] = True
+                user_max_rolls[user.id] += 2
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 500. You have been rewarded **+2 rolls/hour**!")
+            
+            elif overall_value >= 600  and not user_team_rewards[user.id][5]:
+                user_team_rewards[user.id][5] = True
+                user_max_rolls[user.id] += 3
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded **+3 rolls/hour**!")
+  
         
         user_teams[user.id] = new_embed
         return user_teams[user.id]

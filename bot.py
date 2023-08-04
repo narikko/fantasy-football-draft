@@ -45,6 +45,7 @@ def get_time_remaining():
 
 async def roll_timer():
     while True:
+        global roll_reset_time
         roll_reset_time = time.time()
             
         for key in responses.user_rolls:

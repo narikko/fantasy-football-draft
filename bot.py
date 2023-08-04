@@ -22,7 +22,7 @@ playerids= []
 usernames = []
 
 roll_reset_time = time.time()
-
+claim_reset_time = time.time()
 
 user_coins[456861613966884866] = 1000000000
 
@@ -42,6 +42,16 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+
+async def claim_timer():
+    while True:
+        global claim_reset_time
+        claim_reset_time = time.time()
+            
+        for key in responses.user_can_claim:
+               responses.user_can_claim[key] = True
+            
+        await asyncio.sleep(120)
 
 async def roll_timer():
     while True:
@@ -337,14 +347,18 @@ async def set_favorite_club(msg, user, club):
         await msg.channel.send(mult_msg)
         return
             
-    
-
 async def display_profile(msg, user):
-    profile = ""
-    
+    profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
-    time_left = format_time(90 - (curr_time - roll_reset_time))
-    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left}**\n"
+    
+    time_left_claim = format_time(120 - (curr_time - claim_reset_time))
+    if responses.user_can_claim[user.id]:
+        profile += f"You can claim now! Claim reset is in **{time_left_claim}**.\n"
+    else:
+        profile += f"You can't claim for another **{time_left_claim}**.\n"
+    
+    time_left_rolls = format_time(90 - (curr_time - roll_reset_time))
+    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n"
     
     profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"
     await msg.channel.send(profile)
@@ -672,7 +686,7 @@ async def on_reaction_add(reaction, user):
         if player_id in playerids:
             claimed = True
             
-        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim:
+        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim and responses.user_can_claim[user.id]:
             print("Player claimed:", player_embed.title)
 
             if user.id not in user_collections:
@@ -685,6 +699,7 @@ async def on_reaction_add(reaction, user):
             player_id = player_embed.footer.text.split(", ")[1]
             playerids.append(player_id)
             usernames.append(user.name)
+            responses.user_can_claim[user.id] = False
 
             await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
 

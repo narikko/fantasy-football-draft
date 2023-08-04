@@ -14,6 +14,7 @@ user_team_rewards = {}
 rolled_times = {}
 user_max_rolls = {}
 user_rolls = {}
+user_can_claim = {}
 
 stadium_upgrades = [0.5, 1, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
@@ -49,6 +50,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
         if user.id not in user_rolls:
             user_rolls[user.id] = user_max_rolls[user.id]
+            
+        if user.id not in user_can_claim:
+            user_can_claim[user.id] = True
             
         if user_rolls[user.id] == 0:
             curr_time = time.time()

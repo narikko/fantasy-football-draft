@@ -21,7 +21,7 @@ user_market_wait = {}
 playerids= []
 usernames = []
 
-roll_reset_time = 0
+roll_reset_time = time.time()
 
 
 user_coins[456861613966884866] = 1000000000

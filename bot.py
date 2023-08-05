@@ -508,7 +508,7 @@ async def display_profile(msg, user):
     
     time_left_daily = format_time(user_daily_wait[user.id] - curr_time)
     if user_daily_bool[user.id]:
-        profile += "Your daily reward is ready!\n"
+        profile += "Your daily reward is ready!\n" + "\n"
     else:
         profile += f"Your daily reward will be ready in **{time_left_daily}**.\n" + "\n"
     

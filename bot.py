@@ -74,7 +74,7 @@ async def dailies(msg, user):
         time_left = format_time(user_daily_wait[user.id] - time.time())
         await msg.channel.send(f"Your daily reward is not available yet. Please wait **{time_left}**.")
 
-def team_rewards(msg, user, value):
+async def team_rewards(msg, user, value):
     if value == 700:
         f = open('players_list.txt', 'r', encoding='utf-8')
         players_list = f.readlines()

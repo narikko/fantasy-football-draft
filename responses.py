@@ -84,6 +84,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     rolled_player = random.choice(favorite_club_list)
                 else:
                     normal_roll = True
+            else:
+                normal_roll = True
         else:
             normal_roll = True
         

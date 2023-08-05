@@ -514,7 +514,7 @@ async def display_profile(msg, user):
     if user_favorite_club[user.id] != "":
         profile += f"Your favorite club is set to **{user_favorite_club[user.id]}**.\n"
         
-    profile += f"You have **{len(user_collections[user.id]} players in your collection.\n" + "\n"
+    profile += f"You have **{len(user_collections[user.id])} players in your collection.\n" + "\n"
     
     profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"
     await msg.channel.send(profile)

@@ -65,6 +65,7 @@ async def dailies(msg, user):
             daily_reward = random.randint(100, 300)
             
         await msg.channel.send(f"{user.mention} You have been given **+{daily_reward}**!")
+        user_coins[user.id] += daily_reward
         user_daily_bool[user.id] = False
         user_daily_wait[user.id] = time.time() + 86400
         

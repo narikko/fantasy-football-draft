@@ -68,6 +68,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         club_upgrade_chance = 0
         normal_roll = False
         favorite_club_list = []
+        rolled_player = ""
         
         if bot.user_favorite_club[user.id] != "":
             for line in players_list:

@@ -149,7 +149,7 @@ async def free_claim(msg, user):
         user_free_claims[user.id] = 0
         
     if user_free_claims[user.id] != 0:
-        confirmation_msg = await msg.channel.send(f"You have **{user_free_claims[user.id]** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have claim ready. (y/n/yes/no)")
+        confirmation_msg = await msg.channel.send(f"You have **{user_free_claims[user.id]}** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have claim ready. (y/n/yes/no)")
         try:
             response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()

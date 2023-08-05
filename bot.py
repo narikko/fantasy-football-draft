@@ -5,12 +5,17 @@ import re
 import emoji
 import unidecode
 import time
+import random
 
 user_collections = {}
 user_current_page = {}
 collection_messages = {}
 user_coins = {}
 user_favorite_club = {}
+user_free_claims = {}
+
+user_daily_wait = {}
+user_daily_bool = {}
 
 user_market = {}
 user_market_player = {}
@@ -42,6 +47,122 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+
+def dailies(msg, user):
+    if user.id not in user_daily_bool:
+        user_daily_bool[user.id] = True
+        
+    if user.id not in user_daily_wait:
+        user_daily_wait[user.id] = 0
+        
+    if user_daily_bool[user.id]:
+        chance = random.randint(0, 100)
+        daily_reward = 0
+        
+        if chance < 4:
+            daily_reward = random.randint(700, 950)
+        else:
+            daily_reward = random.randint(100, 300)
+            
+        await msg.channel.send(f"{user.mention} You have been given **+{daily_reward}**!")
+        user_daily_bool[user.id] = False
+        user_daily_wait[user.id] = time.time() + 86400
+        
+        asyncio.sleep(86400)
+        user_daily_bool[user.id] = True
+    else:
+        time_left = format_time(user_daily_wait[user.id] - time.time())
+        await msg.channel.send(f"Your daily reward is not available yet. Please wait **{time_left}**.")
+
+def team_rewards(msg, user, value):
+    if value == 700:
+        f = open('players_list.txt', 'r', encoding='utf-8')
+        players_list = f.readlines()
+        
+        rare_players = []
+        for line in players_list:
+            if int(line.split(", ")[4].split()[1]) >= 830:
+                rare_players.append(line)
+                
+        reward = random.choice(rare_players)
+        
+        player_info = reward.strip().split(", ")
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
+            
+
+        embed = discord.Embed(
+            title=player_name,
+            description=player_club + "\n" + player_nationality,
+            color=0xAF0000
+        )
+            
+        embed.add_field(name=player_positions, value="", inline=False)
+        embed.add_field(name= player_value, value="", inline=False)
+        embed.set_image(url=player_imageURL)
+        embed.set_footer(text="Football Roll Bot, " + player_id)
+            
+        player_status = f"**Claimed by {user.name}**"
+        embed.description += ("\n" + player_status)
+        
+        user_collections[user.id].append(player_embed)
+
+        player_id = player_embed.footer.text.split(", ")[1]
+        playerids.append(player_id)
+        usernames.append(user.name)
+        
+        await msg.channel.send(embed=embed)
+        
+    elif value == 800:
+        f = open('legends_list.txt', 'r', encoding='utf-8')
+        legends_list = f.readlines()
+
+        reward = random.choice(legends_list)
+        
+        player_info = reward.strip().split(", ")
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
+            
+
+        embed = discord.Embed(
+            title=player_name,
+            description=player_club + "\n" + player_nationality,
+            color=0xAF0000
+        )
+            
+        embed.add_field(name=player_positions, value="", inline=False)
+        embed.add_field(name= player_value, value="", inline=False)
+        embed.set_image(url=player_imageURL)
+        embed.set_footer(text="Football Roll Bot, " + player_id)
+            
+        player_status = f"**Claimed by {user.name}**"
+        embed.description += ("\n" + player_status)
+        
+        user_collections[user.id].append(player_embed)
+
+        player_id = player_embed.footer.text.split(", ")[1]
+        playerids.append(player_id)
+        usernames.append(user.name)
+        
+async def free_claim(msg, user):
+    if user.id not in user_free_claims:
+        user_free_claims[user.id] = 0
+        
+    if user_free_claims[user.id] != 0:
+        confirmation_msg = await msg.channel.send(f"You have **{user_free_claims[user.id]** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have claim ready. (y/n/yes/no)")
+        try:
+            response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+            response_content = response.content.lower()
+            if response_content == 'yes' or response_content == 'y':
+                responses.user_can_claim[user.id] = True
+                user_free_claims[user.id] -= 1
+                await msg.channel.send(f"{user.mention} Successfully used a free claim!")
+            elif response_content == 'no' or response_content == 'n':
+                await msg.channel.send("Process cancelled.")
+        except asyncio.TimeoutError:
+            await msg.channel.send("Confirmation timed out. Process cancelled.")
+    else:
+        await msg.channel.send(f"{user.mention} You do not have any free claims.")
 
 async def claim_timer():
     while True:
@@ -360,6 +481,18 @@ async def display_profile(msg, user):
     if user.id not in responses.user_can_claim:
         responses.user_can_claim[user.id] = True
         
+    if user.id not in user_favorite_club:
+        user_favorite_club[user.id] = ""
+        
+    if user.id not in user_daily_bool:
+        user_daily_bool[user.id] = True
+        
+    if user.id not in user_daily_wait:
+        user_daily_wait[user.id] = 0
+        
+    if user.id not in user_collections:
+        user_collections[user.id] = []
+        
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     
@@ -370,7 +503,18 @@ async def display_profile(msg, user):
         profile += f"You can't claim for another **{time_left_claim}**.\n"
     
     time_left_rolls = format_time(90 - (curr_time - roll_reset_time))
-    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n"
+    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
+    
+    time_left_daily = format_time(user_daily_wait[user.id] - curr_time)
+    if user_daily_bool[user.id]:
+        profile += "Your daily reward is ready!\n"
+    else:
+        profile += f"Your daily reward will be ready in **{time_left_daily}**.\n" + "\n"
+    
+    if user_favorite_club[user.id] != "":
+        profile += f"Your favorite club is set to **{user_favorite_club[user.id]}**.\n"
+        
+    profile += f"You have **{len(user_collections[user.id]} players in your collection.\n" + "\n"
     
     profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"
     await msg.channel.send(profile)
@@ -641,9 +785,12 @@ def run_discord_bot():
                 command = user_msg.split()[1]
                 await transfer_market(msg, msg.author, player_to_list, command)
                 
-        elif user_msg == "%o":
-            await test()
-            
+        elif user_msg == "%fc":
+            await free_claim(msg, msg.author)
+        
+        elif user_msg == "%d":
+            await dailies(msg, msg.author)
+        
         else:
             await send_message(msg, user_msg, is_private=False)
             

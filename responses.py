@@ -121,6 +121,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
         embed.description += ("\n" + player_status)
         
+        if claimed:
+            dup_coins = int(player_value.strip()) 
+            bot.user_coins[user.id] += dup_coins
+            await msg.channel.send(f"You have been given **+{dup_coins}** \U0001f4a0 for the duplicate player!")
+        
         rolled_time = time.time()
         expiration_time = rolled_time + 60
 
@@ -129,7 +134,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         user_rolls[user.id] -= 1
         
         return embed
-    
+   
     if p_msg.startswith("%v"):
         if user.id not in user_upgrades:
             user_upgrades[user.id] = [0,0,0,0]
@@ -319,13 +324,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     ovl_value = field.value.strip()
                     
             reward_info = f"The overall value of your starting XI is **{ovl_value}**!\n" + "You must build a full team of 11 players to earn rewards.\n" + "\n"
-            reward_info += "Build your first ever starting XI - Reward: **+1 rolls/hour**"
+            reward_info += "Build your first ever starting XI - Reward: **1000 \U0001f4a0**"
             if user_team_rewards[user.id][0]:
                 reward_info += " \u2705"
             reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 300 - Reward: **2 free claims**"
             if user_team_rewards[user.id][1]:
                 reward_info += " \u2705"
-            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 400 - Reward: **10 boosted rolls**"
+            reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 400 - Reward: **2000 \U0001f4a0**"
             if user_team_rewards[user.id][2]:
                 reward_info += " \u2705"
             reward_info += "\n" + "\n" + "Build a starting XI with an overall value of 500 - Reward: **+2 rolls/hour**"    
@@ -459,24 +464,62 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if field.name.strip() == "Overall Value":
                 new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
             else:
-                new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
+                new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
         
-        if len(user_team_players[user.id]) == 11:
+        num_players = 0
+        for fields in user_teams[user.id].fields:
+            if field.value.strip() != "":
+                num_players += 1
+        
+        if num_players == 11:
             if not user_team_rewards[user.id][0]:
                 user_team_rewards[user.id][0] = True
-                user_max_rolls[user.id] += 1
-                await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **+1 rolls/hour**!")
+                 
+                if user.id not in bot.user_coins:
+                    bot.user_coins[user.id] = 0
+                    
+                bot.user_free_claims[user.id] += 1000
+                await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **1000 \U0001f4a0**!")
+                
+            elif overall_value >= 300 and not user_team_rewards[user.id][1]:
+                user_team_rewards[user.id][1] = True
+                
+                if user.id not in bot.user_free_claims:
+                    bot.user_free_claims[user.id] = 0
+                    
+                bot.user_free_claims[user.id] += 2
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 300. You have been rewarded **2 free claims**!")
+                
+            elif overall_value >= 400 and not user_team_rewards[user.id][2]:
+                user_team_rewards[user.id][2] = True
+                
+                if user.id not in bot.user_coins:
+                    bot.user_coins[user.id] = 0
+                    
+                bot.user_free_claims[user.id] += 2000
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 4000. You have been rewarded **2000 \U0001f4a0** !")
             
-            elif overall_value >= 500  and not user_team_rewards[user.id][4]:
-                user_team_rewards[user.id][4] = True
+            elif overall_value >= 500 and not user_team_rewards[user.id][3]:
+                user_team_rewards[user.id][3] = True
                 user_max_rolls[user.id] += 2
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 500. You have been rewarded **+2 rolls/hour**!")
             
-            elif overall_value >= 600  and not user_team_rewards[user.id][5]:
-                user_team_rewards[user.id][5] = True
+            elif overall_value >= 600 and not user_team_rewards[user.id][4]:
+                user_team_rewards[user.id][4] = True
                 user_max_rolls[user.id] += 3
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded **+3 rolls/hour**!")
-  
+                
+            elif overall_value >= 700 and not user_team_rewards[user.id][5]:
+                user_team_rewards[user.id][5] = True
+
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded a random **830+ player**!")
+                await bot.team_rewards(msg, user, 700)
+                
+            elif overall_value >= 800 and not user_team_rewards[user.id][6]:
+                user_team_rewards[user.id][6] = True
+
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded a random **legend player**!")
+                await bot.team_rewards(msg, user, 800)
         
         user_teams[user.id] = new_embed
         return user_teams[user.id]

@@ -68,7 +68,7 @@ async def dailies(msg, user):
         user_daily_bool[user.id] = False
         user_daily_wait[user.id] = time.time() + 86400
         
-        asyncio.sleep(86400)
+        await asyncio.sleep(86400)
         user_daily_bool[user.id] = True
     else:
         time_left = format_time(user_daily_wait[user.id] - time.time())

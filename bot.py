@@ -48,7 +48,7 @@ def get_time_remaining():
         return format_time(time_remaining)
     return ""
 
-def dailies(msg, user):
+async def dailies(msg, user):
     if user.id not in user_daily_bool:
         user_daily_bool[user.id] = True
         

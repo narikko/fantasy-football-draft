@@ -53,7 +53,10 @@ async def sort_collection(msg, user):
         user_collections[user.id] = []
         
     def get_embed_value(embed):
-        return int(embed.fields[-1].value.split()[1])
+        for field in embed.fields:
+            if "Value:" in field.name:
+                return int(field.name.split()[1])
+                            
         
     collection = user_collections[user.id]
     collection.sort(key=get_embed_value, reverse=True)

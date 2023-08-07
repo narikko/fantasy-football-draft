@@ -60,12 +60,15 @@ async def dailies(msg, user):
         daily_reward = 0
         
         if chance < 4:
-            daily_reward = random.randint(700, 950)
+            daily_reward = float(random.randint(700, 950))
         else:
-            daily_reward = random.randint(100, 300)
+            daily_reward = float(random.randint(100, 300))
             
-        await msg.channel.send(f"{user.mention} You have been given **+{daily_reward}**!")
-        user_coins[user.id] += daily_reward
+        if responses.user_upgrades[user.id][1] != 0:
+            daily_reward += daily_reward * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+            
+        await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}**!")
+        user_coins[user.id] += int(daily_reward)
         user_daily_bool[user.id] = False
         user_daily_wait[user.id] = time.time() + 86400
         
@@ -499,7 +502,7 @@ async def display_profile(msg, user):
     
     time_left_claim = format_time(1 - (curr_time - claim_reset_time))
     if responses.user_can_claim[user.id]:
-        profile += f"You can claim now! Claim reset is in **{time_left_claim}**.\n"
+        profile += f"You can __claim__ now! Claim reset is in **{time_left_claim}**.\n"
     else:
         profile += f"You can't claim for another **{time_left_claim}**.\n"
     
@@ -508,7 +511,7 @@ async def display_profile(msg, user):
     
     time_left_daily = format_time(user_daily_wait[user.id] - curr_time)
     if user_daily_bool[user.id]:
-        profile += "Your daily reward is ready!\n" + "\n"
+        profile += "__Your daily reward is ready!__\n" + "\n"
     else:
         profile += f"Your daily reward will be ready in **{time_left_daily}**.\n" + "\n"
     
@@ -591,7 +594,7 @@ async def remove_player(user, msg, player):
                 found_player_value += found_player_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
                 found_player_value = int(found_player_value)
                 
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {found_player_value} \U0001f4a0 (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()

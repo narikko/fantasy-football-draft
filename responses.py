@@ -125,9 +125,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.description += ("\n" + player_status)
         
         if claimed:
-            dup_coins = int(player_value.strip()) 
-            bot.user_coins[user.id] += dup_coins
-            await msg.channel.send(f"You have been given **+{dup_coins}** \U0001f4a0 for the duplicate player!")
+            dup_coins = float(player_value.strip())
+            
+            if user_upgrades[user.id][1] != 0:
+                dup_coins += dup_coins * (board_upgrades[user_upgrades[user.id][1] - 1] / 100)
+            
+            bot.user_coins[user.id] += int(dup_coins)
+            await msg.channel.send(f"You have been given **+{int(dup_coins)}** \U0001f4a0 for the duplicate player!")
         
         rolled_time = time.time()
         expiration_time = rolled_time + 60
@@ -253,7 +257,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed = discord.Embed(
                 title=f"{user.name}'s Starting XI",
                 description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "\n" + "Type %t rewards to learn about starting XI rewards.",
-                color=0xAF0000
+                color=0x7CFC00
             )
             
             embed.add_field(name="F1", value ="", inline=True)
@@ -444,7 +448,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         new_embed = discord.Embed(
                 title=user_teams[user.id].title,
                 description=user_teams[user.id].description,
-                color=user_teams[user.id].color
+                color=0x7CFC00
         )
         
         overall_value = 0
@@ -554,7 +558,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                           "• Level 1: 3000 \U0001f4a0, 5% boost.\n"
                           "• Level 2: 9000 \U0001f4a0, 10% boost.\n"
                           "• Level 3: 27000 \U0001f4a0, 15% boost.\n"
-                          "• Level 4: 1000 \U0001f4a0, 20% boost.\n"
+                          "• Level 4: 50000 \U0001f4a0, 20% boost.\n"
                           "• Level 5 (MAX): 81000 \U0001f4a0, 25% boost.",
                     inline=False
                 )

@@ -72,6 +72,7 @@ async def move_player(msg, user, player, position):
         return
   
     collection.insert(position - 1, player_to_move)
+    await msg.channel.send(f"Succesfully moved {player_to_move.title}!")
      
 async def sort_collection(msg, user):
     if user.id not in user_collections:

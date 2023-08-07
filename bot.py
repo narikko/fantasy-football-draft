@@ -808,7 +808,7 @@ def run_discord_bot():
         elif user_msg == "%d":
             await dailies(msg, msg.author)
             
-        elif user_msg == "%cs":
+        elif user_msg == "%s":
             await sort_collection(msg, msg.author)
         
         else:

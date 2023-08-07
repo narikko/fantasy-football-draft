@@ -549,8 +549,7 @@ async def show_collection(user, msg, page_num):
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
-            embed_to_show_footer = embed_to_show.footer.text
-            embed_to_show.set_footer(text=embed_to_show_footer + " --- " + f"{user_current_page[user.id]}/{len(user_collections)}")
+            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + " " + embed_to_show.footer.text.split(", ")[1] + " --- " + f"{user_current_page[user.id] + 1}/{len(user_collections) + 1}")
         
             if user.id in collection_messages:
                 collection_msg = collection_messages[user.id]

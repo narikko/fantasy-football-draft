@@ -58,9 +58,11 @@ async def move_player(msg, user, player, position):
     
     collection = user_collections[user.id]
     player_to_move = None
+    search_terms = player
+    normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
     i = 0
     for embed in collection:
-        if embed.title.lower().strip() == player.lower().strip():
+        if embed.title.lower().strip() == " ".join(normalized_search_terms):
             player_to_move = collection.pop(i)
             break
         i += 1
@@ -838,7 +840,7 @@ def run_discord_bot():
             
         elif user_msg.startswith("%m"):
             position = int(user_msg.split()[1])
-            player_to_move = user_msg.split()[2]
+            player_to_move = user_msg.split()[2:]
             await move_player(msg, msg.author, player_to_move, position)
         
         else:

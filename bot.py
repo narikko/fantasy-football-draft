@@ -47,7 +47,30 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+
+async def move_player(msg, user, player, position):
+    if user.id not in user_collections:
+        user_collections[user.id] = []
+        
+    if (position > len(user_collections[user.id])) or position < 1:
+        await msg.channel.send("Error: Invalid position.")
+        return
     
+    collection = user_collections[user.id]
+    player_to_move = None
+    i = 0
+    for embed in collection:
+        if embed.title.lower().strip() == player.lower().strip():
+            player_to_move = collection.pop(i)
+            break
+        i += 1
+        
+    if player_to_move is None:
+        await msg.channel.send(f"Error: {player} was not found in your collection.")
+        return
+  
+    collection.insert(position - 1, player_to_move)
+     
 async def sort_collection(msg, user):
     if user.id not in user_collections:
         user_collections[user.id] = []
@@ -56,8 +79,7 @@ async def sort_collection(msg, user):
         for field in embed.fields:
             if "Value:" in field.name:
                 return int(field.name.split()[1])
-                            
-        
+                                  
     collection = user_collections[user.id]
     collection.sort(key=get_embed_value, reverse=True)
     
@@ -578,9 +600,9 @@ async def show_collection(user, msg, page_num):
             await collection_msg.add_reaction("⬅️")
             await collection_msg.add_reaction("➡️")
         else:
-            await msg.channel.send("Page not found.")
+            await msg.channel.send("Error: Page not found.")
     else:
-        await msg.channel.send("No players found in your collection.")
+        await msg.channel.send("Error : No players found in your collection.")
 
 async def remove_player(user, msg, player):
     if user.id not in responses.user_upgrades:
@@ -633,9 +655,9 @@ async def remove_player(user, msg, player):
             except asyncio.TimeoutError:
                 await msg.channel.send("Confirmation timed out. Removal cancelled.")
         else:
-            await msg.channel.send(f"{player} was not found in your collection.")
+            await msg.channel.send(f"Error: {player} was not found in your collection.")
     else:
-        await msg.channel.send("No players found in your collection.")
+        await msg.channel.send("Error: No players found in your collection.")
         
 async def trade_player(user, msg, player, mention):
     user_id = user.id
@@ -659,7 +681,7 @@ async def trade_player(user, msg, player, mention):
         user_i += 1
     
     if not user_embed_trade:
-        await msg.channel.send("You do not have that player in your collection.")
+        await msg.channel.send(f"Error: {player} was not found in your collection.")
         return
     
     repeat = True
@@ -813,6 +835,11 @@ def run_discord_bot():
             
         elif user_msg == "%s":
             await sort_collection(msg, msg.author)
+            
+        elif user_msg.startswith("%m"):
+            position = int(user_msg.split()[1])
+            player_to_move = user_msg.split()[2]
+            await move_player(msg, msg.author, player_to_move, position)
         
         else:
             await send_message(msg, user_msg, is_private=False)

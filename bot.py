@@ -47,6 +47,18 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+    
+async def sort_collection(msg, user):
+    if user.id not in user_collections:
+        user_collections[user.id] = []
+        
+    def get_embed_value(embed):
+        return int(embed.fields[-1].value.split()[1])
+        
+    collection = user_collections[user.id]
+    collection.sort(key=get_embed_value, reverse=True)
+    
+    await msg.channel.send("Your collection has been successfully sorted from highest to lowest value.")
 
 async def dailies(msg, user):
     if user.id not in user_daily_bool:
@@ -795,6 +807,9 @@ def run_discord_bot():
         
         elif user_msg == "%d":
             await dailies(msg, msg.author)
+            
+        elif user_msg == "%cs":
+            await sort_collection(msg, msg.author)
         
         else:
             await send_message(msg, user_msg, is_private=False)

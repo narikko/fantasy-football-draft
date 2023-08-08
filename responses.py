@@ -239,7 +239,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     if p_msg.split()[0] == "%lc":
         club = p_msg.split()[1:]
         
-         if not club:
+        if not club:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
         
         clubs_found = []

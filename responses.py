@@ -161,7 +161,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line for term in normalized_search_terms):
+                if all(term in normalized_line.split()[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("not legend")
                     players_found.append(player_info)
@@ -169,7 +169,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line for term in normalized_search_terms):
+                if all(term in normalized_line.split()[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("legend")
                     players_found.append(player_info)
@@ -232,49 +232,51 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
-                
-        if p_msg.split()[0] == "%vc":
-            club = p_msg.split()[1:]
             
-            def search_club(search_terms):
-                normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
-                players_found = []
+        return embed
+    
+    if p_msg.split()[0] == "%lc":
+        club = p_msg.split()[1:]
+        
+        if not club:
+            return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
+        
+        def search_club(search_terms):
+            normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+            players_found = []
 
-                for line in players_list:
-                    normalized_line = unidecode.unidecode(line.lower())
-                    if all(term in normalized_line.split()[2] for term in normalized_search_terms):
-                        player_name = line.strip().split(", ")[0]
-                        players_found.append(player_name)
-                        
-                
-                for line in legends_list:
-                    normalized_line = unidecode.unidecode(line.lower())
-                    if all(term in normalized_line.split()[2] for term in normalized_search_terms):
-                        player_name = line.strip().split(", ")[0]
-                        players_found.append(player_name)
-                        
-                    
-                return players_found
-            
-            found = search_club_or_country(club)
-            normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
-            club_title = ""
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
                 if all(term in normalized_line.split()[2] for term in normalized_search_terms):
-                    club_title = line.split()[2]
+                    player_name = line.strip().split(", ")[0]
+                    players_found.append(player_name)
+                        
+            for line in legends_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                    player_name = line.strip().split(", ")[0]
+                    players_found.append(player_name)
+                        
+                    
+            return players_found
             
-            players_desc = ""
-            for player in found:
-                players_desc += player +"\n"
+        found = search_club_or_country(club)
+        normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
+        club_title = ""
+        for line in players_list:
+            normalized_line = unidecode.unidecode(line.lower())
+            if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                club_title = line.split()[2]
+            
+        players_desc = ""
+        for player in found:
+            players_desc += player +"\n"
                 
-            embed = discord.Embed(
-                title=club_title,
-                description=players_desc,
-                color=0xADD8E6
+        embed = discord.Embed(
+            title=club_title,
+            description=players_desc,
+            color=0xADD8E6
             )
-            
-            return embed
             
         return embed
     

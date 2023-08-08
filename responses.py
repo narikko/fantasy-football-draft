@@ -68,7 +68,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         test_players = []
         for line in players_list:
             test_players.append(line)
-            if i == 12:
+            if i == 50:
                 break
             i += 1
         

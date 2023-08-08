@@ -57,7 +57,7 @@ async def rename_club(msg, user, name):
     
     user_club_name[user.id] = rename
     
-    await msg.channel.send("{user.mention} Your club has been renamed to **{rename}**!")
+    await msg.channel.send(f"{user.mention} Your club has been renamed to **{rename}**!")
 
 async def move_player(msg, user, player, position):
     if user.id not in user_collections:

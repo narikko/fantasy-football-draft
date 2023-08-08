@@ -94,7 +94,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if normal_roll:
             chance = random.randint(0, 2000)
             
-            if chance > 0:
+            if chance == 0:
                 rolled_player = random.choice(legends_list)
                 legend = True
             else:
@@ -232,10 +232,50 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
+                
+        if p_msg.split()[0] == "%vc":
+            club = p_msg.split()[1:]
             
-            
-        print(claimed)
+            def search_club(search_terms):
+                normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+                players_found = []
 
+                for line in players_list:
+                    normalized_line = unidecode.unidecode(line.lower())
+                    if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                        player_name = line.strip().split(", ")[0]
+                        players_found.append(player_name)
+                        
+                
+                for line in legends_list:
+                    normalized_line = unidecode.unidecode(line.lower())
+                    if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                        player_name = line.strip().split(", ")[0]
+                        players_found.append(player_name)
+                        
+                    
+                return players_found
+            
+            found = search_club_or_country(club)
+            normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
+            club_title = ""
+            for line in players_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                    club_title = line.split()[2]
+            
+            players_desc = ""
+            for player in found:
+                players_desc += player +"\n"
+                
+            embed = discord.Embed(
+                title=club_title,
+                description=players_desc,
+                color=0xADD8E6
+            )
+            
+            return embed
+            
         return embed
     
     if p_msg.startswith("%t"):
@@ -480,14 +520,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         for field in new_embed.fields:
             cleaned_name = unicodedata.normalize('NFKD', field.name).encode('ascii', 'ignore').decode('utf-8')
             cleaned_value = unicodedata.normalize('NFKD', field.value).encode('ascii', 'ignore').decode('utf-8')
-            print(cleaned_name + ": " + cleaned_value)
             if cleaned_value.strip() != "" and cleaned_name.strip() != "Overall Value":
-                print("+1 player")
                 num_players += 1
-        
-        print("Number of players: " + str(num_players))
-        print("Overall value: " + str(overall_value))
-        
+
         if num_players == 11:
             print("11 players")
             if not user_team_rewards[user.id][0]:

@@ -5,6 +5,7 @@ import unidecode
 import emoji
 import asyncio
 import time
+import unicodedata
 
 user_teams = {}
 user_team_players = {}
@@ -485,8 +486,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         num_players = 0
         for field in new_embed.fields:
-            print(field.name + ": " + field.value)
-            if field.value.strip() != "":
+            cleaned_name = unicodedata.normalize('NFKD', field.name).encode('ascii', 'ignore').decode('utf-8')
+            cleaned_value = unicodedata.normalize('NFKD', field.value).encode('ascii', 'ignore').decode('utf-8')
+            print(cleaned_name + ": " + cleaned_value)
+            if cleaned_value.strip() != "" and cleaned_name.strip() != "Overall Value":
                 print("+1 player")
                 num_players += 1
         

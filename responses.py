@@ -260,7 +260,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     
             return players_found
             
-        found = search_club_or_country(club)
+        found = search_club(club)
         normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
         club_title = ""
         for line in players_list:

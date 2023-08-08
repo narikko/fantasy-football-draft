@@ -273,8 +273,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         club_title = ""
         for line in players_list:
             normalized_line = unidecode.unidecode(line.lower())
-            if all(term in normalized_line.split()[2] for term in normalized_search_terms):
-                club_title = line.split()[2]
+            if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
+                club_title = line.split(", ")[2]
             
         players_desc = ""
         i = 0

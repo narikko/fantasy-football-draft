@@ -290,8 +290,11 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
@@ -312,8 +315,11 @@ async def transfer_market(msg, user, player_to_list, command):
 
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
@@ -333,8 +339,11 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
@@ -355,8 +364,11 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
@@ -377,8 +389,11 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0
@@ -399,8 +414,11 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             await task
                             
-                            new_value = int(user_market[user.id] * 1.5)
-                            user_coins[user.id] += new_value
+                            new_value = float(user_market[user.id] * 1.5)
+                            if responses.user_upgrades[user.id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                                
+                            user_coins[user.id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
                             user_market_player[user.id] = ""
                             user_market[user.id] = 0

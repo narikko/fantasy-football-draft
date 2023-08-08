@@ -37,6 +37,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     p_msg = user_msg.lower()
     
     claimed = False
+    legend = False
     
     if p_msg == "%r":
         if user.id not in user_upgrades:
@@ -102,6 +103,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             if chance == 0:
                 rolled_player = random.choice(legends_list)
+                legend = True
             else:
                 rolled_player = random.choice(test_players)
         
@@ -121,7 +123,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed = discord.Embed(
             title=player_name,
             description=player_club + "\n" + player_nationality,
-            color=0xAF0000
+            color=0xAF0000 if not legend else 0xFFD700
         )
         
         embed.add_field(name=player_positions, value="", inline=False)
@@ -133,7 +135,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.description += ("\n" + player_status)
         
         if claimed:
-            dup_coins = float(player_value.strip())
+            dup_coins = float(player_value.split()[1].strip())
             
             if user_upgrades[user.id][1] != 0:
                 dup_coins += dup_coins * (board_upgrades[user_upgrades[user.id][1] - 1] / 100)
@@ -486,7 +488,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if field.value.strip() != "":
                 num_players += 1
         
+        print(num_players)
+        
         if num_players == 11:
+            print("11 players")
             if not user_team_rewards[user.id][0]:
                 user_team_rewards[user.id][0] = True
                  
@@ -527,13 +532,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if overall_value >= 700 and not user_team_rewards[user.id][5]:
                 user_team_rewards[user.id][5] = True
 
-                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded a random **830+ player**!")
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 700. You have been rewarded a random **830+ player**!")
                 await bot.team_rewards(msg, user, 700)
                 
             if overall_value >= 800 and not user_team_rewards[user.id][6]:
                 user_team_rewards[user.id][6] = True
 
-                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded a random **legend player**!")
+                await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 800. You have been rewarded a random **legend player**!")
                 await bot.team_rewards(msg, user, 800)
         
         user_teams[user.id] = new_embed

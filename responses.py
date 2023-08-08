@@ -272,7 +272,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             for clubs in clubs_found:   
                 mult_msg += clubs + "\n"
             
-            await msg.channel.send(mult_msg)
+            try:
+                await msg.channel.send(mult_msg)
+            except:
+                await msg.channel.send("Error has occured. Too many matches.")
             return
         
         def search_club(search_terms):

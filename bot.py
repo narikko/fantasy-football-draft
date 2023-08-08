@@ -524,12 +524,15 @@ async def set_favorite_club(msg, user, club):
         if len(clubs_found) == 0:
             await msg.channel.send("Club not found in our database.")
             return
-    
+        
         mult_msg = f"{len(clubs_found)} matches. Please retype the command with one of the names below.\n"
         for clubs in clubs_found:   
             mult_msg += clubs + "\n"
         
-        await msg.channel.send(mult_msg)
+        try:
+            await msg.channel.send(mult_msg)
+        except:
+            await msg.channel.send("Error has occured. Too many matches.")
         return
             
 async def display_profile(msg, user):

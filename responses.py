@@ -239,8 +239,41 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     if p_msg.split()[0] == "%lc":
         club = p_msg.split()[1:]
         
-        if not club:
+         if not club:
             return discord.Embed(title="Error", description="Please provide search terms.", color=0xFF0000)
+        
+        clubs_found = []
+        found = False
+        normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
+        
+        for line in players_list:
+            normalized_line = unidecode.unidecode(line.lower())
+            club_search = " ".join(normalized_search_terms)
+            if club_search.lower() == normalized_line.split(", ")[2]:
+                clubs_found.append(line.strip().split(", ")[2])
+                found = True
+                break
+            
+        if not found:
+            for line in players_list:
+                normalized_line = unidecode.unidecode(line.lower())
+
+                if line.strip().split(", ")[2] not in clubs_found:
+                    for term in normalized_search_terms:
+                        if term in normalized_line:
+                            club_found = line.strip().split(", ")[2]
+                            clubs_found.append(club_found)
+            
+            if len(clubs_found) == 0:
+                await msg.channel.send("Club not found in our database.")
+                return
+    
+            mult_msg = f"{len(clubs_found)} matches. Please retype the command with one of the names below.\n"
+            for clubs in clubs_found:   
+                mult_msg += clubs + "\n"
+            
+            await msg.channel.send(mult_msg)
+            return
         
         def search_club(search_terms):
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]

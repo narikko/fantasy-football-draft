@@ -488,7 +488,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if field.value.strip() != "":
                 num_players += 1
         
-        print(num_players)
+        print("Number of players: " + num_players)
         
         if num_players == 11:
             print("11 players")

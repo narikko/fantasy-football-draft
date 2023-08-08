@@ -171,7 +171,7 @@ async def team_rewards(msg, user, value):
         embed = discord.Embed(
             title=player_name,
             description=player_club + "\n" + player_nationality,
-            color=0xAF0000
+            color=0xFFD700
         )
             
         embed.add_field(name=player_positions, value="", inline=False)
@@ -182,9 +182,9 @@ async def team_rewards(msg, user, value):
         player_status = f"**Claimed by {user.name}**"
         embed.description += ("\n" + player_status)
         
-        user_collections[user.id].append(player_embed)
+        user_collections[user.id].append(embed)
 
-        player_id = player_embed.footer.text.split(", ")[1]
+        player_id = embed.footer.text.split(", ")[1]
         playerids.append(player_id)
         usernames.append(user.name)
         

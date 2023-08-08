@@ -352,7 +352,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         mpos = ["m1", "m2", "m3", "m4"]
         dpos = ["d1", "d2", "d3"]
         
-        print(bot.user_club_name[user.id] = ""
+        print(bot.user_club_name[user.id])
         if user.id not in user_teams:
             embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if bot.user_club_name == "" else bot.user_club_name[user.id],

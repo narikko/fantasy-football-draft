@@ -13,6 +13,7 @@ collection_messages = {}
 user_coins = {}
 user_favorite_club = {}
 user_free_claims = {}
+user_club_name = {}
 
 user_daily_wait = {}
 user_daily_bool = {}
@@ -47,6 +48,16 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+
+async def rename_club(msg, user, name):
+    if user.id not in user_club_name:
+        user_club_name[user.id] = ""
+    
+    rename = " ".join(name)
+    
+    user_club_name[user.id] = rename
+    
+    await msg.channel.send("{user.mention} Your club has been renamed to **{rename}**!")
 
 async def move_player(msg, user, player, position):
     if user.id not in user_collections:
@@ -866,6 +877,10 @@ def run_discord_bot():
             position = int(user_msg.split()[1])
             player_to_move = user_msg.split()[2:]
             await move_player(msg, msg.author, player_to_move, position)
+            
+        elif user_msg.startswith("%n"):
+            name = user_msg.split()[1:]
+            await rename_club(msg, msg.author, name)
         
         else:
             await send_message(msg, user_msg, is_private=False)

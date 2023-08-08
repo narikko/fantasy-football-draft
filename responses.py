@@ -339,6 +339,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if user.id not in user_team_rewards:
             user_team_rewards[user.id] = [False, False, False, False, False, False, False]
+            
+        if user.id not in bot.user_club_name:
+            bot.user_club_name[user.id] = ""
 
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
@@ -350,7 +353,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if user.id not in user_teams:
             embed = discord.Embed(
-                title=f"{user.name}'s Starting XI",
+                title=f"{user.name}'s Starting XI" if bot.user_club_name == "" else bot.user_club_name[user.id],
                 description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "\n" + "Type %t rewards to learn about starting XI rewards.",
                 color=0x7CFC00
             )

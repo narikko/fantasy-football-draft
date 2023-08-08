@@ -485,7 +485,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         num_players = 0
         for fields in user_teams[user.id].fields:
+            print(field.name + ": " + field.value)
             if field.value.strip() != "":
+                print("+1 player")
                 num_players += 1
         
         print("Number of players: " + str(num_players))

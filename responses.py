@@ -161,7 +161,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split()[0] for term in normalized_search_terms):
+                if all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("not legend")
                     players_found.append(player_info)
@@ -169,7 +169,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split()[0] for term in normalized_search_terms):
+                if all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("legend")
                     players_found.append(player_info)
@@ -248,13 +248,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
                     player_name = line.strip().split(", ")[0]
                     players_found.append(player_name)
                         
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split()[2] for term in normalized_search_terms):
+                if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
                     player_name = line.strip().split(", ")[0]
                     players_found.append(player_name)
                         

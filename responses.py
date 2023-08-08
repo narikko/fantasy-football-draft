@@ -244,22 +244,29 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         def search_club(search_terms):
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
+            found = []
             players_found = []
+            ids_found = []
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
                 if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
                     player_name = line.strip().split(", ")[0]
+                    id_found = line.strip().split(", ")[6]
                     players_found.append(player_name)
+                    ids_found.append(id_found)
                         
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
                 if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
                     player_name = line.strip().split(", ")[0]
+                    id_found = line.strip().split(", ")[6]
                     players_found.append(player_name)
+                    ids_found.append(id_found)
                         
-                    
-            return players_found
+            found.append(players_found)
+            found.append(ids_found)
+            return found
             
         found = search_club(club)
         normalized_search_terms = [unidecode.unidecode(term.lower()) for term in club]
@@ -270,8 +277,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 club_title = line.split()[2]
             
         players_desc = ""
-        for player in found:
-            players_desc += player +"\n"
+        i = 0
+        for player in found[0]:
+            emoji = ""
+            if found[1][i] in bot.playerids:
+                emoji = " \u2705"
+            players_desc += player + emoji + "\n"
+            
+            i += 1
                 
         embed = discord.Embed(
             title=club_title,

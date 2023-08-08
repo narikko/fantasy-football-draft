@@ -66,14 +66,6 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                   
             return
         
-        i = 0
-        test_players = []
-        for line in players_list:
-            test_players.append(line)
-            if i == 50:
-                break
-            i += 1
-        
         num_player_club = 0
         club_upgrade_chance = 0
         normal_roll = False
@@ -102,11 +94,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if normal_roll:
             chance = random.randint(0, 2000)
             
-            if chance == 0:
+            if chance > 0:
                 rolled_player = random.choice(legends_list)
                 legend = True
             else:
-                rolled_player = random.choice(test_players)
+                rolled_player = random.choice(players_list)
         
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info

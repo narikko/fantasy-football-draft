@@ -178,6 +178,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             return players_found
         
         players_found = search_player(search_terms)
+        print("Players found:", players_found)
         
         if len(players_found) == 1:
             player_info = players_found[0]

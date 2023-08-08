@@ -188,6 +188,8 @@ async def team_rewards(msg, user, value):
         playerids.append(player_id)
         usernames.append(user.name)
         
+        await msg.channel.send(embed=embed)
+        
 async def free_claim(msg, user):
     if user.id not in user_free_claims:
         user_free_claims[user.id] = 0
@@ -216,7 +218,7 @@ async def claim_timer():
         for key in responses.user_can_claim:
                responses.user_can_claim[key] = True
             
-        await asyncio.sleep(1)
+        await asyncio.sleep(10800)
 
 async def roll_timer():
     while True:
@@ -226,7 +228,7 @@ async def roll_timer():
         for key in responses.user_rolls:
                responses.user_rolls[key] = responses.user_max_rolls[key]
             
-        await asyncio.sleep(90)
+        await asyncio.sleep(3600)
         
 
 async def clean_up_rolled_times():
@@ -515,7 +517,7 @@ async def set_favorite_club(msg, user, club):
 
             if line.strip().split(", ")[2] not in clubs_found:
                 for term in normalized_search_terms:
-                    if term in normalized_line:
+                    if term in normalized_line.split(", ")[2]:
                         club_found = line.strip().split(", ")[2]
                         clubs_found.append(club_found)
         

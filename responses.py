@@ -260,7 +260,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
                 if line.strip().split(", ")[2] not in clubs_found:
                     for term in normalized_search_terms:
-                        if term in normalized_line:
+                        if term in normalized_line.split(", ")[2]:
                             club_found = line.strip().split(", ")[2]
                             clubs_found.append(club_found)
             

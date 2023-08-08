@@ -494,10 +494,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 num_players += 1
         
         print("Number of players: " + str(num_players))
+        print("Overall value: " + str(ooverall_value))
         
         if num_players == 11:
             print("11 players")
             if not user_team_rewards[user.id][0]:
+                print("1st reward")
                 user_team_rewards[user.id][0] = True
                  
                 if user.id not in bot.user_coins:
@@ -507,6 +509,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **1000 \U0001f4a0**!")
                 
             if overall_value >= 300 and not user_team_rewards[user.id][1]:
+                print("2nd reward")
                 user_team_rewards[user.id][1] = True
                 
                 if user.id not in bot.user_free_claims:
@@ -516,6 +519,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 300. You have been rewarded **2 free claims**!")
                 
             if overall_value >= 400 and not user_team_rewards[user.id][2]:
+                print("3rd reward")
                 user_team_rewards[user.id][2] = True
                 
                 if user.id not in bot.user_coins:
@@ -525,22 +529,26 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 4000. You have been rewarded **2000 \U0001f4a0** !")
             
             if overall_value >= 500 and not user_team_rewards[user.id][3]:
+                print("4th reward")
                 user_team_rewards[user.id][3] = True
                 user_max_rolls[user.id] += 2
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 500. You have been rewarded **+2 rolls/hour**!")
             
             if overall_value >= 600 and not user_team_rewards[user.id][4]:
+                print("5th reward")
                 user_team_rewards[user.id][4] = True
                 user_max_rolls[user.id] += 3
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 600. You have been rewarded **+3 rolls/hour**!")
                 
             if overall_value >= 700 and not user_team_rewards[user.id][5]:
+                print("6th reward")
                 user_team_rewards[user.id][5] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 700. You have been rewarded a random **830+ player**!")
                 await bot.team_rewards(msg, user, 700)
                 
             if overall_value >= 800 and not user_team_rewards[user.id][6]:
+                print("7th reward")
                 user_team_rewards[user.id][6] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 800. You have been rewarded a random **legend player**!")

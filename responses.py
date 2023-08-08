@@ -280,9 +280,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         i = 0
         emoji = ""
         for player in found[0]:
-            emoji = ""
             if found[1][i] in bot.playerids:
                 emoji = " \u2705"
+            else:
+                emoji = ""
             players_desc += player + emoji + "\n"
             
             i += 1

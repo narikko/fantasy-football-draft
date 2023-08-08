@@ -149,9 +149,9 @@ async def team_rewards(msg, user, value):
         player_status = f"**Claimed by {user.name}**"
         embed.description += ("\n" + player_status)
         
-        user_collections[user.id].append(player_embed)
+        user_collections[user.id].append(embed)
 
-        player_id = player_embed.footer.text.split(", ")[1]
+        player_id = embed.footer.text.split(", ")[1]
         playerids.append(player_id)
         usernames.append(user.name)
         

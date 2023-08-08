@@ -484,7 +484,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
         
         num_players = 0
-        for fields in nnew_embed.fields:
+        for fields in new_embed.fields:
             print(field.name + ": " + field.value)
             if field.value.strip() != "":
                 print("+1 player")

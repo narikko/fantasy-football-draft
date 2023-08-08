@@ -505,7 +505,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if user.id not in bot.user_coins:
                     bot.user_coins[user.id] = 0
                     
-                bot.user_free_claims[user.id] += 1000
+                bot.user_coins[user.id] += 1000
                 await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **1000 \U0001f4a0**!")
                 
             if overall_value >= 300 and not user_team_rewards[user.id][1]:
@@ -525,7 +525,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if user.id not in bot.user_coins:
                     bot.user_coins[user.id] = 0
                     
-                bot.user_free_claims[user.id] += 2000
+                bot.user_coins[user.id] += 2000
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 4000. You have been rewarded **2000 \U0001f4a0** !")
             
             if overall_value >= 500 and not user_team_rewards[user.id][3]:

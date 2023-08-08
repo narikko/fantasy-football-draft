@@ -494,7 +494,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 num_players += 1
         
         print("Number of players: " + str(num_players))
-        print("Overall value: " + str(ooverall_value))
+        print("Overall value: " + str(overall_value))
         
         if num_players == 11:
             print("11 players")

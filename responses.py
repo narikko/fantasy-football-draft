@@ -491,6 +491,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if player.title == p_msg.split()[2]:
                     user_team_players[user.id].remove(player)
             
+            await msg.channel.send(f"{p_msg.split()[2]} was removed from your starting XI.")
             return
 
         for player in collection:

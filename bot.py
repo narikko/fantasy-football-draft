@@ -841,7 +841,7 @@ def run_discord_bot():
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0)
             else:
-                await show_collection(msg.author, msg, int(user_msg.split()[1]))
+                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1)
         elif user_msg.startswith("%rm"):
             if len(user_msg.split()) == 1:
                 await msg.channel.send("Please specify who you wish to remove from your collection.")

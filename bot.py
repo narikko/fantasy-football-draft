@@ -52,6 +52,11 @@ def get_time_remaining():
 async def rename_club(msg, user, name):
     if user.id not in user_club_name:
         user_club_name[user.id] = ""
+        
+    if name == []:
+        user_club_name[user.id] = ""
+        await msg.channel.send(f"{user.mention} Your club's name has been reset to default.")
+        return
     
     rename = " ".join(name)
     
@@ -879,8 +884,11 @@ def run_discord_bot():
             await move_player(msg, msg.author, player_to_move, position)
             
         elif user_msg.startswith("%n"):
-            name = user_msg.split()[1:]
-            await rename_club(msg, msg.author, name)
+            if len(user_msg.split()) == 1:
+                await rename_club(msg, msg.author, [])
+            else:
+                name = user_msg.split()[1:]
+                await rename_club(msg, msg.author, name)
         
         else:
             await send_message(msg, user_msg, is_private=False)

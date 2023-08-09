@@ -84,7 +84,7 @@ async def move_player(msg, user, player, position):
         i += 1
         
     if player_to_move is None:
-        await msg.channel.send(f"Error: {" ".join(player)} was not found in your collection.")
+        await msg.channel.send(f"Error: {' '.join(player)} was not found in your collection.")
         return
   
     collection.insert(position - 1, player_to_move)

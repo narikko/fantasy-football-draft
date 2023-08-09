@@ -232,9 +232,9 @@ async def claim_timer():
         claim_reset_time = time.time()
             
         for key in responses.user_can_claim:
-               responses.user_can_claim[key] = True
+            responses.user_can_claim[key] = True
             
-        await asyncio.sleep(10800)
+        await asyncio.sleep(1)
 
 async def roll_timer():
     while True:
@@ -242,7 +242,7 @@ async def roll_timer():
         roll_reset_time = time.time()
             
         for key in responses.user_rolls:
-               responses.user_rolls[key] = responses.user_max_rolls[key]
+            responses.user_rolls[key] = responses.user_max_rolls[key]
             
         await asyncio.sleep(3600)
         
@@ -585,7 +585,7 @@ async def display_profile(msg, user):
     else:
         profile += f"You can't claim for another **{time_left_claim}**.\n"
     
-    time_left_rolls = format_time(90 - (curr_time - roll_reset_time))
+    time_left_rolls = format_time(3600 - (curr_time - roll_reset_time))
     profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
     
     time_left_daily = format_time(user_daily_wait[user.id] - curr_time)

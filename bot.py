@@ -78,7 +78,8 @@ async def move_player(msg, user, player, position):
     normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
     i = 0
     for embed in collection:
-        if embed.title.lower().strip() == " ".join(normalized_search_terms):
+        embed_title = unidecode.unidecode(embed.title.lower().strip())
+        if embed_title == " ".join(normalized_search_terms):
             player_to_move = collection.pop(i)
             break
         i += 1

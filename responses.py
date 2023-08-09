@@ -394,7 +394,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if len(p_msg.split()) == 1:
             new_embed = discord.Embed(
-                title=user_teams[user.id].title,
+                title=f"{user.name}'s Starting XI" if bot.user_club_name[user.id] == "" else bot.user_club_name[user.id],
                 description=user_teams[user.id].description,
                 color=user_teams[user.id].color
             )
@@ -527,7 +527,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if correct_player and correct_pos:
             new_embed = discord.Embed(
-                title=user_teams[user.id].title,
+                title=f"{user.name}'s Starting XI" if bot.user_club_name[user.id] == "" else bot.user_club_name[user.id],
                 description=user_teams[user.id].description,
                 color=user_teams[user.id].color
             )

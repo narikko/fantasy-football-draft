@@ -14,6 +14,7 @@ user_coins = {}
 user_favorite_club = {}
 user_free_claims = {}
 user_club_name = {}
+mentioned_user = {}
 
 user_daily_wait = {}
 user_daily_bool = {}
@@ -620,12 +621,19 @@ async def send_message(msg, user_msg, is_private):
     except Exception as e:
         print(e)
 
-async def show_collection(user, msg, page_num):
+async def show_collection(user, msg, page_num, mention):
     if user.id not in user_current_page:
         user_current_page[user.id] = 0
+        
+    mention_id = 0
+        
+    if mention == "":
+        mention_id = user.id
+    else:
+        mention_id = extract_user_id(mention)
 
     if user.id in user_collections:
-        collection = user_collections[user.id]
+        collection = user_collections[mention_id]
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
             embed_to_show = collection[page_num]
@@ -839,10 +847,24 @@ def run_discord_bot():
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
             collection_messages = {}
+            mentioned_user[msg.author.id] = ""
             if len(user_msg.split()) == 1:
-                await show_collection(msg.author, msg, 0)
+                await show_collection(msg.author, msg, 0, "")
+            
+            elif "@" in user_msg.split()[1] and len(user_msg.split()) == 2:
+                mentioned_user[msg.author.id] = user_msg.split()[1]
+                await show_collection(msg.author, msg, 0, mentioned_user[msg.author.id])
+                
+            elif "@" in user_msg.split()[1] and len(user_msg.split()) == 3:
+                mentioned_user[msg.author.id] = user_msg.split()[1]
+                await show_collection(msg.author, msg, int(user_msg.split()[2]) - 1, mentioned_user[msg.author.id])
+                
+            elif "@" in user_msg.split()[2] and len(user_msg.split()) == 3:
+                mentioned_user[msg.author.id] = user_msg.split()[2]
+                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, mentioned_user[msg.author.id])
+            
             else:
-                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1)
+                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, "")
         elif user_msg.startswith("%rm"):
             if len(user_msg.split()) == 1:
                 await msg.channel.send("Please specify who you wish to remove from your collection.")
@@ -911,6 +933,9 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
     
+    if user.id not in mentioned_user:
+        mentioned_user[user.id] = ""
+    
     if reaction.message.author == client.user: 
         if user.id in user_current_page: 
             if reaction.emoji == "⬅️":  
@@ -920,7 +945,7 @@ async def on_reaction_add(reaction, user):
                     user_current_page[user.id] -= 1
                 
                 current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page)
+                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
                 
             elif reaction.emoji == "➡️":
@@ -930,7 +955,7 @@ async def on_reaction_add(reaction, user):
                     user_current_page[user.id] += 1
                     
                 current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page)
+                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
             
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:

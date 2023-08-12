@@ -487,6 +487,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     
             user_teams[user.id] = new_embed
             
+            newer_embed = discord.Embed(
+                title=user_teams[user.id].title,
+                description=user_teams[user.id].description,
+                color=user_teams[user.id].color
+            )
+            
             overall_value = 0
             player_values = []
             if len(user_team_players[user.id]) != 0:
@@ -505,11 +511,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for field in user_teams[user.id].fields:
                 if field.name.strip() == "Overall Value":
-                    new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+                    newer_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
                 else:
-                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    newer_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
-            user_teams[user.id] = new_embed
+            user_teams[user.id] = newer_embed
             
             removed_player = ""
             for player in user_team_players[user.id]:

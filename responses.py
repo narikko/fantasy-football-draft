@@ -487,6 +487,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     
             user_teams[user.id] = new_embed
             
+            removed_player = ""
+            for player in user_team_players[user.id]:
+                if player.title == p_msg.split()[2]:
+                    user_team_players[user.id].remove(player)
+                    removed_player = player.title
+            
             newer_embed = discord.Embed(
                 title=user_teams[user.id].title,
                 description=user_teams[user.id].description,
@@ -516,12 +522,6 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     newer_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = newer_embed
-            
-            removed_player = ""
-            for player in user_team_players[user.id]:
-                if player.title == p_msg.split()[2]:
-                    user_team_players[user.id].remove(player)
-                    removed_player = player.title
             
             await msg.channel.send(f"{player.title} was removed from your starting XI.")
             return

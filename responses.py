@@ -505,6 +505,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 for player in user_team_players[user.id]:
                     for field in player.fields:
                         if "Value:" in field.name:
+                            print(int(field.name.split()[1]))
                             player_values.append(int(field.name.split()[1]))
                             break
                                 

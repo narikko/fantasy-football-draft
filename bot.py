@@ -938,21 +938,36 @@ async def on_reaction_add(reaction, user):
     
     if reaction.message.author == client.user: 
         if user.id in user_current_page: 
-            if reaction.emoji == "⬅️":  
-                if user_current_page[user.id] == 0:
-                    user_current_page[user.id] = len(user_collections[user.id]) - 1
-                else:                        
-                    user_current_page[user.id] -= 1
+            if reaction.emoji == "⬅️":
+                if mentioned_user[user.id] != "":
+                    mention_id = await extract_user_id(mentioned_user[user.id])
+                    if user_current_page[user.id] == 0:
+                        user_current_page[user.id] = len(user_collections[user.id]) - 1
+                    else:
+                        user_current_page[user.id] -= 1
+                    
+                else:   
+                    if user_current_page[user.id] == 0:
+                        user_current_page[user.id] = len(user_collections[user.id]) - 1
+                    else:                        
+                        user_current_page[user.id] -= 1
                 
                 current_page = user_current_page[user.id]
                 await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
                 
             elif reaction.emoji == "➡️":
-                if user_current_page[user.id] == len(user_collections[user.id]) - 1:
-                    user_current_page[user.id] = 0
+                if mentioned_user[user.id] != "":
+                    mention_id = await extract_user_id(mentioned_user[user.id])
+                    if user_current_page[user.id] == len(user_collections[mention_id]) - 1:
+                        user_current_page[user.id] = 0
+                    else:
+                        user_current_page[user.id] += 1
                 else:
-                    user_current_page[user.id] += 1
+                    if user_current_page[user.id] == len(user_collections[user.id]) - 1:
+                        user_current_page[user.id] = 0
+                    else:
+                        user_current_page[user.id] += 1
                     
                 current_page = user_current_page[user.id]
                 await show_collection(user, reaction.message, current_page, mentioned_user[user.id])

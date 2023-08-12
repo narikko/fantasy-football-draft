@@ -630,7 +630,7 @@ async def show_collection(user, msg, page_num, mention):
     if mention == "":
         mention_id = user.id
     else:
-        mention_id = extract_user_id(mention)
+        mention_id = await extract_user_id(mention)
 
     if user.id in user_collections:
         collection = user_collections[mention_id]

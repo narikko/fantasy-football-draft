@@ -209,7 +209,7 @@ async def tutorial(msg, user, page_num):
     if 0 <= page_num < len(tutorials):
         bot.user_current_page[user.id] = page_num
         embed_to_show = tutorials[page_num]
-        embed_to_show.set_footer(text=f"{user_current_page[user.id] + 1}/{len(tutorials)}")
+        embed_to_show.set_footer(text=f"{bot.user_current_page[user.id] + 1}/{len(tutorials)}")
        
         if user.id in tutorial_messages:
             tutorial_msg = tutorial_messages[user.id]

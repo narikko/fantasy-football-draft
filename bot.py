@@ -918,10 +918,10 @@ def run_discord_bot():
         elif user_msg.startswith("%tuto"):
             tutorial.tutorial_messages = {}
             if len(user_msg.split()) == 1:
-                tutorial.tutorial(msg, msg.author, 0)
+                await tutorial.tutorial(msg, msg.author, 0)
             else:
                 page_num = user_msg.split()[1]
-                tutorial.tutorial(msg, msg.author, page_num)
+                await tutorial.tutorial(msg, msg.author, page_num)
         
         else:
             await send_message(msg, user_msg, is_private=False)

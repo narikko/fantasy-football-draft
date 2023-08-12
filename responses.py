@@ -489,7 +489,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             removed_player = ""
             for player in user_team_players[user.id]:
+                print("title: " + player.title.lower())
+                print("msg: " + p_msg.split()[2])
                 if player.title.lower() == p_msg.split()[2]:
+                    print("this is happening")
                     user_team_players[user.id].remove(player)
                     removed_player = player.title
             

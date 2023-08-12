@@ -471,43 +471,30 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         sel_player = ""
         
         if p_msg.split()[1] == "rm":
-            new_embed = discord.Embed.from_dict(user_teams[user.id].to_dict())  # Create a copy of the original embed
+            new_embed = discord.Embed(
+                title=user_teams[user.id].title,
+                description=user_teams[user.id].description,
+                color=user_teams[user.id].color
+            )
             
-            removed_player = None
-            player_values = []
-            
-            for field in new_embed.fields:
+            for field in user_teams[user.id].fields:
                 if field.name.strip().lower() == p_msg.split()[2]:
-                    removed_player = field.name.strip()
+                    new_embed.add_field(name=field.name, value="", inline=field.inline)
                 elif all(term.lower() in field.value.strip().lower() for term in search_terms):
-                    new_embed.set_field_at(new_embed.fields.index(field), name=field.name, value="", inline=field.inline)
-                elif "Value:" in field.name:
-                    player_values.append(int(field.name.split()[1]))
-
-            if removed_player is not None:
-                user_team_players[user.id] = [player for player in user_team_players[user.id] if player.title != removed_player]
-
-            overall_value = 0
-            if len(user_team_players[user.id]) != 0:
-                overall_value = round(sum(player_values) / len(user_team_players[user.id]))
-
-            if user_upgrades[user.id][2] != 0:
-                overall_value = float(overall_value)
-                overall_value += overall_value * (training_upgrades[user_upgrades[user.id][2] - 1] / 100)
-                overall_value = int(overall_value)
-            
-            # Update the "Overall Value" field in the copy of the embed
-            for field in new_embed.fields:
-                if field.name.strip() == "Overall Value":
-                    new_embed.set_field_at(new_embed.fields.index(field), name=field.name, value=overall_value, inline=field.inline)
+                     new_embed.add_field(name=field.name, value="", inline=field.inline)
+                else:
+                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
-
-            if removed_player is not None:
-                await msg.channel.send(f"{removed_player} was removed from your starting XI.")
+            
+            removed_player = ""
+            for player in user_team_players[user.id]:
+                if player.title == p_msg.split()[2]:
+                    user_team_players[user.id].remove(player)
+                    removed_player = player.title
+            
+            await msg.channel.send(f"{player.title} was removed from your starting XI.")
             return
-
-
 
         for player in collection:
             if all(term.lower() in player.title.lower() for term in search_terms):

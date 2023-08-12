@@ -843,7 +843,6 @@ def run_discord_bot():
         print(f"{username} said: '{user_msg}' ({channel})")
         
         global collection_messages
-        global tutorial.tutorial_messages
         
         if user_msg[0] == "?":
             user_msg = user_msg[1:]

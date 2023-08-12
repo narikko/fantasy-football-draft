@@ -220,8 +220,8 @@ async def tutorial(msg, user, page_num):
             await tutorial_msg.clear_reactions()
             tutorial_messages[user.id] = tutorial_msg
         
-        await collection_msg.add_reaction("\u2b05")
-        await collection_msg.add_reaction("\u27a1")
+        await tutorial_msg.add_reaction("\u2b05")
+        await tutorial_msg.add_reaction("\u27a1")
     else:
         await msg.channel.send("Error: Page not found.")
         

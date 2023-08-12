@@ -6,6 +6,7 @@ import emoji
 import unidecode
 import time
 import random
+import tutorial
 
 user_collections = {}
 user_current_page = {}
@@ -49,6 +50,41 @@ def get_time_remaining():
         time_remaining = user_market_wait[user.id] - time.time()
         return format_time(time_remaining)
     return ""
+
+async def show_collection(user, msg, page_num, mention):
+    if user.id not in user_current_page:
+        user_current_page[user.id] = 0
+        
+    mention_id = 0
+        
+    if mention == "":
+        mention_id = user.id
+    else:
+        mention_id = await extract_user_id(mention)
+
+    if mention_id in user_collections:
+        collection = user_collections[mention_id]
+        if 0 <= page_num < len(collection):
+            user_current_page[user.id] = page_num
+            embed_to_show = collection[page_num]
+            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{user_current_page[user.id] + 1}/{len(user_collections[mention_id])}")
+        
+            if user.id in collection_messages:
+                collection_msg = collection_messages[user.id]
+                await collection_msg.clear_reactions()
+                await collection_msg.edit(embed=embed_to_show)
+            else:
+                collection_msg = await msg.channel.send(embed=embed_to_show)
+                await collection_msg.clear_reactions()
+                collection_messages[user.id] = collection_msg
+
+            await collection_msg.add_reaction("⬅️")
+            await collection_msg.add_reaction("➡️")
+        else:
+            await msg.channel.send("Error: Page not found.")
+    else:
+        await msg.channel.send("Error : No players found in your collection.")
+
 
 async def rename_club(msg, user, name):
     if user.id not in user_club_name:
@@ -621,40 +657,6 @@ async def send_message(msg, user_msg, is_private):
     except Exception as e:
         print(e)
 
-async def show_collection(user, msg, page_num, mention):
-    if user.id not in user_current_page:
-        user_current_page[user.id] = 0
-        
-    mention_id = 0
-        
-    if mention == "":
-        mention_id = user.id
-    else:
-        mention_id = await extract_user_id(mention)
-
-    if mention_id in user_collections:
-        collection = user_collections[mention_id]
-        if 0 <= page_num < len(collection):
-            user_current_page[user.id] = page_num
-            embed_to_show = collection[page_num]
-            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{user_current_page[user.id] + 1}/{len(user_collections[mention_id])}")
-        
-            if user.id in collection_messages:
-                collection_msg = collection_messages[user.id]
-                await collection_msg.clear_reactions()
-                await collection_msg.edit(embed=embed_to_show)
-            else:
-                collection_msg = await msg.channel.send(embed=embed_to_show)
-                await collection_msg.clear_reactions()
-                collection_messages[user.id] = collection_msg
-
-            await collection_msg.add_reaction("⬅️")
-            await collection_msg.add_reaction("➡️")
-        else:
-            await msg.channel.send("Error: Page not found.")
-    else:
-        await msg.channel.send("Error : No players found in your collection.")
-
 async def remove_player(user, msg, player):
     if user.id not in responses.user_upgrades:
         responses.user_upgrades[user.id] = [0,0,0,0]
@@ -841,6 +843,7 @@ def run_discord_bot():
         print(f"{username} said: '{user_msg}' ({channel})")
         
         global collection_messages
+        global tutorial.tutorial_messages
         
         if user_msg[0] == "?":
             user_msg = user_msg[1:]
@@ -912,6 +915,14 @@ def run_discord_bot():
             else:
                 name = user_msg.split()[1:]
                 await rename_club(msg, msg.author, name)
+                
+        elif user_msg.startswith("%tuto"):
+            tutorial.tutorial_messages = {}
+            if len(user_msg.split()) == 1:
+                tutorial.tutorial(msg, msg.author, 0)
+            else:
+                page_num = user_msg.split()[1]
+                tutorial.tutorial(msg, msg.author, page_num)
         
         else:
             await send_message(msg, user_msg, is_private=False)
@@ -972,6 +983,27 @@ async def on_reaction_add(reaction, user):
                 current_page = user_current_page[user.id]
                 await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
+            
+            elif reaction.emoji == "\u2b05":
+                if user_current_page[user.id] == 0:
+                    user_current_page[user.id] = len(tutorial.user_tutorial[user.id]) - 1
+                else:                        
+                    user_current_page[user.id] -= 1
+                
+                current_page = user_current_page[user.id]
+                await tutorial.tutorial(reaction.message, user, current_page) 
+                return
+            
+            elif reaction.emoji == "\u27a1":
+                if user_current_page[user.id] == len(tutorial.user_tutorial[user.id]) - 1:
+                    user_current_page[user.id] = 0
+                else:
+                    user_current_page[user.id] += 1
+                
+                current_page = user_current_page[user.id]
+                await tutorial.tutorial(reaction.message, user, current_page) 
+                return
+            
             
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]

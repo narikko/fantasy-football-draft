@@ -484,6 +484,30 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                      new_embed.add_field(name=field.name, value="", inline=field.inline)
                 else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    
+            user_teams[user.id] = new_embed
+            
+            overall_value = 0
+            player_values = []
+            if len(user_team_players[user.id]) != 0:
+                for player in user_team_players[user.id]:
+                    for field in player.fields:
+                        if "Value:" in field.name:
+                            player_values.append(int(field.name.split()[1]))
+                            break
+                                
+                overall_value = round(sum(player_values) / len(user_team_players[user.id]))
+            
+            if user_upgrades[user.id][2] != 0:
+                overall_value = float(overall_value)
+                overall_value += overall_value * (training_upgrades[user_upgrades[user.id][2] - 1] / 100)
+                overall_value = int(overall_value)
+            
+            for field in user_teams[user.id].fields:
+                if field.name.strip() == "Overall Value":
+                    new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+                else:
+                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
 
             user_teams[user.id] = new_embed
             

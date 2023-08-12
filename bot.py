@@ -636,7 +636,6 @@ async def show_collection(user, msg, page_num, mention):
         collection = user_collections[mention_id]
         if 0 <= page_num < len(collection):
             user_current_page[user.id] = page_num
-            print(page_num)
             embed_to_show = collection[page_num]
             embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{user_current_page[user.id] + 1}/{len(user_collections[mention_id])}")
         

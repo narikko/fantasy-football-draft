@@ -189,7 +189,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_8 = discord.Embed(
             title="Congrats! You have completed the tutorial!",
-            description="Type %index for a summary of all the commands." + "\n" + "Type %tuto [page_number] to go back on a specific tutorial."
+            description="Type %index for a summary of all the commands." + "\n" + "Type %tuto [page_number] to go back on a specific tutorial.",
             color=0xFFA500 
         )
         

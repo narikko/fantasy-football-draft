@@ -206,8 +206,10 @@ async def tutorial(msg, user, page_num):
         
         user_tutorial[user.id] = tutorial_list
         
-    if False in user_tutorial_completion[user.id][user_current_tutorial[user.id]]:
-        await msg.channel.send("Please complete the current tutorial before moving onto another one.")
+    if page_num > user_current_tutorial[user.id]:
+        if False in user_current_tutorial[user.id][page_num]:
+            await msg.channel.send("Please complete the current tutorial before moving onto another one.")
+            return
         
     tutorials = user_tutorial[user.id]
    

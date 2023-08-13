@@ -4,6 +4,7 @@ import bot
 user_tutorial = {}
 tutorial_messages = {}
 user_tutorial_completion = {}
+user_current_tutorial = {}
 
 async def tutorial(msg, user, page_num):
     if user.id not in user_tutorial:
@@ -204,6 +205,9 @@ async def tutorial(msg, user, page_num):
         tutorial_list.append(tuto_8)
         
         user_tutorial[user.id] = tutorial_list
+        
+    if False in user_tutorial_completion[user.id][user_current_tutorial]:
+        await msg.channel.send("Please complete the current tutorial before moving onto another one.")
         
     tutorials = user_tutorial[user.id]
    

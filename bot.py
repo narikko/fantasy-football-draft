@@ -1145,7 +1145,7 @@ async def on_reaction_add(reaction, user):
                     if user_current_page[user.id] == len(tutorial.user_tutorial[user.id]) - 1:
                         user_current_page[user.id] = 0
                     else:
-                        user_current_page[u	ser.id] += 1
+                        user_current_page[user.id] += 1
                     
                     current_page = user_current_page[user.id]
                     await tutorial.tutorial(reaction.message, user, current_page) 

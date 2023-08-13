@@ -985,7 +985,7 @@ def run_discord_bot():
         global collection_messages
         
         if msg.author.id not in tutorial.user_tutorial_completion:
-            tutorial.user_tutorial_completion[user.id] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
+            tutorial.user_tutorial_completion[msg.author.id] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
         
         if user_msg[0] == "?":
             user_msg = user_msg[1:]

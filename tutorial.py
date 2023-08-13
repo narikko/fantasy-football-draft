@@ -3,6 +3,7 @@ import bot
 
 user_tutorial = {}
 tutorial_messages = {}
+user_tutorial_completion = {}
 
 async def tutorial(msg, user, page_num):
     if user.id not in user_tutorial:

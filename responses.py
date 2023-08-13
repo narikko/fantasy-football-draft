@@ -6,6 +6,7 @@ import emoji
 import asyncio
 import time
 import unicodedata
+import tutorial
 
 user_teams = {}
 user_team_players = {}
@@ -233,6 +234,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
+                
+        if not tutorial.user_tutorial_completion[user.id][3][0]:
+            tutorial.user_tutorial_completion[user.id][3][0] = True
+            
+            if False not in tutorial.user_tutorial_completion[user.id][3]:
+                user_coins[user.id] += 500
+                await reaction.message.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**!")
             
         return embed
     
@@ -327,6 +335,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             description=players_desc,
             color=0xADD8E6
             )
+        
+        if not tutorial.user_tutorial_completion[user.id][3][1]:
+            tutorial.user_tutorial_completion[user.id][3][1] = True
+            
+            if False not in tutorial.user_tutorial_completion[user.id][3]:
+                user_coins[user.id] += 500
+                await reaction.message.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**!")
             
         return embed
     
@@ -422,6 +437,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
             
             user_teams[user.id] = new_embed
+            
+            if not tutorial.user_tutorial_completion[user.id][4][0]:
+                tutorial.user_tutorial_completion[user.id][4][0] = True
+                
+                if False not in tutorial.user_tutorial_completion[user.id][4]:
+                    user_coins[user.id] += 500
+                    await reaction.message.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+            
             return user_teams[user.id]
         
         if p_msg.split()[1] == "rewards":
@@ -458,6 +481,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 description=reward_info,
                 color=0x00008B
             )
+            
+            if not tutorial.user_tutorial_completion[user.id][4][3]:
+                tutorial.user_tutorial_completion[user.id][4][3] = True
+                
+                if False not in tutorial.user_tutorial_completion[user.id][4]:
+                    user_coins[user.id] += 500
+                    await reaction.message.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
             
             return embed
             
@@ -528,6 +558,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             user_teams[user.id] = newer_embed
             
             await msg.channel.send(f"{player.title} was removed from your starting XI.")
+            
+            if not tutorial.user_tutorial_completion[user.id][4][2]:
+                tutorial.user_tutorial_completion[user.id][4][2] = True
+                
+                if False not in tutorial.user_tutorial_completion[user.id][4]:
+                    user_coins[user.id] += 500
+                    await reaction.message.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
             return
 
         for player in collection:
@@ -676,6 +713,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 await bot.team_rewards(msg, user, 800)
         
         user_teams[user.id] = new_embed
+        
+        if not tutorial.user_tutorial_completion[user.id][4][1]:
+            tutorial.user_tutorial_completion[user.id][4][1] = True
+                
+            if False not in tutorial.user_tutorial_completion[user.id][4]:
+                user_coins[user.id] += 500
+                await reaction.message.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+                
         return user_teams[user.id]
     
     if p_msg.startswith("%u"):
@@ -729,6 +774,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                           "• Level 5 (MAX): 24000 \U0001f4a0, reduced to 6 hours.",
                     inline=False
                 )
+                
+                if not tutorial.user_tutorial_completion[user.id][5][1]:
+                    tutorial.user_tutorial_completion[user.id][5][1] = True
+                        
+                    if False not in tutorial.user_tutorial_completion[user.id][5]:
+                        bot.user_free_claims[user.id] += 1
+                        await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
                             
                 return embed
             
@@ -744,6 +796,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][0] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!")
+                    
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if False not in tutorial.user_tutorial_completion[user.id][5]:
+                            bot.user_free_claims[user.id] += 1
+                            await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                    
                     return
                 else:
                     return
@@ -760,6 +820,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][1] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][1]}**!")
+                    
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if False not in tutorial.user_tutorial_completion[user.id][5]:
+                            bot.user_free_claims[user.id] += 1
+                            await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            
                     return
                 else:
                     return
@@ -776,6 +844,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][2] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][2]}**!")
+                    
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if False not in tutorial.user_tutorial_completion[user.id][5]:
+                            bot.user_free_claims[user.id] += 1
+                            await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            
                     return
                 else:
                     return
@@ -792,6 +868,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     bot.user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][3] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your transfer market to level **{user_upgrades[user.id][3]}**!")
+                    
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if False not in tutorial.user_tutorial_completion[user.id][5]:
+                            bot.user_free_claims[user.id] += 1
+                            await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            
                     return
                 else:
                     return
@@ -832,6 +916,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                   "To level up an upgrade, type %u [upgrade_name]. Example: %u Board.",
             inline=False
         )
+        
+        if not tutorial.user_tutorial_completion[user.id][5][0]:
+            tutorial.user_tutorial_completion[user.id][5][0] = True
+                
+            if False not in tutorial.user_tutorial_completion[user.id][5]:
+                bot.user_free_claims[user.id] += 1
+                await reaction.message.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
             
         return embed
         

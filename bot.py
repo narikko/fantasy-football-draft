@@ -1188,6 +1188,7 @@ async def on_reaction_add(reaction, user):
             if not tutorial.user_tutorial_completion[user.id][0][0]:
                 tutorial.user_tutorial_completion[user.id][0][0] = True
                 user_free_claims[user.id] += 1
+                print("it happened")
                 await reaction.message.channel.send("Tutorial 1 complete! You have been rewarded **1 free claim**!")
                 
             if len(user_collections[user.id]) == 2:

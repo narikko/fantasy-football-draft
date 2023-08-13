@@ -853,7 +853,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     user_upgrades[user.id][1] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][1]}**!")
                     
-                    if user.id not in bot.user_free_claims:
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
@@ -878,7 +881,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     user_upgrades[user.id][2] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][2]}**!")
                     
-                    if user.id not in bot.user_free_claims:
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
@@ -902,7 +908,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     user_upgrades[user.id][3] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your transfer market to level **{user_upgrades[user.id][3]}**!")
                     
-                    if user.id not in bot.user_free_claims:
+                    if not tutorial.user_tutorial_completion[user.id][5][2]:
+                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                            
+                        if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
                         if False not in tutorial.user_tutorial_completion[user.id][5]:

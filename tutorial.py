@@ -108,7 +108,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_5 = discord.Embed(
             title="Tutorial 5: Team Building",
-            description="**Reward: 500 \U0001f4a0**"
+            description="**Reward: 500 \U0001f4a0**",
             color=0xFFA500 
         )
         

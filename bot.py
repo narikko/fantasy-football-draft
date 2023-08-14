@@ -1132,7 +1132,7 @@ def run_discord_bot():
         elif user_msg.startswith("%tuto"):
             tutorial.tutorial_messages = {}
             if len(user_msg.split()) == 1:
-                await tutorial.tutorial(msg, msg.author, tutorial.user_current_tutorial)
+                await tutorial.tutorial(msg, msg.author, tutorial.user_current_tutorial[msg.author.id])
             else:
                 page_num = user_msg.split()[1]
                 await tutorial.tutorial(msg, msg.author, page_num)

@@ -12,6 +12,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_1 = discord.Embed(
             title="Tutorial 1: The Basics",
+            description="**Reward: 1 free claim**",
             color=0xFFA500 
         )
         
@@ -23,6 +24,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_2 = discord.Embed(
             title="Tutorial 2: Profile",
+            description="**Reward: 250 \U0001f4a0**",
             color=0xFFA500 
         )
         
@@ -46,6 +48,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_3 = discord.Embed(
             title="Tutorial 3: Collection",
+            description= "**Reward: +1 roll/hour**", 
             color=0xFFA500 
         )
         
@@ -87,6 +90,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_4 = discord.Embed(
             title="Tutorial 4: Viewing",
+            description="**Reward: 500 \U0001f4a0**",
             color=0xFFA500 
         )
         
@@ -104,6 +108,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_5 = discord.Embed(
             title="Tutorial 5: Team Building",
+            description="**Reward: 500 \U0001f4a0**"
             color=0xFFA500 
         )
         
@@ -139,6 +144,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_6 = discord.Embed(
             title="Tutorial 6: Upgrades",
+            description="**Reward: 1 free claim**",
             color=0xFFA500 
         )
         
@@ -162,6 +168,7 @@ async def tutorial(msg, user, page_num):
         
         tuto_7 = discord.Embed(
             title="Tutorial 7: Trading and the Transfer Market",
+            description="**Reward: 750 \U0001f4a0**",
             color=0xFFA500 
         )
         

@@ -224,7 +224,7 @@ async def dailies(msg, user):
         if not tutorial.user_tutorial_completion[user.id][1][2]:
             tutorial.user_tutorial_completion[user.id][1][2] = True
             
-            if user.id not in user_coins[user.id]:
+            if user.id not in user_coins:
                 user_coins[user.id] = 0
         
             if False not in tutorial.user_tutorial_completion[user.id][1]:

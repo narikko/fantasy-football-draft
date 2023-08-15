@@ -1149,9 +1149,9 @@ def run_discord_bot():
 @client.event
 async def on_reaction_add(reaction, user):
     print("Reaction added by:", user)
-    print("Message author:", msg.author)
+    print("Message author:", reaction.message.author)
     print("Emoji:", reaction.emoji)
-    print("Embeds:", msg.embeds)
+    print("Embeds:", reaction.message.embeds)
 
     if user == client.user:
         print("Bot message.")
@@ -1160,7 +1160,7 @@ async def on_reaction_add(reaction, user):
     if user.id not in mentioned_user:
         mentioned_user[user.id] = ""
     
-    if msg.author == client.user: 
+    if reaction.message.author == client.user: 
         if user.id in user_current_page: 
             if reaction.emoji == "⬅️":
                 if mentioned_user[user.id] != "":
@@ -1177,7 +1177,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] -= 1
                 
                 current_page = user_current_page[user.id]
-                await show_collection(user, msg, current_page, mentioned_user[user.id])
+                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
                 
             elif reaction.emoji == "➡️":
@@ -1194,7 +1194,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] += 1
                     
                 current_page = user_current_page[user.id]
-                await show_collection(user, msg, current_page, mentioned_user[user.id])
+                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
                 return
             
             elif reaction.emoji == "\u2b05":
@@ -1205,7 +1205,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] -= 1
                     
                     current_page = user_current_page[user.id]
-                    await tutorial.tutorial(msg, user, current_page) 
+                    await tutorial.tutorial(reaction.message, user, current_page) 
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
@@ -1219,15 +1219,15 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] += 1
                     
                     current_page = user_current_page[user.id]
-                    await tutorial.tutorial(msg, user, current_page) 
+                    await tutorial.tutorial(reaction.message, user, current_page) 
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
                     return
             
             
-    if isinstance(msg.embeds[0], discord.Embed) and "Football Roll Bot" in msg.embeds[0].footer.text:
-        player_embed = msg.embeds[0]
+    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
+        player_embed = reaction.message.embeds[0]
         player_id = player_embed.footer.text.split(", ")[1]
         
         current_time = time.time()

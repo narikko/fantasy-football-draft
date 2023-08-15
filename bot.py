@@ -91,7 +91,7 @@ async def show_collection(user, msg, page_num, mention):
                     if False not in tutorial.user_tutorial_completion[user.id][2]:
                         responses.user_max_rolls[user.id] += 1
                         tutorial.user_current_tutorial[user.id] = 3
-                        await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
+                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
             else:
                 if not tutorial.user_tutorial_completion[user.id][2][5]:
                     tutorial.user_tutorial_completion[user.id][2][5] = True
@@ -102,7 +102,7 @@ async def show_collection(user, msg, page_num, mention):
                     if False not in tutorial.user_tutorial_completion[user.id][2]:
                         responses.user_max_rolls[user.id] += 1
                         tutorial.user_current_tutorial[user.id] = 3
-                        await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
+                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
         else:
             await msg.channel.send("Error: Page not found.")
     else:
@@ -132,7 +132,7 @@ async def rename_club(msg, user, name):
         if False not in tutorial.user_tutorial_completion[user.id][4]:
             user_coins[user.id] += 500
             tutorial.user_current_tutorial[user.id] = 5
-            await reaction.message.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+            await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
 
 async def move_player(msg, user, player, position):
     if user.id not in user_collections:
@@ -170,7 +170,7 @@ async def move_player(msg, user, player, position):
         if False not in tutorial.user_tutorial_completion[user.id][2]:
             responses.user_max_rolls[user.id] += 1
             tutorial.user_current_tutorial[user.id] = 3
-            await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
+            await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
      
 async def sort_collection(msg, user):
     if user.id not in user_collections:
@@ -195,7 +195,7 @@ async def sort_collection(msg, user):
         if False not in tutorial.user_tutorial_completion[user.id][2]:
             responses.user_max_rolls[user.id] += 1
             tutorial.user_current_tutorial[user.id] = 3
-            await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
+            await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
 
 async def dailies(msg, user):
     if user.id not in user_daily_bool:
@@ -230,7 +230,7 @@ async def dailies(msg, user):
             if False not in tutorial.user_tutorial_completion[user.id][1]:
                 user_coins[user.id] += 250
                 tutorial.user_current_tutorial[user.id] = 2
-                await reaction.message.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
+                await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
         
         await asyncio.sleep(86400)
         user_daily_bool[user.id] = True
@@ -412,7 +412,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             tutorial.user_tutorial_completion[user.id][7][0] = True
                             user_coins[user.id] += 750
                             tutorial.user_current_tutorial[user.id] = 7
-                            await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                            await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                     
                     if responses.user_upgrades[user.id][3] == 1:
                         try:
@@ -445,7 +445,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
                                     tutorial.user_current_tutorial[user.id] = 7
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -482,7 +482,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
                                     tutorial.user_current_tutorial[user.id] = 7
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -518,7 +518,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
                                     tutorial.user_current_tutorial[user.id] = 7
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -555,7 +555,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
                                     tutorial.user_current_tutorial[user.id] = 7
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -588,7 +588,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -625,7 +625,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
                                     user_coins[user.id] += 750
                                     tutorial.user_current_tutorial[user.id] = 7
-                                    await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                             
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
@@ -683,7 +683,7 @@ async def transfer_market(msg, user, player_to_list, command):
                 tutorial.user_tutorial_completion[user.id][7][0] = True
                 user_coins[user.id] += 750
                 tutorial.user_current_tutorial[user.id] = 7
-                await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                 
 async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:
@@ -731,7 +731,7 @@ async def set_favorite_club(msg, user, club):
                 if False not in tutorial.user_tutorial_completion[user.id][1]:
                     user_coins[user.id] += 250
                     tutorial.user_current_tutorial[user.id] = 2
-                    await reaction.message.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
+                    await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
             
             break
     
@@ -821,7 +821,7 @@ async def display_profile(msg, user):
         if False not in tutorial.user_tutorial_completion[user.id][1]:
             user_coins[user.id] += 250
             tutorial.user_current_tutorial[user.id] = 2
-            await reaction.message.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
+            await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**!")
         
 
 async def extract_user_id(mention):
@@ -897,7 +897,7 @@ async def remove_player(user, msg, player):
                         if False not in tutorial.user_tutorial_completion[user.id][2]:
                             responses.user_max_rolls[user.id] += 1
                             tutorial.user_current_tutorial[user.id] = 3
-                            await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
+                            await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**!")
                     
                 elif response_content == 'no' or response_content == 'n':
                     await msg.channel.send("Removal cancelled.")
@@ -1026,7 +1026,7 @@ async def trade_player(user, msg, player, mention):
                             tutorial.user_tutorial_completion[user.id][7][0] = True
                             user_coins[user.id] += 750
                             tutorial.user_current_tutorial[user.id] = 7
-                            await reaction.message.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
+                            await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**!")
                     
                 elif response_content == 'no' or response_content == 'n':
                     await msg.channel.send("Trade cancelled.")
@@ -1149,9 +1149,9 @@ def run_discord_bot():
 @client.event
 async def on_reaction_add(reaction, user):
     print("Reaction added by:", user)
-    print("Message author:", reaction.message.author)
+    print("Message author:", msg.author)
     print("Emoji:", reaction.emoji)
-    print("Embeds:", reaction.message.embeds)
+    print("Embeds:", msg.embeds)
 
     if user == client.user:
         print("Bot message.")
@@ -1160,7 +1160,7 @@ async def on_reaction_add(reaction, user):
     if user.id not in mentioned_user:
         mentioned_user[user.id] = ""
     
-    if reaction.message.author == client.user: 
+    if msg.author == client.user: 
         if user.id in user_current_page: 
             if reaction.emoji == "⬅️":
                 if mentioned_user[user.id] != "":
@@ -1177,7 +1177,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] -= 1
                 
                 current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
+                await show_collection(user, msg, current_page, mentioned_user[user.id])
                 return
                 
             elif reaction.emoji == "➡️":
@@ -1194,7 +1194,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] += 1
                     
                 current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
+                await show_collection(user, msg, current_page, mentioned_user[user.id])
                 return
             
             elif reaction.emoji == "\u2b05":
@@ -1205,7 +1205,7 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] -= 1
                     
                     current_page = user_current_page[user.id]
-                    await tutorial.tutorial(reaction.message, user, current_page) 
+                    await tutorial.tutorial(msg, user, current_page) 
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
@@ -1219,15 +1219,15 @@ async def on_reaction_add(reaction, user):
                         user_current_page[user.id] += 1
                     
                     current_page = user_current_page[user.id]
-                    await tutorial.tutorial(reaction.message, user, current_page) 
+                    await tutorial.tutorial(msg, user, current_page) 
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
                     return
             
             
-    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
-        player_embed = reaction.message.embeds[0]
+    if isinstance(msg.embeds[0], discord.Embed) and "Football Roll Bot" in msg.embeds[0].footer.text:
+        player_embed = msg.embeds[0]
         player_id = player_embed.footer.text.split(", ")[1]
         
         current_time = time.time()

@@ -897,7 +897,13 @@ async def remove_player(user, msg, player):
                     
                     user_coins[user.id] += int(found_player_value)
                     await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
-                    await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
+                    
+                    if user.id not in responses.user_team_players:
+                        responses.user_team_players[user.id] = []
+                    
+                    for player in responses.user_team_players:
+                        if player.title == removed_embed.title:
+                            await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
                     
                     if not tutorial.user_tutorial_completion[user.id][2][4]:
                         tutorial.user_tutorial_completion[user.id][2][4] = True

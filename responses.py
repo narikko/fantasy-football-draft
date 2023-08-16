@@ -573,7 +573,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
             user_teams[user.id] = newer_embed
             
-            await msg.channel.send(f"{player.title} was removed from your starting XI.")
+            await msg.channel.send(f"{removed_player} was removed from your starting XI.")
             
             if not tutorial.user_tutorial_completion[user.id][4][2]:
                 tutorial.user_tutorial_completion[user.id][4][2] = True

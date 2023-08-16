@@ -227,7 +227,7 @@ async def tutorial(msg, user, page_num):
         for field in page.fields:
             print(user_tutorial_completion[user.id][i][j])
             if user_tutorial_completion[user.id][i][j]:
-                new_page.add_field(name=field.name.split(": ")[0] + ":" + " \u2705", value=field.value, inline=field.inline)
+                new_page.add_field(name=field.name.split(":")[0] + ": " + "\u2705", value=field.value, inline=field.inline)
             else:
                 new_page.add_field(name=field.name, value= field.value, inline=field.inline)
                 

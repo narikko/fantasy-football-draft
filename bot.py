@@ -84,6 +84,8 @@ async def show_collection(user, msg, page_num, mention):
             if mention == "":    
                 if not tutorial.user_tutorial_completion[user.id][2][1]:
                     tutorial.user_tutorial_completion[user.id][2][1] = True
+                    
+                    print(tutorial.user_tutorial_completion[user.id][2])
                             
                     if user.id not in responses.user_max_rolls:
                         responses.user_max_rolls[user.id] = 9
@@ -95,6 +97,8 @@ async def show_collection(user, msg, page_num, mention):
             else:
                 if not tutorial.user_tutorial_completion[user.id][2][5]:
                     tutorial.user_tutorial_completion[user.id][2][5] = True
+                    
+                    print(tutorial.user_tutorial_completion[user.id][2])
                     
                     if user.id not in responses.user_max_rolls:
                         responses.user_max_rolls[user.id] = 9
@@ -164,6 +168,8 @@ async def move_player(msg, user, player, position):
     if not tutorial.user_tutorial_completion[user.id][2][3]:
         tutorial.user_tutorial_completion[user.id][2][3] = True
         
+        print(tutorial.user_tutorial_completion[user.id][2])
+        
         if user.id not in responses.user_max_rolls:
             responses.user_max_rolls[user.id] = 9
                 
@@ -188,6 +194,8 @@ async def sort_collection(msg, user):
     
     if not tutorial.user_tutorial_completion[user.id][2][2]:
         tutorial.user_tutorial_completion[user.id][2][2] = True
+        
+        print(tutorial.user_tutorial_completion[user.id][2])
         
         if user.id not in responses.user_max_rolls:
             responses.user_max_rolls[user.id] = 9
@@ -891,6 +899,8 @@ async def remove_player(user, msg, player):
                     if not tutorial.user_tutorial_completion[user.id][2][4]:
                         tutorial.user_tutorial_completion[user.id][2][4] = True
                         
+                        print(tutorial.user_tutorial_completion[user.id][2])
+                        
                         if user.id not in responses.user_max_rolls:
                             responses.user_max_rolls[user.id] = 9
                     
@@ -1269,6 +1279,8 @@ async def on_reaction_add(reaction, user):
             if len(user_collections[user.id]) == 2:
                 if not tutorial.user_tutorial_completion[user.id][2][0]:
                     tutorial.user_tutorial_completion[user.id][2][0] = True
+                    
+                    print(tutorial.user_tutorial_completion[user.id][2])
                     
                     if user.id not in responses.user_max_rolls:
                         responses.user_max_rolls[user.id] = 9

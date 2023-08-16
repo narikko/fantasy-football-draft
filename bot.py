@@ -413,7 +413,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     if not tutorial.user_tutorial_completion[user.id][6][2]:
                         tutorial.user_tutorial_completion[user.id][6][2] = True
                             
-                        if user.id not in user_coins[user.id]:
+                        if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                         if False not in tutorial.user_tutorial_completion[user.id][6]:
@@ -446,7 +446,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
                                     
-                                if user.id not in user_coins[user.id]:
+                                if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
@@ -483,7 +483,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
                                     
-                                if user.id not in user_coins[user.id]:
+                                if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
@@ -519,7 +519,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
                                     
-                                if user.id not in user_coins[user.id]:
+                                if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
@@ -556,7 +556,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
                                     
-                                if user.id not in user_coins[user.id]:
+                                if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
@@ -592,6 +592,9 @@ async def transfer_market(msg, user, player_to_list, command):
                             
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
+                                
+                                if user.id not in user_coins:
+                                    user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:
                                     tutorial.user_tutorial_completion[user.id][7][0] = True
@@ -626,7 +629,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             if not tutorial.user_tutorial_completion[user.id][6][3]:
                                 tutorial.user_tutorial_completion[user.id][6][3] = True
                                 
-                                if user.id not in user_coins[user.id]:
+                                if user.id not in user_coins:
                                     user_coins[user.id] = 0
                                     
                                 if False not in tutorial.user_tutorial_completion[user.id][6]:

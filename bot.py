@@ -44,7 +44,7 @@ def format_time(seconds):
     minutes, seconds = divmod(remainder, 60)
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-def get_time_remaining():
+def get_time_remaining(user):
     task = user_transfer_tasks[user.id]
     if task is not None and not task.done():
         time_remaining = user_market_wait[user.id] - time.time()
@@ -677,7 +677,7 @@ async def transfer_market(msg, user, player_to_list, command):
         menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
         menu += "**Transfer List:**\n"
         if user_market_bool[user.id]:
-            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining()}**"
+            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(user)}**"
         else:
             menu += "Ready to add a player from your collection!"
             

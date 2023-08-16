@@ -1149,9 +1149,12 @@ def run_discord_bot():
             else:
                 page_num = user_msg.split()[1]
                 await tutorial.tutorial(msg, msg.author, page_num)
-        
-        else:
+                
+        elif user_msg == "%r" or user_msg.startswith("%v") or user_msg.startswith("%lc") or user_msg.startswith("%t") or user_msg.startswith("%u"):
             await send_message(msg, user_msg, is_private=False)
+            
+        else:
+            return
             
     client.loop.create_task(clean_up_rolled_times())
     client.loop.create_task(roll_timer())

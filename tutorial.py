@@ -222,6 +222,7 @@ async def tutorial(msg, user, page_num):
                 color=page.color
             )
             for field in page.fields:
+                print(user_tutorial_completion[user.id][i][j])
                 if user_tutorial_completion[user.id][i][j]:
                     new_page.add_field(name=field.name + " \u2705", value=field.value, inline=field.inline)
                 else:

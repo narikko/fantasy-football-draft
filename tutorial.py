@@ -213,25 +213,25 @@ async def tutorial(msg, user, page_num):
         
         user_tutorial[user.id] = tutorial_list
         
-        i = 0
-        for page in user_tutorial[user.id]:
-            j = 0
-            new_page = discord.Embed(
-                title=page.title,
-                description=page.description,
-                color=page.color
+    i = 0
+    for page in user_tutorial[user.id]:
+        j = 0
+        new_page = discord.Embed(
+            title=page.title,
+            description=page.description,
+            color=page.color
             )
-            for field in page.fields:
-                print(user_tutorial_completion[user.id][i][j])
-                if user_tutorial_completion[user.id][i][j]:
-                    new_page.add_field(name=field.name + " \u2705", value=field.value, inline=field.inline)
-                else:
-                    new_page.add_field(name=field.name, value= field.value, inline=field.inline)
+        for field in page.fields:
+            print(user_tutorial_completion[user.id][i][j])
+            if user_tutorial_completion[user.id][i][j]:
+                new_page.add_field(name=field.name + " \u2705", value=field.value, inline=field.inline)
+            else:
+                new_page.add_field(name=field.name, value= field.value, inline=field.inline)
                 
-                j += 1
+            j += 1
             
-            user_tutorial[user.id][i] = new_page
-            i += 1
+        user_tutorial[user.id][i] = new_page
+        i += 1
 
     if page_num > user_current_tutorial[user.id]:
         if False in user_current_tutorial[user.id][page_num]:

@@ -901,7 +901,7 @@ async def remove_player(user, msg, player):
                     if user.id not in responses.user_team_players:
                         responses.user_team_players[user.id] = []
                     
-                    for player in responses.user_team_players:
+                    for player in responses.user_team_players[user.id]:
                         if player.title == removed_embed.title:
                             await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
                     

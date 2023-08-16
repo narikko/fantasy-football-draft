@@ -37,6 +37,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     legends_list = g.readlines()
     
     p_msg = user_msg.lower()
+    print(p_msg)
     
     claimed = False
     legend = False
@@ -516,7 +517,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         correct_pos = False
         sel_player = ""
         
-        if p_msg.split()[1] == "rm":  
+        if p_msg.split()[1] == "rm":
+            print("this happened")
             new_embed = discord.Embed(
                 title=user_teams[user.id].title,
                 description=user_teams[user.id].description,

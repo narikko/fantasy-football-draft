@@ -1018,7 +1018,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         index_description += "__%t [position] [player_name]__: Add a player to your starting XI.\n"
         index_description += "__%t rewards__: View starting XI rewards.\n"
         index_description += "__%t rm [player_name]__: Remove a player from your starting XI.\n"
-        index_description += "__%tr (or %trade) [mention] [player_name]: Trade a player to another user.\n"
+        index_description += "__%tr (or %trade) [mention] [player_name]__: Trade a player to another user.\n"
         index_description += "__%tm__: View the transfer market.\n"
         index_description += "__%tm add [player_name]__: Add a player from your collection to the transfer list.\n"
         index_description += "__%tm rm [player_name]__: Remove player from transfer list.\n"

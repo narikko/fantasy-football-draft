@@ -8,8 +8,6 @@ import time
 import random
 import tutorial
 
-from discord.ext import commands
-
 user_collections = {}
 user_current_page = {}
 collection_messages = {}
@@ -39,13 +37,7 @@ user_coins[456861613966884866] = 1000000000
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
 intents.members = True
-
-client = commands.client(command_prefix='%', intents=intents)
-
-client.command()
-async def w(ctx):
-    welcome_msg = "**Welcome to Fantasy Football Draft!** Embark on an exciting journey of collecting player cards and crafting your ultimate collection. Compete with fellow users as you work towards assembling the most formidable squad. Type %tuto to get started!"
-    await ctx.send(welcome_message)
+client = discord.Client(intents=intents)
 
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
@@ -1221,7 +1213,7 @@ async def on_reaction_add(reaction, user):
     print("Embeds:", reaction.message.embeds)
 
     if user == client.user:
-        print("client message.")
+        print("Bot message.")
         return
     
     if user.id not in mentioned_user:

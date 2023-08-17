@@ -40,9 +40,9 @@ TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Q
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='%', intents=intents)
+client = commands.client(command_prefix='%', intents=intents)
 
-@bot.command()
+client.command()
 async def w(ctx):
     welcome_msg = "**Welcome to Fantasy Football Draft!** Embark on an exciting journey of collecting player cards and crafting your ultimate collection. Compete with fellow users as you work towards assembling the most formidable squad. Type %tuto to get started!"
     await ctx.send(welcome_message)
@@ -345,7 +345,7 @@ async def free_claim(msg, user):
     if user_free_claims[user.id] != 0:
         confirmation_msg = await msg.channel.send(f"You have **{user_free_claims[user.id]}** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have claim ready. (y/n/yes/no)")
         try:
-            response = await bot.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+            response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()
             if response_content == 'yes' or response_content == 'y':
                 responses.user_can_claim[user.id] = True
@@ -737,7 +737,7 @@ async def purchase_confirmation(price_to_upgrade, user, msg):
     if user_coins[user.id] >= price_to_upgrade:
         confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
         try:
-            response = await bot.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+            response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()
             if response_content == 'yes' or response_content == 'y':
                 return True
@@ -923,7 +923,7 @@ async def remove_player(user, msg, player):
                 
             confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
             try:
-                response = await bot.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+                response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()
                 if response_content == 'yes' or response_content == 'y':
                     removed_embed = collection.pop(i)
@@ -974,7 +974,7 @@ async def trade_player(user, msg, player, mention):
     user_id = user.id
     other_id = await extract_user_id(mention)
     
-    other_user = bot.get_user(other_id)
+    other_user = client.get_user(other_id)
     
     user_collection = user_collections[user_id]
     other_collection = user_collections[other_id]
@@ -1003,7 +1003,7 @@ async def trade_player(user, msg, player, mention):
             return m.author.id == other_id and m.channel == msg.channel
         
         try:
-            response = await bot.wait_for('message', timeout=180, check=check_response)
+            response = await client.wait_for('message', timeout=180, check=check_response)
             response_content = response.content.lower()
             
             if response_content == "n" or response_content == "no":
@@ -1032,7 +1032,7 @@ async def trade_player(user, msg, player, mention):
                     return m.author.id == user_id and m.channel == msg.channel
             
             try:
-                response = await bot.wait_for('message', timeout=100, check=check_user_response)
+                response = await client.wait_for('message', timeout=100, check=check_user_response)
                 response_content = response.content.lower()
                 if response_content == 'yes' or response_content == 'y':
                     user_confirm = True
@@ -1048,7 +1048,7 @@ async def trade_player(user, msg, player, mention):
                 return m.author.id == other_id and m.channel == msg.channel
         
             try:
-                response = await bot.wait_for('message', timeout=100, check=check_response)
+                response = await client.wait_for('message', timeout=100, check=check_response)
                 response_content = response.content.lower()
                 
                 if response_content == 'yes' or response_content == 'y':
@@ -1099,13 +1099,13 @@ async def trade_player(user, msg, player, mention):
                 await msg.channel.send("Confirmation timed out. Trade cancelled.")
                 
 def run_discord_bot():
-    @bot.event
+    @client.event
     async def on_ready():
-        print(f'{bot.user} is now running!')
+        print(f'{client.user} is now running!')
         
-    @bot.event
+    @client.event
     async def on_message(msg):
-        if msg.author == bot.user:
+        if msg.author == client.user:
             return
         
         username = str(msg.author)
@@ -1207,27 +1207,27 @@ def run_discord_bot():
         else:
             return
             
-    bot.loop.create_task(clean_up_rolled_times())
-    bot.loop.create_task(roll_timer())
-    bot.loop.create_task(claim_timer())
+    client.loop.create_task(clean_up_rolled_times())
+    client.loop.create_task(roll_timer())
+    client.loop.create_task(claim_timer())
             
-    bot.run(TOKEN)
+    client.run(TOKEN)
             
-@bot.event
+@client.event
 async def on_reaction_add(reaction, user):
     print("Reaction added by:", user)
     print("Message author:", reaction.message.author)
     print("Emoji:", reaction.emoji)
     print("Embeds:", reaction.message.embeds)
 
-    if user == bot.user:
-        print("Bot message.")
+    if user == client.user:
+        print("client message.")
         return
     
     if user.id not in mentioned_user:
         mentioned_user[user.id] = ""
     
-    if reaction.message.author == bot.user: 
+    if reaction.message.author == client.user: 
         if user.id in user_current_page: 
             if reaction.emoji == "⬅️":
                 if mentioned_user[user.id] != "":

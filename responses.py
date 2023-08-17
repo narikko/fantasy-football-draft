@@ -241,11 +241,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             if user.id not in bot.user_coins:
                 bot.user_coins[user.id] = 0
+                
+            await msg.channel.send("Substep complete! Type %tuto for the next steps!")
             
             if False not in tutorial.user_tutorial_completion[user.id][3]:
                 bot.user_coins[user.id] += 500
                 tutorial.user_current_tutorial[user.id] = 4
-                await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**!")
+                await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
         return embed
     
@@ -347,10 +349,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if user.id not in bot.user_coins:
                 bot.user_coins[user.id] = 0
             
+            await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+            
             if False not in tutorial.user_tutorial_completion[user.id][3]:
                 bot.user_coins[user.id] += 500
                 tutorial.user_current_tutorial[user.id] = 4
-                await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**!")
+                await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
         return embed
     
@@ -453,10 +457,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if user.id not in bot.user_coins:
                     bot.user_coins[user.id] = 0
                 
+                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                
                 if False not in tutorial.user_tutorial_completion[user.id][4]:
                     bot.user_coins[user.id] += 500
                     
-                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
             return user_teams[user.id]
         
@@ -500,11 +506,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 
                 if user.id not in bot.user_coins:
                     bot.user_coins[user.id] = 0
+                    
+                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
                 if False not in tutorial.user_tutorial_completion[user.id][4]:
                     user_coins[user.id] += 500
                     tutorial.user_current_tutorial[user.id] = 5
-                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
             return embed
             
@@ -581,12 +589,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 tutorial.user_tutorial_completion[user.id][4][2] = True
                 
                 if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                    bot.user_coins[user.id] =
+                    
+                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
                 if False not in tutorial.user_tutorial_completion[user.id][4]:
                     user_coins[user.id] += 500
                     tutorial.user_current_tutorial[user.id] = 5
-                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+                    await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             return
 
         for player in collection:
@@ -742,10 +752,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if user.id not in bot.user_coins:
                 bot.user_coins[user.id] = 0
                 
+            await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                
             if False not in tutorial.user_tutorial_completion[user.id][4]:
                 user_coins[user.id] += 500
                 tutorial.user_current_tutorial[user.id] = 5
-                await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**!")
+                await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
                 
         return user_teams[user.id]
     
@@ -807,10 +819,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     if user.id not in bot.user_free_claims:
                         bot.user_free_claims[user.id] = 0
                         
+                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                        
                     if False not in tutorial.user_tutorial_completion[user.id][5]:
                         bot.user_free_claims[user.id] += 1
                         tutorial.user_current_tutorial[user.id] = 6
-                        await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                        await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                 return embed
             
@@ -833,10 +847,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
+                        await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                            
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
                             bot.user_free_claims[user.id] += 1
                             tutorial.user_current_tutorial[user.id] = 6
-                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                     
                     return
                 else:
@@ -861,10 +877,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
+                        await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                            
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
                             bot.user_free_claims[user.id] += 1
                             tutorial.user_current_tutorial[user.id] = 6
-                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                     return
                 else:
@@ -889,10 +907,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
+                        await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                            
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
                             bot.user_free_claims[user.id] += 1
                             tutorial.user_current_tutorial[user.id] = 6
-                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")                            
+                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")                            
                     return
                 else:
                     return
@@ -916,10 +936,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                         if user.id not in bot.user_free_claims:
                             bot.user_free_claims[user.id] = 0
                             
+                        await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                            
                         if False not in tutorial.user_tutorial_completion[user.id][5]:
                             bot.user_free_claims[user.id] += 1
                             tutorial.user_current_tutorial[user.id] = 6
-                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                            await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                     return
                 else:
@@ -967,12 +989,52 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 
             if user.id not in bot.user_free_claims:
                 bot.user_free_claims[user.id] = 0
+                
+            await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
             if False not in tutorial.user_tutorial_completion[user.id][5]:
                 bot.user_free_claims[user.id] += 1
                 tutorial.user_current_tutorial[user.id] = 6
-                await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**!")
+                await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
             
+        return embed
+    
+    if p_msg == "%index":
+        index_description = "__%c__: View your collection.\n" + "__%c [page_number]__: View your collection at a specific page.\n"
+        index_description += "__%c [mention]__: View another user's collection.\n" + "__%c [mention] [page_number]__: View another user's collection at a specific page.\n"
+        index_description += "__%d__: Claim your daily reward.\n"
+        index_description += "__%fc__: Use a free claim.\n"
+        index_description += "__%index__: Summary of all commands.\m"
+        index_description += "__%lc__: List all players from a club.\n"
+        index_description += "__%m [page_number] [player_name]__: Move a player in your collection.\n"
+        index_description += "__%n__: Reset your club name to default.\n"
+        index_description += "__%n [name]__: Rename your club.\n"
+        index_description += "__%p__: View your profile.\n"
+        index_description += "__%r__: Roll for a player.\n"
+        index_description += "__%rm [player_name]__: Remove a player from your collection.\n"
+        index_description += "__%s__: Sort your collection from highest to lowest value.\n"
+        index_description += "__%sc__: Select your favorite club.\n"
+        index_description += "__%t__: View your starting XI.\n"
+        index_description += "__%t [position] [player_name]__: Add a player to your starting XI.\n"
+        index_description += "__%t rewards__: View starting XI rewards.\n"
+        index_description += "__%t rm [player_name]__: Remove a player from your starting XI.\n"
+        index_description += "__%tr (or %trade) [mention] [player_name]: Trade a player to another user.\n"
+        index_description += "__%tm__: View the transfer market.\n"
+        index_description += "__%tm add [player_name]__: Add a player from your collection to the transfer list.\n"
+        index_description += "__%tm rm [player_name]__: Remove player from transfer list.\n"
+        index_description += "__%tuto__: View your current tutorial.\n"
+        index_description += "__%tuto [page_number]__: View a specific unlocked tutorial.\n"
+        index_description += "__%u__: View your upgrades.\n"
+        index_description += "__%u [upgrade]__: Level up an upgrade.\n"
+        index_description += "__%u info__: Info about upgrades.\n"
+        index_description += "__%v [player_name]__: View a player.\n"
+        
+        embed = discord.Embed(
+            title="Index",
+            description=index_description,
+            color=0xB2BEB5
+        )
+        
         return embed
         
         

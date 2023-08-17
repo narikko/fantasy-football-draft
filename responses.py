@@ -589,7 +589,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 tutorial.user_tutorial_completion[user.id][4][2] = True
                 
                 if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] =
+                    bot.user_coins[user.id] = 0
                     
                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 

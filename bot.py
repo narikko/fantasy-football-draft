@@ -1193,7 +1193,7 @@ def run_discord_bot():
                 page_num = int(user_msg.split()[1])
                 await tutorial.tutorial(msg, msg.author, page_num)
                 
-        elif user_msg == "%r" or user_msg.startswith("%v") or user_msg.startswith("%lc") or user_msg.startswith("%t") or user_msg.startswith("%u"):
+        elif user_msg == "%r" or user_msg.startswith("%v") or user_msg.startswith("%lc") or user_msg.startswith("%t") or user_msg.startswith("%u") or user_msg == "%index":
             await send_message(msg, user_msg, is_private=False)
             
         else:

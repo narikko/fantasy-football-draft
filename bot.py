@@ -925,13 +925,15 @@ def run_discord_bot():
         if msg.author == client.user:
             return
         
+        server_id = msg.guild.id
+        
+        global server_data
+        
         username = str(msg.author)
         user_msg = str(msg.content)
         channel = str(msg.channel)
         
         print(f"{username} said: '{user_msg}' ({channel})")
-        
-        global collection_messages
         
         if msg.author.id not in server_data[server_id]["user_tutorial_completion"]:
             server_data[server_id]["user_tutorial_completion"][msg.author.id] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
@@ -943,7 +945,7 @@ def run_discord_bot():
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
-            collection_messages = {}
+            server_data[server_id]["collection_messages"] = {}
             mentioned_user[msg.author.id] = ""
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0, "")

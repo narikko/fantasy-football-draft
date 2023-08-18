@@ -1043,8 +1043,8 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
     
-    if user.id not in server_data[user.guild.id]["mentioned_user"]:
-        server_data[user.guild.id]["mentioned_user"][user.id] = ""
+    if user.id not in server_data[str(user.guild.id)]["mentioned_user"]:
+        server_data[str(user.guild.id)]["mentioned_user"][user.id] = ""
     
     if reaction.message.author == client.user:
         server_id = str(user.guild.id)

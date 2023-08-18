@@ -626,7 +626,7 @@ async def display_profile(msg, user):
         profile += f"You can't claim for another **{time_left_claim}**.\n"
     
     time_left_rolls = format_time(3600 - (curr_time - server_data[server_id]["roll_reset_time"]))
-    profile += f"You have **{server_data[server_id]["user_rolls"][user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
+    profile += f"You have **{server_data[server_id]['user_rolls'][user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
     
     time_left_daily = format_time(server_data[server_id]["user_daily_wait"][user.id] - curr_time)
     if server_data[server_id]["user_daily_bool"][user.id]:

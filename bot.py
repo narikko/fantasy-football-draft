@@ -925,7 +925,7 @@ def run_discord_bot():
         if msg.author == client.user:
             return
         
-        server_id = msg.guild.id
+        server_id = str(msg.guild.id)
         
         global server_data
         

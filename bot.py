@@ -635,9 +635,9 @@ async def display_profile(msg, user):
         profile += f"Your daily reward will be ready in **{time_left_daily}**.\n" + "\n"
     
     if server_data[server_id]["user_favorite_club"][user.id] != "":
-        profile += f"Your favorite club is set to **{server_data[server_id]["user_favorite_club"][user.id]}**.\n"
+        profile += f"Your favorite club is set to **{server_data[server_id]['user_favorite_club'][user.id]}**.\n"
         
-    profile += f"You have **{len(server_data[server_id]["user_collections"][user.id])}** player(s) in your collection.\n" + "\n"
+    profile += f"You have **{len(server_data[server_id]['user_collections'][user.id])}** player(s) in your collection.\n" + "\n"
     
     profile += "You have " + str(server_data[server_id]["user_coins"][user.id]) + " \U0001f4a0"
     

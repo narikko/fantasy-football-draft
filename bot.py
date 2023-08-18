@@ -8,31 +8,7 @@ import time
 import random
 import tutorial
 
-user_collections = {}
-user_current_page = {}
-collection_messages = {}
-user_coins = {}
-user_favorite_club = {}
-user_free_claims = {}
-user_club_name = {}
-mentioned_user = {}
-
-user_daily_wait = {}
-user_daily_bool = {}
-
-user_market = {}
-user_market_player = {}
-user_market_bool = {}
-user_transfer_tasks = {}
-user_market_wait = {}
-
-playerids= []
-usernames = []
-
-roll_reset_time = time.time()
-claim_reset_time = time.time()
-
-user_coins[456861613966884866] = 1000000000
+server_data = {}
 
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
@@ -44,115 +20,59 @@ def format_time(seconds):
     minutes, seconds = divmod(remainder, 60)
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-def get_time_remaining(user):
-    task = user_transfer_tasks[user.id]
-    if task is not None and not task.done():
-        time_remaining = user_market_wait[user.id] - time.time()
-        return format_time(time_remaining)
+def get_time_remaining(server_id, user):
+    if user_id in server_data[server_id]["user_transfer_tasks"]:
+        task = server_data[server_id]["user_transfer_tasks"][user.id]
+        if task is not None and not task.done():
+            time_remaining = server_data[server_id]["user_market_wait"][user.id] - time.time()
+            return format_time(time_remaining)
     return ""
 
-async def show_collection(user, msg, page_num, mention):
-    if user.id not in user_current_page:
-        user_current_page[user.id] = 0
-        
-    mention_id = 0
-        
-    if mention == "":
-        mention_id = user.id
-    else:
-        mention_id = await extract_user_id(mention)
-
-    if mention_id in user_collections:
-        collection = user_collections[mention_id]
-        if 0 <= page_num < len(collection):
-            user_current_page[user.id] = page_num
-            embed_to_show = collection[page_num]
-            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{user_current_page[user.id] + 1}/{len(user_collections[mention_id])}")
-        
-            if user.id in collection_messages:
-                collection_msg = collection_messages[user.id]
-                await collection_msg.clear_reactions()
-                await collection_msg.edit(embed=embed_to_show)
-            else:
-                collection_msg = await msg.channel.send(embed=embed_to_show)
-                await collection_msg.clear_reactions()
-                collection_messages[user.id] = collection_msg
-
-            await collection_msg.add_reaction("⬅️")
-            await collection_msg.add_reaction("➡️")
-            
-            if mention == "":    
-                if not tutorial.user_tutorial_completion[user.id][2][1]:
-                    tutorial.user_tutorial_completion[user.id][2][1] = True
-                    
-                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                    
-                    print(tutorial.user_tutorial_completion[user.id][2])
-                            
-                    if user.id not in responses.user_max_rolls:
-                        responses.user_max_rolls[user.id] = 9
-                            
-                    if False not in tutorial.user_tutorial_completion[user.id][2]:
-                        responses.user_max_rolls[user.id] += 1
-                        tutorial.user_current_tutorial[user.id] = 3
-                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
-            else:
-                if not tutorial.user_tutorial_completion[user.id][2][5]:
-                    tutorial.user_tutorial_completion[user.id][2][5] = True
-                    
-                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                    
-                    print(tutorial.user_tutorial_completion[user.id][2])
-                    
-                    if user.id not in responses.user_max_rolls:
-                        responses.user_max_rolls[user.id] = 9
-                            
-                    if False not in tutorial.user_tutorial_completion[user.id][2]:
-                        responses.user_max_rolls[user.id] += 1
-                        tutorial.user_current_tutorial[user.id] = 3
-                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
-        else:
-            await msg.channel.send("Error: Page not found.")
-    else:
-        await msg.channel.send("Error : No players found in your collection.")
-
 async def rename_club(msg, user, name):
-    if user.id not in user_club_name:
-        user_club_name[user.id] = ""
+    server_id = msg.guild.id
+    if "user_club_name" not in server_data[server_id]:
+        server_data[server_id]["user_club_name"] = {}
+        
+    if user.id not in server_data[server_id]["user_club_name"]:
+        server_data[server_id]["user_club_name"][user.id] = ""
         
     if name == []:
-        user_club_name[user.id] = ""
+        server_data[server_id]["user_club_name"][user.id] = ""
         await msg.channel.send(f"{user.mention} Your club's name has been reset to default.")
         return
     
     rename = " ".join(name)
     
-    user_club_name[user.id] = rename
+    server_data[server_id]["user_club_name"][user.id] = rename
     
     await msg.channel.send(f"{user.mention} Your club has been renamed to **{rename}**!")
     
-    if not tutorial.user_tutorial_completion[user.id][4][4]:
-        tutorial.user_tutorial_completion[user.id][4][4] = True
+    if not server_data[server_id]["user_tutorial_completion"][user.id][4][4]:
+        server_data[server_id]["user_tutorial_completion"][user.id][4][4] = True
         
-        if user.id not in user_coins:
-            user_coins[user.id] = 0
+        if user.id not in server_data[server_id]["user_coins"]:
+            server_data[server_id]["user_coins"][user.id] = 0
             
         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-        if False not in tutorial.user_tutorial_completion[user.id][4]:
-            user_coins[user.id] += 500
-            tutorial.user_current_tutorial[user.id] = 5
+        if False not in server_data[server_id]["user_tutorial_completion"][user.id][4]:
+            server_data[server_id]["user_coins"][user.id] += 500
+            server_data[server_id]["user_current_tutorial"][user.id] = 5
             await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
 
 async def move_player(msg, user, player, position):
-    if user.id not in user_collections:
-        user_collections[user.id] = []
+    server_id = msg.guild.id
+    if "user_collections" not in server_data[server_id]:
+        server_data[server_id]["user_collections"] = {}
         
-    if (position > len(user_collections[user.id])) or position < 1:
+    if user.id not in server_data[server_id]["user_collections"]:
+        server_data[server_id]["user_collections"][user.id] = []
+        
+    if (position > len(server_data[server_id]["user_collections"][user.id])) or position < 1:
         await msg.channel.send("Error: Invalid position.")
         return
     
-    collection = user_collections[user.id]
+    collection = server_data[server_id]["user_collections"][user.id]
     player_to_move = None
     search_terms = player
     normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
@@ -171,58 +91,67 @@ async def move_player(msg, user, player, position):
     collection.insert(position - 1, player_to_move)
     await msg.channel.send(f"Succesfully moved {player_to_move.title}!")
     
-    if not tutorial.user_tutorial_completion[user.id][2][3]:
-        tutorial.user_tutorial_completion[user.id][2][3] = True
+    if not server_data[server_id]["user_tutorial_completion"][user.id][2][3]:
+        server_data[server_id]["user_tutorial_completion"][user.id][2][3] = True
         
-        print(tutorial.user_tutorial_completion[user.id][2])
-        
-        if user.id not in responses.user_max_rolls:
-            responses.user_max_rolls[user.id] = 9
+        if user.id not in server_data[server_id]["user_max_rolls"]:
+            server_data[server_id]["user_max_rolls"][user.id] = 9
             
         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-        if False not in tutorial.user_tutorial_completion[user.id][2]:
-            responses.user_max_rolls[user.id] += 1
-            tutorial.user_current_tutorial[user.id] = 3
+        if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+            server_data[server_id]["user_max_rolls"][user.id] += 1
+            server_data[server_id]["user_current_tutorial"][user.id] = 3
             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
      
 async def sort_collection(msg, user):
-    if user.id not in user_collections:
-        user_collections[user.id] = []
+    server_id = msg.guild.id
+    if "user_collections" not in server_data[server_id]:
+        server_data[server_id]["user_collections"] = {}
+        
+    if user.id not in server_data[server_id]["user_collections"]:
+        server_data[server_id]["user_collections"][user.id] = []
         
     def get_embed_value(embed):
         for field in embed.fields:
             if "Value:" in field.name:
                 return int(field.name.split()[1])
                                   
-    collection = user_collections[user.id]
+    collection = server_data[server_id]["user_collections"][user.id]
     collection.sort(key=get_embed_value, reverse=True)
     
     await msg.channel.send("Your collection has been successfully sorted from highest to lowest value.")
     
-    if not tutorial.user_tutorial_completion[user.id][2][2]:
-        tutorial.user_tutorial_completion[user.id][2][2] = True
+    if not server_data[server_id]["user_tutorial_completion"][user.id][2][2]:
+        server_data[server_id]["user_tutorial_completion"][user.id][2][2] = True
         
-        print(tutorial.user_tutorial_completion[user.id][2])
+        print(server_data[server_id]["user_tutorial_completion"][user.id][2])
         
-        if user.id not in responses.user_max_rolls:
-            responses.user_max_rolls[user.id] = 9
+        if user.id not in server_data[server_id]["user_max_rolls"]:
+            server_data[server_id]["user_max_rolls"][user.id] = 9
             
         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-        if False not in tutorial.user_tutorial_completion[user.id][2]:
-            responses.user_max_rolls[user.id] += 1
-            tutorial.user_current_tutorial[user.id] = 3
+        if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+            server_data[server_id]["user_max_rolls"][user.id] += 1
+            server_data[server_id]["user_current_tutorial"][user.id] = 3
             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
-
+            
 async def dailies(msg, user):
-    if user.id not in user_daily_bool:
-        user_daily_bool[user.id] = True
+    server_id = msg.guild.id
+    if "user_daily_bool" not in server_data[server_id]:
+        server_data[server_id]["user_daily_bool"] = {}
         
-    if user.id not in user_daily_wait:
-        user_daily_wait[user.id] = 0
+    if "user_daily_wait" not in server_data[server_id]:
+        server_data[server_id]["user_daily_wait"] = {}
         
-    if user_daily_bool[user.id]:
+    if user.id not in server_data[server_id]["user_daily_bool"]:
+        server_data[server_id]["user_daily_bool"][user.id] = True
+        
+    if user.id not in server_data[server_id]["user_daily_wait"]:
+        server_data[server_id]["user_daily_wait"][user.id] = 0
+        
+    if server_data[server_id]["user_daily_bool"][user.id]:
         chance = random.randint(0, 100)
         daily_reward = 0
         
@@ -231,34 +160,44 @@ async def dailies(msg, user):
         else:
             daily_reward = float(random.randint(100, 300))
             
-        if responses.user_upgrades[user.id][1] != 0:
-            daily_reward += daily_reward * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+        if server_data[server_id]["user_upgrades"][user.id][1] != 0:
+            daily_reward += daily_reward * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
             
         await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}**!")
-        user_coins[user.id] += int(daily_reward)
-        user_daily_bool[user.id] = False
-        user_daily_wait[user.id] = time.time() + 86400
+        server_data[server_id]["user_coins"][user.id] += int(daily_reward)
+        server_data[server_id]["user_daily_bool"][user.id] = False
+        server_data[server_id]["user_daily_wait"][user.id] = time.time() + 86400
         
-        if not tutorial.user_tutorial_completion[user.id][1][2]:
-            tutorial.user_tutorial_completion[user.id][1][2] = True
+        if not server_data[server_id]["user_tutorial_completion"][user.id][1][2]:
+            server_data[server_id]["user_tutorial_completion"][user.id][1][2] = True
             
-            if user.id not in user_coins:
-                user_coins[user.id] = 0
+            if user.id not in server_data[server_id]["user_coins"]:
+                server_data[server_id]["user_coins"][user.id] = 0
                 
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
         
-            if False not in tutorial.user_tutorial_completion[user.id][1]:
-                user_coins[user.id] += 250
-                tutorial.user_current_tutorial[user.id] = 2
+            if False not in server_data[server_id]["user_tutorial_completion"][user.id][1]:
+                server_data[server_id]["user_coins"][user.id] += 250
+                server_data[server_id]["user_current_tutorial"][user.id] = 2
                 await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
         
         await asyncio.sleep(86400)
-        user_daily_bool[user.id] = True
+        server_data[server_id]["user_daily_bool"][user.id] = True
     else:
-        time_left = format_time(user_daily_wait[user.id] - time.time())
+        time_left = format_time(server_data[server_id]["user_daily_wait"][user.id] - time.time())
         await msg.channel.send(f"Your daily reward is not available yet. Please wait **{time_left}**.")
-
+        
 async def team_rewards(msg, user, value):
+    server_id = msg.guild.id
+    if "user_collections" not in server_data[server_id]:
+        server_data[server_id]["user_collections"] = {}
+    
+    if "playerids" not in server_data[server_id]:
+        server_data[server_id]["playerids"] = []
+        
+    if "usernames" not in server_data[server_id]:
+        server_data[server_id]["usernames"] = []
+        
     if value == 700:
         f = open('players_list.txt', 'r', encoding='utf-8')
         players_list = f.readlines()
@@ -284,16 +223,19 @@ async def team_rewards(msg, user, value):
         embed.add_field(name=player_positions, value="", inline=False)
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
-        embed.set_footer(text="Football Roll Bot, " + player_id)
+        embed.set_footer(text="Fantasy Football Draft, " + player_id)
             
         player_status = f"**Claimed by {user.name}**"
         embed.description += ("\n" + player_status)
         
-        user_collections[user.id].append(embed)
+        if user.id not in server_data[server_id]["user_collections"]:
+            server_data[server_id]["user_collections"][user.id] = []
+            
+        server_data[server_id]["user_collections"][user.id].append(embed)
 
         player_id = embed.footer.text.split(", ")[1]
-        playerids.append(player_id)
-        usernames.append(user.name)
+        server_data[server_id]["playerids"].append(player_id)
+        server_data[server_id]["usernames"].append(user.name)
         
         await msg.channel.send(embed=embed)
         
@@ -317,31 +259,38 @@ async def team_rewards(msg, user, value):
         embed.add_field(name=player_positions, value="", inline=False)
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
-        embed.set_footer(text="Football Roll Bot, " + player_id)
+        embed.set_footer(text="Fantasy Football Draft, " + player_id)
             
         player_status = f"**Claimed by {user.name}**"
         embed.description += ("\n" + player_status)
         
-        user_collections[user.id].append(embed)
+        if user.id not in server_data[server_id]["user_collections"]:
+            server_data[server_id]["user_collections"][user.id] = []
+            
+        server_data[server_id]["user_collections"][user.id].append(embed)
 
         player_id = embed.footer.text.split(", ")[1]
-        playerids.append(player_id)
-        usernames.append(user.name)
+        server_data[server_id]["playerids"].append(player_id)
+        server_data[server_id]["usernames"].append(user.name)
         
         await msg.channel.send(embed=embed)
         
 async def free_claim(msg, user):
-    if user.id not in user_free_claims:
-        user_free_claims[user.id] = 0
+    server_id = msg.guild.id
+    if "user_free_claims" not in server_data[server_id]:
+        server_data[server_id]["user_free_claims"] = {}
+    
+    if user.id not in server_data[server_id]["user_free_claims"]:
+        server_data[server_id]["user_free_claims"][user.id] = 0
         
-    if user_free_claims[user.id] != 0:
-        confirmation_msg = await msg.channel.send(f"You have **{user_free_claims[user.id]}** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have claim ready. (y/n/yes/no)")
+    if server_data[server_id]["user_free_claims"][user.id] != 0:
+        confirmation_msg = await msg.channel.send(f"You have **{server_data[server_id]['user_free_claims'][user.id]}** free claim(s). Are you sure you want to use a free claim? Make sure you don't already have a claim ready. (y/n/yes/no)")
         try:
             response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()
             if response_content == 'yes' or response_content == 'y':
-                responses.user_can_claim[user.id] = True
-                user_free_claims[user.id] -= 1
+                server_data[server_id]["user_can_claim"][user.id] = True
+                server_data[server_id]["user_free_claims"][user.id] -= 1
                 await msg.channel.send(f"{user.mention} Successfully used a free claim!")
             elif response_content == 'no' or response_content == 'n':
                 await msg.channel.send("Process cancelled.")
@@ -352,335 +301,171 @@ async def free_claim(msg, user):
 
 async def claim_timer():
     while True:
-        global claim_reset_time
-        claim_reset_time = time.time()
-            
-        for key in responses.user_can_claim:
-            responses.user_can_claim[key] = True
-            
+        for server_id in server_data:
+            if "claim_reset_time" not in server_data[server_id]:
+                server_data[server_id]["claim_reset_time"] = time.time()
+
+            server_data[server_id]["claim_reset_time"] = time.time()
+
+            if "user_can_claim" not in server_data[server_id]:
+                server_data[server_id]["user_can_claim"] = {}
+
+            for key in server_data[server_id]["user_can_claim"]:
+                server_data[server_id]["user_can_claim"][key] = True
+
         await asyncio.sleep(1)
 
 async def roll_timer():
     while True:
-        global roll_reset_time
-        roll_reset_time = time.time()
-            
-        for key in responses.user_rolls:
-            responses.user_rolls[key] = responses.user_max_rolls[key]
-            
+        for server_id in server_data:
+            if "roll_reset_time" not in server_data[server_id]:
+                server_data[server_id]["roll_reset_time"] = time.time()
+
+            server_data[server_id]["roll_reset_time"] = time.time()
+
+            if "user_rolls" not in server_data[server_id]:
+                server_data[server_id]["user_rolls"] = {}
+                server_data[server_id]["user_max_rolls"] = {}
+
+            for user_id in server_data[server_id]["user_max_rolls"]:
+                server_data[server_id]["user_rolls"][user_id] = server_data[server_id]["user_max_rolls"][user_id]
+
         await asyncio.sleep(3600)
-        
 
 async def clean_up_rolled_times():
     while True:
         current_time = time.time()
-        expired_players = []
 
-        for player_id, (rolled_time, expiration_time) in responses.rolled_times.items():
-            if current_time > expiration_time:
-                expired_players.append(player_id)
+        for server_id in server_data:
+            if "rolled_times" not in server_data[server_id]:
+                server_data[server_id]["rolled_times"] = {}
 
-        for player_id in expired_players:
-            del responses.rolled_times[player_id]
+            expired_players = []
+
+            for player_id, (rolled_time, expiration_time) in server_data[server_id]["rolled_times"].items():
+                if current_time > expiration_time:
+                    expired_players.append(player_id)
+
+            for player_id in expired_players:
+                del server_data[server_id]["rolled_times"][player_id]
 
         await asyncio.sleep(60)
 
 async def transfer_market(msg, user, player_to_list, command):
-    if user.id not in responses.user_upgrades:
-        responses.user_upgrades[user.id] = [0,0,0,0]
+    server_id = str(msg.guild.id)
+    user_id = user.id
+    
+    if user_id not in server_data[server_id]["user_upgrades"]:
+        server_data[server_id]["user_upgrades"][user_id] = [0, 0, 0, 0]
         
-    if user.id not in user_market:
-        user_market[user.id] = 0
+    if user_id not in server_data[server_id]["user_market"]:
+        server_data[server_id]["user_market"][user_id] = 0
         
-    if user.id not in user_market_bool:
-        user_market_bool[user.id] = False
+    if user_id not in server_data[server_id]["user_market_bool"]:
+        server_data[server_id]["user_market_bool"][user_id] = False
         
-    if user.id not in user_market_player:
-        user_market_player[user.id] = ""
+    if user_id not in server_data[server_id]["user_market_player"]:
+        server_data[server_id]["user_market_player"][user_id] = ""
         
-    if user.id not in user_transfer_tasks:
-        user_transfer_tasks[user.id] = None
+    if user_id not in server_data[server_id]["user_transfer_tasks"]:
+        server_data[server_id]["user_transfer_tasks"][user_id] = None
         
-    if user.id not in user_market_wait:
-        user_market_wait[user.id] = 0
+    if user_id not in server_data[server_id]["user_market_wait"]:
+        server_data[server_id]["user_market_wait"][user_id] = 0
     
     task = None
     if command == "add":
-        if not user_market_bool[user.id]:
+        if not server_data[server_id]["user_market_bool"][user_id]:
             search_terms = player_to_list
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
-            collection = user_collections[user.id]
+            collection = server_data[server_id]["user_collections"].get(user_id, [])
             
             for player in collection:
                 normalized_title = unidecode.unidecode(player.title.lower())
                 if all(term.lower() in normalized_title for term in normalized_search_terms):
                     for field in player.fields:
                         if "Value:" in field.name:
-                            user_market[user.id] = int(field.name.split()[1])
+                            server_data[server_id]["user_market"][user_id] = int(field.name.split()[1])
                             break
                     
-                    user_market_player[user.id] = player.title
-                    user_market_bool[user.id] = True
+                    server_data[server_id]["user_market_player"][user_id] = player.title
+                    server_data[server_id]["user_market_bool"][user_id] = True
                     
-                    if not tutorial.user_tutorial_completion[user.id][6][2]:
-                        tutorial.user_tutorial_completion[user.id][6][2] = True
+                    if not server_data[server_id]["user_tutorial_completion"][user_id][6][2]:
+                        server_data[server_id]["user_tutorial_completion"][user_id][6][2] = True
                             
-                        if user.id not in user_coins:
-                            user_coins[user.id] = 0
+                        if user_id not in server_data[server_id]["user_coins"]:
+                            server_data[server_id]["user_coins"][user_id] = 0
                                     
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                                     
-                        if False not in tutorial.user_tutorial_completion[user.id][6]:
-                            tutorial.user_tutorial_completion[user.id][7][0] = True
-                            user_coins[user.id] += 750
-                            tutorial.user_current_tutorial[user.id] = 7
+                        if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
+                            server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
+                            server_data[server_id]["user_coins"][user_id] += 750
+                            server_data[server_id]["user_current_tutorial"][user_id] = 7
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                    
-                    if responses.user_upgrades[user.id][3] == 1:
+                            
+                    async def transfer_time(time_to_wait):
                         try:
                             await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(30))
+                            task = asyncio.create_task(asyncio.sleep(time_to_wait))
                             task.starttime = time.time()
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 30
+                            server_data_server["user_transfer_tasks"][user_id] = task
+                            server_data_server["user_market_wait"][user_id] = time.time() + time_to_wait
                             
                             await task
                             
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+                            new_value = float(server_data_server["user_market"][user_id] * 1.5)
+                            if server_data_server["user_upgrades"][user_id][1] != 0:
+                                new_value += new_value * (responses.board_upgrades[server_data_server["user_upgrades"][user_id][1] - 1] / 100)
                                 
-                            user_coins[user.id] += int(new_value)
+                            server_data_server["user_coins"][user_id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
+                            server_data_server["user_market_player"][user_id] = ""
+                            server_data_server["user_market"][user_id] = 0
+                            server_data_server["user_market_bool"][user_id] = False
+                            server_data_server["user_market_wait"][user_id] = 0
                             
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                    
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
+                            if not server_data_server["user_tutorial_completion"][user_id][6][3]:
+                                server_data_server["user_tutorial_completion"][user_id][6][3] = True
+                                                    
+                                if user_id not in server_data_server["user_coins"]:
+                                    server_data_server["user_coins"][user_id] = 0
+                                                    
                                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    tutorial.user_current_tutorial[user.id] = 7
+                                                    
+                                if False not in server_data_server["user_tutorial_completion"][user_id][6]:
+                                    server_data_server["user_tutorial_completion"][user_id][7][0] = True
+                                    server_data_server["user_coins"][user_id] += 750
+                                    server_data_server["user_current_tutorial"][user_id] = 7
                                     await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
-                            
-                    elif responses.user_upgrades[user.id][3] == 2:
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(172800))
-                            task.starttime = time.time()
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 172800
-
-                            await task
-                            
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
-                                
-                            user_coins[user.id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
-                            
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                    
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    tutorial.user_current_tutorial[user.id] = 7
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
                         except asyncio.CancelledError:
                             await msg.channel.send("Failed to list player.")
                             return
                     
-                    elif responses.user_upgrades[user.id][3] == 3:
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(86400))
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 86400
-                            
-                            await task
-                            
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
-                                
-                            user_coins[user.id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
-                            
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                    
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    tutorial.user_current_tutorial[user.id] = 7
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
-                        
-                    elif responses.user_upgrades[user.id][3] == 4:
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(43200))
-                            task.starttime = time.time()
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 43200
-                            
-                            await task
-                            
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
-                                
-                            user_coins[user.id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
-                            
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                    
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    tutorial.user_current_tutorial[user.id] = 7
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
-                    
-                    elif responses.user_upgrades[user.id][3] == 5:
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(21600))
-                            task.starttime = time.time()
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 21600
-                            
-                            await task
-                            
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
-                                
-                            user_coins[user.id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
-                            
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
-                    
+                    if server_data_server["user_upgrades"][user_id][3] == 1:
+                        await transfer_time(30)
+                    elif server_data_server["user_upgrades"][user_id][3] == 2:
+                        await transfer_time(172800)
+                    elif server_data_server["user_upgrades"][user_id][3] == 3:
+                        await transfer_time(86400)
+                    elif server_data_server["user_upgrades"][user_id][3] == 4:
+                        await transfer_time(43200)
                     else:
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(432000))
-                            task.starttime = time.time()
-                            user_transfer_tasks[user.id] = task
-                            user_market_wait[user.id] = time.time() + 432000
-                            
-                            await task
-                            
-                            new_value = float(user_market[user.id] * 1.5)
-                            if responses.user_upgrades[user.id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
-                                
-                            user_coins[user.id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
-                            user_market_player[user.id] = ""
-                            user_market[user.id] = 0
-                            user_market_bool[user.id] = False
-                            user_market_wait[user.id] = 0
-                            
-                            if not tutorial.user_tutorial_completion[user.id][6][3]:
-                                tutorial.user_tutorial_completion[user.id][6][3] = True
-                                
-                                if user.id not in user_coins:
-                                    user_coins[user.id] = 0
-                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                    
-                                if False not in tutorial.user_tutorial_completion[user.id][6]:
-                                    tutorial.user_tutorial_completion[user.id][7][0] = True
-                                    user_coins[user.id] += 750
-                                    tutorial.user_current_tutorial[user.id] = 7
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
-        
+                        await transfer_time(432000)
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return
         
     if command == "rm":
-        if user_market_bool[user.id]:
-            user_market_player[user.id] = ""
-            user_market[user.id] = 0
-            user_market_bool[user.id] = False
+        if server_data_server["user_market_bool"][user_id]:
+            server_data_server["user_market_player"][user_id] = ""
+            server_data_server["user_market"][user_id] = 0
+            server_data_server["user_market_bool"][user_id] = False
             try:
-                task.cancel()
+                server_data_server["user_transfer_tasks"][user_id].cancel()
                 try:
-                    await task
+                    await server_data_server["user_transfer_tasks"][user_id]
                     await msg.channel.send("Succesfully emptied transfer list.")
                 except:
                     await msg.channel.send("Failed to remove player from transfer list.")
@@ -689,45 +474,46 @@ async def transfer_market(msg, user, player_to_list, command):
             except asyncio.CancelledError:
                 await msg.channel.send("Failed to remove player from transfer list.")
                 return
-            
         else:
             await msg.channel.send("Error. You have no player listed on the transfer market.")
-        
+
     if command == "":
         menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
-        if responses.user_upgrades[user.id][3] != 0:
-            menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[responses.user_upgrades[user.id][3] - 1]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+        if server_data_server["user_upgrades"][user_id][3] != 0:
+            menu += f"Here you can add a player from your collection to the transfer list, and in **{server_data_server['transfer_upgrades'][server_data_server['user_upgrades'][user_id][3] - 1]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
         else:
             menu += f"Here you can add a player from your collection to the transfer list, and in **5 days**, you will receive 150% of the value of the player you sold!\n" + "\n"
             
         menu += "To add a player to the transfer list, type %tm add [player_name]. You may only add one player at a time. Example: %tm add Erling Haaland\n"
         menu += "To remove a player from your transfer list, type %tm rm [player_name]. Example: %tm rm Erling Haaland\n" + "\n"
         menu += "**Transfer List:**\n"
-        if user_market_bool[user.id]:
-            menu += user_market_player[user.id] + f" - Player will be sold in **{get_time_remaining(user)}**"
+        if server_data_server["user_market_bool"][user_id]:
+            menu += f"{server_data_server['user_market_player'][user_id]} - Player will be sold in **{get_time_remaining(server_id, user)}**"
         else:
             menu += "Ready to add a player from your collection!"
             
         print("Sending menu...")
         await msg.channel.send(menu)
         
-        if not tutorial.user_tutorial_completion[user.id][6][1]:
-            tutorial.user_tutorial_completion[user.id][6][1] = True
+        if not server_data_server["user_tutorial_completion"][user_id][6][1]:
+            server_data_server["user_tutorial_completion"][user_id][6][1] = True
             
-            if user.id not in user_coins[user.id]:
-                user_coins[user.id] = 0
+            if user_id not in server_data_server["user_coins"]:
+                server_data_server["user_coins"][user_id] = 0
                 
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                                     
-            if False not in tutorial.user_tutorial_completion[user.id][6]:
-                tutorial.user_tutorial_completion[user.id][7][0] = True
-                user_coins[user.id] += 750
-                tutorial.user_current_tutorial[user.id] = 7
+            if False not in server_data_server["user_tutorial_completion"][user_id][6]:
+                server_data_server["user_tutorial_completion"][user_id][7][0] = True
+                server_data_server["user_coins"][user_id] += 750
+                server_data_server["user_current_tutorial"][user_id] = 7
                 await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
                 
 async def purchase_confirmation(price_to_upgrade, user, msg):
-    if user_coins[user.id] >= price_to_upgrade:
-        confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {user_coins[user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
+    server_id = str(msg.guild.id)
+    
+    if server_data[server_id]["user_coins"][user.id] >= price_to_upgrade:
+        confirmation_msg = await msg.channel.send(f"Are you sure you want to spend {price_to_upgrade} \U0001f4a0 on this upgrade? You will have {server_data[server_id]['user_coins'][user.id] - price_to_upgrade} \U0001f4a0 left after this purchase. (y/n/yes/no)")
         try:
             response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()
@@ -741,11 +527,13 @@ async def purchase_confirmation(price_to_upgrade, user, msg):
             return False
             
 async def set_favorite_club(msg, user, club):
-    if user.id not in user_favorite_club:
-        user_favorite_club[user.id] = ""
+    server_id = str(msg.guild.id)
     
-    f = open('players_list.txt', 'r', encoding='utf-8')
-    players_list = f.readlines()
+    if user.id not in server_data[server_id]["user_favorite_club"]:
+        server_data[server_id]["user_favorite_club"][user.id] = ""
+    
+    with open('players_list.txt', 'r', encoding='utf-8') as f:
+        players_list = f.readlines()
     
     search_terms = club 
     normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
@@ -758,21 +546,21 @@ async def set_favorite_club(msg, user, club):
         club_search = " ".join(normalized_search_terms)
         if club_search.lower() == normalized_line.split(", ")[2]:
             favorite_club = line.strip().split(", ")[2]
-            user_favorite_club[user.id] = favorite_club
+            server_data[server_id]["user_favorite_club"][user.id] = favorite_club
             found = True
             await msg.channel.send(f"{user.mention} Your favorite club has been set to {favorite_club}")
             
-            if not tutorial.user_tutorial_completion[user.id][1][1]:
-                tutorial.user_tutorial_completion[user.id][1][1] = True
+            if not server_data[server_id]["user_tutorial_completion"][user.id][1][1]:
+                server_data[server_id]["user_tutorial_completion"][user.id][1][1] = True
                 
-                if user.id not in user.coins[user.id]:
-                    user.coins[user.id] = 0
+                if user.id not in server_data[server_id]["user_coins"]:
+                    server_data[server_id]["user_coins"][user.id] = 0
                     
                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
             
-                if False not in tutorial.user_tutorial_completion[user.id][1]:
-                    user_coins[user.id] += 250
-                    tutorial.user_current_tutorial[user.id] = 2
+                if False not in server_data[server_id]["user_tutorial_completion"][user.id][1]:
+                    server_data[server_id]["user_coins"][user.id] += 250
+                    server_data[server_id]["user_current_tutorial"][user.id] = 2
                     await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
             
             break
@@ -798,75 +586,75 @@ async def set_favorite_club(msg, user, club):
         try:
             await msg.channel.send(mult_msg)
         except:
-            await msg.channel.send("Error has occured. Too many matches.")
-        return
-    
+            await msg.channel.send("Error has occurred. Too many matches.")
+        return    
             
 async def display_profile(msg, user):
-    if user.id not in user_coins:
-        user_coins[user.id] = 0
+    server_id = str(msg.guild.id)
+    
+    if user.id not in server_data[server_id]["user_coins"]:
+        server_data[server_id]["user_coins"][user.id] = 0
         
-    if user.id not in responses.user_max_rolls:
-        responses.user_max_rolls[user.id] = 9
+    if user.id not in server_data[server_id]["user_max_rolls"]:
+        server_data[server_id]["user_max_rolls"][user.id] = 9
             
-    if user.id not in responses.user_rolls:
-        responses.user_rolls[user.id] = responses.user_max_rolls[user.id]
+    if user.id not in server_data[server_id]["user_rolls"]:
+        server_data[server_id]["user_rolls"][user.id] = server_data[server_id]["user_max_rolls"][user.id]
             
-    if user.id not in responses.user_can_claim:
-        responses.user_can_claim[user.id] = True
+    if user.id not in server_data[server_id]["user_can_claim"]:
+        server_data[server_id]["user_can_claim"][user.id] = True
         
-    if user.id not in user_favorite_club:
-        user_favorite_club[user.id] = ""
+    if user.id not in server_data[server_id]["user_favorite_club"]:
+        server_data[server_id]["user_favorite_club"][user.id] = ""
         
-    if user.id not in user_daily_bool:
-        user_daily_bool[user.id] = True
+    if user.id not in server_data[server_id]["user_daily_bool"]:
+        server_data[server_id]["user_daily_bool"][user.id] = True
         
-    if user.id not in user_daily_wait:
-        user_daily_wait[user.id] = 0
+    if user.id not in server_data[server_id]["user_daily_wait"]:
+        server_data[server_id]["user_daily_wait"][user.id] = 0
         
-    if user.id not in user_collections:
-        user_collections[user.id] = []
+    if user.id not in server_data[server_id]["user_collections"]:
+        server_data[server_id]["user_collections"][user.id] = []
         
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     
-    time_left_claim = format_time(1 - (curr_time - claim_reset_time))
-    if responses.user_can_claim[user.id]:
+    time_left_claim = format_time(1 - (curr_time - server_data[server_id]["claim_reset_time"]))
+    if server_data[server_id]["user_can_claim"][user.id]:
         profile += f"You can __claim__ now! Claim reset is in **{time_left_claim}**.\n"
     else:
         profile += f"You can't claim for another **{time_left_claim}**.\n"
     
-    time_left_rolls = format_time(3600 - (curr_time - roll_reset_time))
-    profile += f"You have **{responses.user_rolls[user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
+    time_left_rolls = format_time(3600 - (curr_time - server_data[server_id]["roll_reset_time"]))
+    profile += f"You have **{server_data[server_id]["user_rolls"][user.id]}** rolls left. Rolls will replenish in **{time_left_rolls}**.\n" + "\n"
     
-    time_left_daily = format_time(user_daily_wait[user.id] - curr_time)
-    if user_daily_bool[user.id]:
+    time_left_daily = format_time(server_data[server_id]["user_daily_wait"][user.id] - curr_time)
+    if server_data[server_id]["user_daily_bool"][user.id]:
         profile += "__Your daily reward is ready!__\n" + "\n"
     else:
         profile += f"Your daily reward will be ready in **{time_left_daily}**.\n" + "\n"
     
-    if user_favorite_club[user.id] != "":
-        profile += f"Your favorite club is set to **{user_favorite_club[user.id]}**.\n"
+    if server_data[server_id]["user_favorite_club"][user.id] != "":
+        profile += f"Your favorite club is set to **{server_data[server_id]["user_favorite_club"][user.id]}**.\n"
         
-    profile += f"You have **{len(user_collections[user.id])}** player(s) in your collection.\n" + "\n"
+    profile += f"You have **{len(server_data[server_id]["user_collections"][user.id])}** player(s) in your collection.\n" + "\n"
     
-    profile += "You have " + str(user_coins[user.id]) + " \U0001f4a0"
+    profile += "You have " + str(server_data[server_id]["user_coins"][user.id]) + " \U0001f4a0"
     
     await msg.channel.send(profile)
     
-    if not tutorial.user_tutorial_completion[user.id][1][0]:
-        tutorial.user_tutorial_completion[user.id][1][0] = True
+    if not server_data[server_id]["user_tutorial_completion"][user.id][1][0]:
+        server_data[server_id]["user_tutorial_completion"][user.id][1][0] = True
         
-        if user.id not in user_coins:
-            user_coins[user.id] = 0
+        if user.id not in server_data[server_id]["user_coins"]:
+            server_data[server_id]["user_coins"][user.id] = 0
             
         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
     
-        if False not in tutorial.user_tutorial_completion[user.id][1]:
-            user_coins[user.id] += 250
-            tutorial.user_current_tutorial[user.id] = 2
-            await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
-        
+        if False not in server_data[server_id]["user_tutorial_completion"][user.id][1]:
+            server_data[server_id]["user_coins"][user.id] += 250
+            server_data[server_id]["user_current_tutorial"][user.id] = 2
+            await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")        
 
 async def extract_user_id(mention):
     pattern = r"<@!?(\d+)>"
@@ -886,34 +674,36 @@ async def send_message(msg, user_msg, is_private):
         print(e)
 
 async def remove_player(user, msg, player):
-    if user.id not in responses.user_upgrades:
-        responses.user_upgrades[user.id] = [0,0,0,0]
-        
-    if user.id not in user_coins:
-        user_coins[user.id] = 0
+    server_id = str(msg.guild.id)
     
-    if user.id in user_collections:
-        collection = user_collections[user.id]
+    if user.id not in server_data[server_id]["user_upgrades"]:
+        server_data[server_id]["user_upgrades"][user.id] = [0, 0, 0, 0]
+        
+    if user.id not in server_data[server_id]["user_coins"]:
+        server_data[server_id]["user_coins"][user.id] = 0
+    
+    if user.id in server_data[server_id]["user_collections"]:
+        collection = server_data[server_id]["user_collections"][user.id]
         i = 0
         found_player = None
         found_player_value = 0
         
         for embed in collection:
-            if embed.title == player:
+            if embed["title"] == player:
                 found_player = embed
                 break
             i += 1
             
         if found_player:
-            for field in found_player.fields:
-                if "Value:" in field.name:
-                    found_player_value = float(field.name.split()[1])
+            for field in found_player["fields"]:
+                if "Value:" in field["name"]:
+                    found_player_value = float(field["name"].split()[1])
             
-            if responses.user_upgrades[user.id][1] != 0:
-                found_player_value += found_player_value * (responses.board_upgrades[responses.user_upgrades[user.id][1] - 1] / 100)
+            if server_data[server_id]["user_upgrades"][user.id][1] != 0:
+                found_player_value += found_player_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
                 found_player_value = int(found_player_value)
                 
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player['title']} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()
@@ -922,35 +712,33 @@ async def remove_player(user, msg, player):
                     
                     removed_player_id = removed_embed.footer.text.split(", ")[1]
                     j = 0
-                    for playerid in playerids:
-                        if removed_player_id == playerid:
-                            playerids.pop(j)
-                            usernames.pop(j)
+                    for player_id in server_data[server_id]["playerids"]:
+                        if removed_player_id == player_id:
+                            server_data[server_id]["playerids"].pop(j)
+                            server_data[server_id]["usernames"].pop(j)
                         j += 1
                     
-                    user_coins[user.id] += int(found_player_value)
-                    await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
+                    server_data[server_id]["user_coins"][user.id] += int(found_player_value)
+                    await msg.channel.send(f"{removed_embed['title']} was removed from {user.mention}'s collection.")
                     
-                    if user.id not in responses.user_team_players:
-                        responses.user_team_players[user.id] = []
+                    if user.id not in server_data[server_id]["user_team_players"]:
+                        server_data[server_id]["user_team_players"][user.id] = []
                     
-                    for player in responses.user_team_players[user.id]:
-                        if player.title == removed_embed.title:
-                            await responses.handle_responses(msg, f"%t rm {removed_embed.title}", msg.author)
+                    for player in server_data[server_id]["user_team_players"][user.id]:
+                        if player["title"] == removed_embed["title"]:
+                            await responses.handle_responses(msg, f"%t rm {removed_embed['title']}", msg.author)
                     
-                    if not tutorial.user_tutorial_completion[user.id][2][4]:
-                        tutorial.user_tutorial_completion[user.id][2][4] = True
+                    if not server_data[server_id]["user_tutorial_completion"][user.id][2][4]:
+                        server_data[server_id]["user_tutorial_completion"][user.id][2][4] = True
                         
-                        print(tutorial.user_tutorial_completion[user.id][2])
-                        
-                        if user.id not in responses.user_max_rolls:
-                            responses.user_max_rolls[user.id] = 9
+                        if user.id not in server_data[server_id]["user_max_rolls"]:
+                            server_data[server_id]["user_max_rolls"][user.id] = 9
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                     
-                        if False not in tutorial.user_tutorial_completion[user.id][2]:
-                            responses.user_max_rolls[user.id] += 1
-                            tutorial.user_current_tutorial[user.id] = 3
+                        if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+                            server_data[server_id]["user_max_rolls"][user.id] += 1
+                            server_data[server_id]["user_current_tutorial"][user.id] = 3
                             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
                     
                 elif response_content == 'no' or response_content == 'n':
@@ -963,13 +751,15 @@ async def remove_player(user, msg, player):
         await msg.channel.send("Error: No players found in your collection.")
         
 async def trade_player(user, msg, player, mention):
+    server_id = str(msg.guild.id)
+    
     user_id = user.id
     other_id = await extract_user_id(mention)
     
     other_user = client.get_user(other_id)
     
-    user_collection = user_collections[user_id]
-    other_collection = user_collections[other_id]
+    user_collection = server_data[server_id]["user_collections"][user_id]
+    other_collection = server_data[server_id]["user_collections"][other_id]
     
     user_embed_trade = None
     other_embed_trade = None
@@ -1008,7 +798,7 @@ async def trade_player(user, msg, player, mention):
                         repeat = False
                         break
                     else:
-                        await msg.channel.send(f"<@{other_id} Could not find that player in your collection. Please try again.")
+                        await msg.channel.send(f"<@{other_id}> Could not find that player in your collection. Please try again.")
                     other_i += 1
                           
         except asyncio.TimeoutError:
@@ -1052,36 +842,35 @@ async def trade_player(user, msg, player, mention):
                     user_removed_playerid = user_removed.footer.text.split(", ")[1]
                     other_removed_playerid = other_removed.footer.text.split(", ")[1]
                     
-                    for playerid in playerids:
+                    for playerid in server_data[server_id]["playerids"]:
                         if user_removed_playerid == playerid:
-                            playerids.pop(j)
-                            usernames.pop(j)
+                            server_data[server_id]["playerids"].pop(j)
+                            server_data[server_id]["usernames"].pop(j)
                         if other_removed_playerid == playerid:
-                            playerids.pop(j)
-                            usernames.pop(j)
+                            server_data[server_id]["playerids"].pop(j)
+                            server_data[server_id]["usernames"].pop(j)
                         j += 1
-                    
                     
                     user_removed.description = user_removed.description.replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
                     other_removed.description = other_removed.description.replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
                     
-                    user_collections[user_id].append(other_removed)
-                    user_collections[other_id].append(user_removed)
+                    server_data[server_id]["user_collections"][user_id].append(other_removed)
+                    server_data[server_id]["user_collections"][other_id].append(user_removed)
                     
                     await msg.channel.send("Trade successful!")
                     
-                    if not tutorial.user_tutorial_completion[user.id][6][0]:
-                        tutorial.user_tutorial_completion[user.id][6][0] = True
+                    if not server_data[server_id]["user_tutorial_completion"][user_id][6][0]:
+                        server_data[server_id]["user_tutorial_completion"][user_id][6][0] = True
                         
-                        if user.id not in user_coins:
-                            user_coins[user.id] = 0
+                        if user_id not in server_data[server_id]["user_coins"]:
+                            server_data[server_id]["user_coins"][user_id] = 0
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-                        if False not in tutorial.user_tutorial_completion[user.id][6]:
-                            tutorial.user_tutorial_completion[user.id][7][0] = True
-                            user_coins[user.id] += 750
-                            tutorial.user_current_tutorial[user.id] = 7
+                        if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
+                            server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
+                            server_data[server_id]["user_coins"][user_id] += 750
+                            server_data[server_id]["user_current_tutorial"][user_id] = 7
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
                     
                 elif response_content == 'no' or response_content == 'n':
@@ -1094,6 +883,42 @@ def run_discord_bot():
     @client.event
     async def on_ready():
         print(f'{client.user} is now running!')
+        
+        for guild in client.guilds:
+            server_id = str(guild.id)
+            server_data.setdefault(server_id, {
+                "user_collections": {},
+                "user_current_page": {},
+                "collection_messages": {},
+                "user_coins": {},
+                "user_favorite_club": {},
+                "user_free_claims": {},
+                "user_club_name": {},
+                "mentioned_user": {},
+                "user_daily_wait": {},
+                "user_daily_bool": {},
+                "user_market": {},
+                "user_market_player": {},
+                "user_market_bool": {},
+                "user_transfer_tasks": {},
+                "user_market_wait": {},
+                "playerids": [],
+                "usernames": [],
+                "roll_reset_time": time.time(),
+                "claim_reset_time": time.time(),
+                "user_teams": {},
+                "user_team_players": {},
+                "user_upgrades": {},
+                "user_team_rewards": {},
+                "rolled_times": {},
+                "user_max_rolls": {},
+                "user_rolls": {},
+                "user_can_claim": {},
+                "user_tutorial": {},
+                "tutorial_messages": {},
+                "user_tutorial_completion": {},
+                "user_current_tutorial": {}
+            })
         
     @client.event
     async def on_message(msg):
@@ -1108,11 +933,11 @@ def run_discord_bot():
         
         global collection_messages
         
-        if msg.author.id not in tutorial.user_tutorial_completion:
-            tutorial.user_tutorial_completion[msg.author.id] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
+        if msg.author.id not in server_data[server_id]["user_tutorial_completion"]:
+            server_data[server_id]["user_tutorial_completion"][msg.author.id] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
         
-        if msg.author.id not in tutorial.user_current_tutorial:
-            tutorial.user_current_tutorial[msg.author.id] = 0
+        if msg.author.id not in server_data[server_id]["user_current_tutorial"]:
+            server_data[server_id]["user_current_tutorial"][msg.author.id] = 0
         
         if user_msg[0] == "?":
             user_msg = user_msg[1:]
@@ -1188,7 +1013,7 @@ def run_discord_bot():
         elif user_msg.startswith("%tuto"):
             tutorial.tutorial_messages = {}
             if len(user_msg.split()) == 1:
-                await tutorial.tutorial(msg, msg.author, tutorial.user_current_tutorial[msg.author.id])
+                await tutorial.tutorial(msg, msg.author, server_data[server_id]["user_current_tutorial"][msg.author.id])
             else:
                 page_num = int(user_msg.split()[1])
                 await tutorial.tutorial(msg, msg.author, page_num)
@@ -1216,54 +1041,55 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
     
-    if user.id not in mentioned_user:
-        mentioned_user[user.id] = ""
+    if user.id not in server_data[user.guild.id]["mentioned_user"]:
+        server_data[user.guild.id]["mentioned_user"][user.id] = ""
     
-    if reaction.message.author == client.user: 
-        if user.id in user_current_page: 
+    if reaction.message.author == client.user:
+        server_id = user.guild.id
+        if user.id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
-                if mentioned_user[user.id] != "":
-                    mention_id = await extract_user_id(mentioned_user[user.id])
-                    if user_current_page[user.id] == 0:
-                        user_current_page[user.id] = len(user_collections[user.id]) - 1
+                if server_data[server_id]["mentioned_user"][user.id] != "":
+                    mention_id = await extract_user_id(server_data[server_id]["mentioned_user"][user.id])
+                    if server_data[server_id]["user_current_page"][user.id] == 0:
+                        server_data[server_id]["user_current_page"][user.id] = len(server_data[server_id]["user_collections"][user.id]) - 1
                     else:
-                        user_current_page[user.id] -= 1
+                        server_data[server_id]["user_current_page"][user.id] -= 1
                     
-                else:   
-                    if user_current_page[user.id] == 0:
-                        user_current_page[user.id] = len(user_collections[user.id]) - 1
-                    else:                        
-                        user_current_page[user.id] -= 1
+                else:
+                    if server_data[server_id]["user_current_page"][user.id] == 0:
+                        server_data[server_id]["user_current_page"][user.id] = len(server_data[server_id]["user_collections"][user.id]) - 1
+                    else:
+                        server_data[server_id]["user_current_page"][user.id] -= 1
                 
-                current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
+                current_page = server_data[server_id]["user_current_page"][user.id]
+                await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user.id])
                 return
                 
             elif reaction.emoji == "➡️":
-                if mentioned_user[user.id] != "":
-                    mention_id = await extract_user_id(mentioned_user[user.id])
-                    if user_current_page[user.id] == len(user_collections[mention_id]) - 1:
-                        user_current_page[user.id] = 0
+                if server_data[server_id]["mentioned_user"][user.id] != "":
+                    mention_id = await extract_user_id(server_data[server_id]["mentioned_user"][user.id])
+                    if server_data[server_id]["user_current_page"][user.id] == len(server_data[server_id]["user_collections"][mention_id]) - 1:
+                        server_data[server_id]["user_current_page"][user.id] = 0
                     else:
-                        user_current_page[user.id] += 1
+                        server_data[server_id]["user_current_page"][user.id] += 1
                 else:
-                    if user_current_page[user.id] == len(user_collections[user.id]) - 1:
-                        user_current_page[user.id] = 0
+                    if server_data[server_id]["user_current_page"][user.id] == len(server_data[server_id]["user_collections"][user.id]) - 1:
+                        server_data[server_id]["user_current_page"][user.id] = 0
                     else:
-                        user_current_page[user.id] += 1
+                        server_data[server_id]["user_current_page"][user.id] += 1
                     
-                current_page = user_current_page[user.id]
-                await show_collection(user, reaction.message, current_page, mentioned_user[user.id])
+                current_page = server_data[server_id]["user_current_page"][user.id]
+                await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user.id])
                 return
             
             elif reaction.emoji == "\u2b05":
-                if False not in tutorial.user_tutorial_completion[user.id][user_current_page[user.id] - 1]: 
-                    if user_current_page[user.id] == 0:
-                        user_current_page[user.id] = len(tutorial.user_tutorial[user.id]) - 1
-                    else:                        
-                        user_current_page[user.id] -= 1
+                if False not in server_data[server_id]["user_tutorial_completion"][user.id][server_data[server_id]["user_current_page"][user.id] - 1]: 
+                    if server_data[server_id]["user_current_page"][user.id] == 0:
+                        server_data[server_id]["user_current_page"][user.id] = len(server_data[server_id]["user_tutorial"][user.id]) - 1
+                    else:
+                        server_data[server_id]["user_current_page"][user.id] -= 1
                     
-                    current_page = user_current_page[user.id]
+                    current_page = server_data[server_id]["user_current_page"][user.id]
                     await tutorial.tutorial(reaction.message, user, current_page) 
                     return
                 else:
@@ -1271,75 +1097,73 @@ async def on_reaction_add(reaction, user):
                     return
             
             elif reaction.emoji == "\u27a1":
-                if False not in tutorial.user_tutorial_completion[user.id][user_current_page[user.id]]:
-                    if user_current_page[user.id] == len(tutorial.user_tutorial[user.id]) - 1:
-                        user_current_page[user.id] = 0
+                if False not in server_data[server_id]["user_tutorial_completion"][user.id][server_data[server_id]["user_current_page"][user.id]]:
+                    if server_data[server_id]["user_current_page"][user.id] == len(server_data[server_id]["user_tutorial"][user.id]) - 1:
+                        server_data[server_id]["user_current_page"][user.id] = 0
                     else:
-                        user_current_page[user.id] += 1
+                        server_data[server_id]["user_current_page"][user.id] += 1
                     
-                    current_page = user_current_page[user.id]
+                    current_page = server_data[server_id]["user_current_page"][user.id]
                     await tutorial.tutorial(reaction.message, user, current_page) 
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
                     return
-            
-            
-    if isinstance(reaction.message.embeds[0], discord.Embed) and "Football Roll Bot" in reaction.message.embeds[0].footer.text:
+                
+    if isinstance(reaction.message.embeds[0], discord.Embed) and "Fantasy Football Draft" in reaction.message.embeds[0].footer.text:
         player_embed = reaction.message.embeds[0]
         player_id = player_embed.footer.text.split(", ")[1]
         
         current_time = time.time()
         can_claim = False
-        if (current_time - responses.rolled_times[player_id][0]) < 60:
+        if (current_time - server_data[server_id]["rolled_times"][player_id][0]) < 60:
             can_claim = True
         
         claimed = False 
-        if player_id in playerids:
+        if player_id in server_data[server_id]["playerids"]:
             claimed = True
             
-        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim and responses.user_can_claim[user.id]:
+        if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim and server_data[server_id]["user_can_claim"][user.id]:
             print("Player claimed:", player_embed.title)
 
-            if user.id not in user_collections:
-                user_collections[user.id] = []
+            if user.id not in server_data[server_id]["user_collections"]:
+                server_data[server_id]["user_collections"][user.id] = []
                 
             player_embed.description = player_embed.description.replace("**React with any emoji to claim!**", f"**Claimed by {user.name}**") 
 
-            user_collections[user.id].append(player_embed)
+            server_data[server_id]["user_collections"][user.id].append(player_embed)
 
             player_id = player_embed.footer.text.split(", ")[1]
-            playerids.append(player_id)
-            usernames.append(user.name)
-            responses.user_can_claim[user.id] = False
+            server_data[server_id]["playerids"].append(player_id)
+            server_data[server_id]["usernames"].append(user.name)
+            server_data[server_id]["user_can_claim"][user.id] = False
 
             await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")
             
-            if not tutorial.user_tutorial_completion[user.id][0][0]:
-                tutorial.user_tutorial_completion[user.id][0][0] = True
+            if not server_data[server_id]["user_tutorial_completion"][user.id][0][0]:
+                server_data[server_id]["user_tutorial_completion"][user.id][0][0] = True
                 
-                if user.id not in user_free_claims:
-                    user_free_claims[user.id] = 0
+                if user.id not in server_data[server_id]["user_free_claims"]:
+                    server_data[server_id]["user_free_claims"][user.id] = 0
                     
-                user_free_claims[user.id] += 1
-                tutorial.user_current_tutorial[user.id] = 1
+                server_data[server_id]["user_free_claims"][user.id] += 1
+                server_data[server_id]["user_current_tutorial"][user.id] = 1
                 await reaction.message.channel.send("Tutorial 1 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                 
-            if len(user_collections[user.id]) == 2:
-                if not tutorial.user_tutorial_completion[user.id][2][0]:
-                    tutorial.user_tutorial_completion[user.id][2][0] = True
+            if len(server_data[server_id]["user_collections"][user.id]) == 2:
+                if not server_data[server_id]["user_tutorial_completion"][user.id][2][0]:
+                    server_data[server_id]["user_tutorial_completion"][user.id][2][0] = True
                     
-                    print(tutorial.user_tutorial_completion[user.id][2])
-                    
-                    if user.id not in responses.user_max_rolls:
-                        responses.user_max_rolls[user.id] = 9
+                    if user.id not in server_data[server_id]["user_max_rolls"]:
+                        server_data[server_id]["user_max_rolls"][user.id] = 9
                         
-                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                    await reaction.message.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-                    if False not in tutorial.user_tutorial_completion[user.id][2]:
-                        responses.user_max_rolls[user.id] += 1
-                        tutorial.user_current_tutorial[user.id] = 3
+                    if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+                        server_data[server_id]["user_max_rolls"][user.id] += 1
+                        server_data[server_id]["user_current_tutorial"][user.id] = 3
                         await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
+
 
 
     

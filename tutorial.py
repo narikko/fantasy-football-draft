@@ -1,12 +1,14 @@
 import discord
 import bot
 
-user_tutorial = {}
-tutorial_messages = {}
-user_tutorial_completion = {}
-user_current_tutorial = {}
-
 async def tutorial(msg, user, page_num):
+    server_data = bot.server_data.get(msg.guild.id, {})
+    
+    user_tutorial = server_data.get('user_tutorial', {})
+    user_tutorial_completion = server_data.get('user_tutorial_completion', {})
+    user_current_page = server_data.get('user_current_page', {})
+    tutorial_messages = server_data.get('tutorial_messages', {})
+    
     if user.id not in user_tutorial:
         tutorial_list = []
         
@@ -244,9 +246,9 @@ async def tutorial(msg, user, page_num):
     tutorials = user_tutorial[user.id]
    
     if 0 <= page_num < len(tutorials):
-        bot.user_current_page[user.id] = page_num
+        user_current_page[user.id] = page_num
         embed_to_show = tutorials[page_num]
-        embed_to_show.set_footer(text=f"{bot.user_current_page[user.id] + 1}/{len(tutorials)}")
+        embed_to_show.set_footer(text=f"{user_current_page[user.id] + 1}/{len(tutorials)}")
        
         if user.id in tutorial_messages:
             tutorial_msg = tutorial_messages[user.id]

@@ -8,16 +8,6 @@ import time
 import unicodedata
 import tutorial
 
-user_teams = {}
-user_team_players = {}
-user_upgrades = {}
-user_team_rewards = {}
-
-rolled_times = {}
-user_max_rolls = {}
-user_rolls = {}
-user_can_claim = {}
-
 stadium_upgrades = [0.5, 1, 2, 4, 8]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
         
@@ -31,6 +21,28 @@ transfer_upgrades = ["3 days", "2 days", "1 day", "12 hours", "6 hours"]
 transfer_prices = [2000, 5000, 8000, 12000, 24000]
 
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
+    
+    server_data = bot.server_data.get(msg.guild.id, {})
+        
+    user_upgrades = server_data.get('user_upgrades', {})
+    user_favorite_club = server_data.get('user_favorite_club', {})
+    user_max_rolls = server_data.get('user_max_rolls', {})
+    user_rolls = server_data.get('user_rolls', {})
+    user_can_claim = server_data.get('user_can_claim', {})
+    playerids = server_data.get('playerids', [])
+    usernames = server_data.get('usernames', [])
+    rolled_times = server_data.get('rolled_times', {})
+    user_tutorial_completion = server_data.get('user_tutorial_completion', {})
+    user_coins = server_data.get('user_coins', {})
+    user_current_tutorial = server_data.get('user_current_tutorial', {})
+    user_team_players = server_data.get('user_team_players', {})
+    user_team_rewards = server_data.get('user_team_rewards', {})
+    user_club_name = server_data.get('user_club_name', {})
+    user_teams = server_data.get('user_teams', {})
+    user_collections = server_data.get('user_collections', {})
+    user_free_claims = server_data.get('user_free_claims', {})
+    roll_reset_time = server_data.get('roll_reset_time', time.time())
+    
     f = open('players_list.txt', 'r', encoding='utf-8')
     g = open('legends_list.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
@@ -46,8 +58,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_upgrades:
             user_upgrades[user.id] = [0,0,0,0]
             
-        if user.id not in bot.user_favorite_club:
-            bot.user_favorite_club[user.id] = ""
+        if user.id not in user_favorite_club:
+            user_favorite_club[user.id] = ""
             
         if user.id not in user_max_rolls:
             user_max_rolls[user.id] = 9
@@ -61,8 +73,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user_rolls[user.id] == 0:
             curr_time = time.time()
             print("Current time:", curr_time)
-            print("Roll reset time:", bot.roll_reset_time)
-            time_left = bot.format_time(90 - (curr_time - bot.roll_reset_time))
+            print("Roll reset time:", roll_reset_time)
+            time_left = format_time(90 - (curr_time - roll_reset_time))
             print("Time left:", time_left)
             await msg.channel.send(f"{user.mention} You have no rolls remaining. Your rolls will replenish in **{time_left}**.")
                   
@@ -74,9 +86,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         favorite_club_list = []
         rolled_player = ""
         
-        if bot.user_favorite_club[user.id] != "":
+        if user_favorite_club[user.id] != "":
             for line in players_list:
-                if bot.user_favorite_club[user.id] in line:
+                if user_favorite_club[user.id] in line:
                     num_player_club += 1
                     favorite_club_list.append(line)
             
@@ -108,10 +120,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         i = 0
         claimed_user = ""
-        for playerid in bot.playerids:
+        for playerid in playerids:
             if player_id == playerid:
                 claimed = True
-                claimed_user = bot.usernames[i]
+                claimed_user = usernames[i]
                 break
             i += 1
         
@@ -124,7 +136,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.add_field(name=player_positions, value="", inline=False)
         embed.add_field(name= player_value, value="", inline=False)
         embed.set_image(url=player_imageURL)
-        embed.set_footer(text="Football Roll Bot, " + player_id)
+        embed.set_footer(text="Fantasy Football Draft, " + player_id)
         
         player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
         embed.description += ("\n" + player_status)
@@ -135,7 +147,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if user_upgrades[user.id][1] != 0:
                 dup_coins += dup_coins * (board_upgrades[user_upgrades[user.id][1] - 1] / 100)
             
-            bot.user_coins[user.id] += int(dup_coins)
+            user_coins[user.id] += int(dup_coins)
             await msg.channel.send(f"You have been given **+{int(dup_coins)}** \U0001f4a0 for the duplicate player!")
         
         rolled_time = time.time()
@@ -198,10 +210,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         i = 0
         claimed_user = ""
-        for playerid in bot.playerids:
+        for playerid in playerids:
             if player_id == playerid:
                 claimed = True
-                claimed_user = bot.usernames[i]
+                claimed_user = usernames[i]
                 break
             i += 1
         
@@ -215,7 +227,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed.add_field(name=player_positions, value="", inline=False)
             embed.add_field(name=player_value, value="", inline=False)
             embed.set_image(url=player_imageURL)
-            embed.set_footer(text="Football Roll Bot, " + player_id)
+            embed.set_footer(text="Fantasy Football Draft, " + player_id)
             
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
@@ -230,23 +242,23 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed.add_field(name=player_positions, value="", inline=False)
             embed.add_field(name=player_value, value="", inline=False)
             embed.set_image(url=player_imageURL)
-            embed.set_footer(text="Football Roll Bot, " + player_id)
+            embed.set_footer(text="Fantasy Football Draft, " + player_id)
             
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
                 
-        if not tutorial.user_tutorial_completion[user.id][3][0]:
-            tutorial.user_tutorial_completion[user.id][3][0] = True
+        if not user_tutorial_completion[user.id][3][0]:
+            user_tutorial_completion[user.id][3][0] = True
             
-            if user.id not in bot.user_coins:
-                bot.user_coins[user.id] = 0
+            if user.id not in user_coins:
+                user_coins[user.id] = 0
                 
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
             
-            if False not in tutorial.user_tutorial_completion[user.id][3]:
-                bot.user_coins[user.id] += 500
-                tutorial.user_current_tutorial[user.id] = 4
+            if False not in user_tutorial_completion[user.id][3]:
+                user_coins[user.id] += 500
+                user_current_tutorial[user.id] = 4
                 await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
         return embed
@@ -330,7 +342,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         players_desc = ""
         i = 0
         for player in found[0]:
-            if found[1][i] in bot.playerids:
+            if found[1][i] in playerids:
                 players_desc += player + " \u2705" + "\n"
             else:
                 players_desc += player + "\n"
@@ -343,17 +355,17 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             color=0xADD8E6
             )
         
-        if not tutorial.user_tutorial_completion[user.id][3][1]:
-            tutorial.user_tutorial_completion[user.id][3][1] = True
+        if not user_tutorial_completion[user.id][3][1]:
+            user_tutorial_completion[user.id][3][1] = True
             
-            if user.id not in bot.user_coins:
-                bot.user_coins[user.id] = 0
+            if user.id not in user_coins:
+                user_coins[user.id] = 0
             
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
             
-            if False not in tutorial.user_tutorial_completion[user.id][3]:
-                bot.user_coins[user.id] += 500
-                tutorial.user_current_tutorial[user.id] = 4
+            if False not in user_tutorial_completion[user.id][3]:
+                user_coins[user.id] += 500
+                user_current_tutorial[user.id] = 4
                 await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
         return embed
@@ -368,9 +380,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if user.id not in user_team_rewards:
             user_team_rewards[user.id] = [False, False, False, False, False, False, False]
             
-        if user.id not in bot.user_club_name:
+        if user.id not in user_club_name:
             print("intializing name")
-            bot.user_club_name[user.id] = ""
+            user_club_name[user.id] = ""
 
         forward_pos = ["LW", "ST", "RW", "CF"]
         midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
@@ -380,10 +392,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         mpos = ["m1", "m2", "m3", "m4"]
         dpos = ["d1", "d2", "d3"]
         
-        print(bot.user_club_name[user.id])
+        print(user_club_name[user.id])
         if user.id not in user_teams:
             embed = discord.Embed(
-                title=f"{user.name}'s Starting XI" if bot.user_club_name[user.id] == "" else bot.user_club_name[user.id],
+                title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
                 description= "Type %t [position] [player_name] to add a player from your collection to your starting XI" + "\n" + "Example: %t F2 Erling Haaland" + "\n" + "\n" + "Type %t rewards to learn about starting XI rewards.",
                 color=0x7CFC00
             )
@@ -422,7 +434,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if len(p_msg.split()) == 1:
             new_embed = discord.Embed(
-                title=f"{user.name}'s Starting XI" if bot.user_club_name[user.id] == "" else bot.user_club_name[user.id],
+                title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
                 description=user_teams[user.id].description,
                 color=user_teams[user.id].color
             )
@@ -451,16 +463,16 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             user_teams[user.id] = new_embed
             
-            if not tutorial.user_tutorial_completion[user.id][4][0]:
-                tutorial.user_tutorial_completion[user.id][4][0] = True
+            if not user_tutorial_completion[user.id][4][0]:
+                user_tutorial_completion[user.id][4][0] = True
                 
-                if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                if user.id not in user_coins:
+                    user_coins[user.id] = 0
                 
                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-                if False not in tutorial.user_tutorial_completion[user.id][4]:
-                    bot.user_coins[user.id] += 500
+                if False not in user_tutorial_completion[user.id][4]:
+                    user_coins[user.id] += 500
                     
                     await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
@@ -501,17 +513,17 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 color=0x00008B
             )
             
-            if not tutorial.user_tutorial_completion[user.id][4][3]:
-                tutorial.user_tutorial_completion[user.id][4][3] = True
+            if not user_tutorial_completion[user.id][4][3]:
+                user_tutorial_completion[user.id][4][3] = True
                 
-                if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                if user.id not in user_coins:
+                    user_coins[user.id] = 0
                     
                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-                if False not in tutorial.user_tutorial_completion[user.id][4]:
+                if False not in user_tutorial_completion[user.id][4]:
                     user_coins[user.id] += 500
-                    tutorial.user_current_tutorial[user.id] = 5
+                    user_current_tutorial[user.id] = 5
                     await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
             return embed
@@ -520,7 +532,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         search_terms = p_msg.split()[2:]
         print("Search terms:", search_terms)
             
-        collection = bot.user_collections[user.id]
+        collection = user_collections[user.id]
         correct_player = False
         correct_pos = False
         sel_player = ""
@@ -585,17 +597,17 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             await msg.channel.send(f"{removed_player} was removed from your starting XI.")
             
-            if not tutorial.user_tutorial_completion[user.id][4][2]:
-                tutorial.user_tutorial_completion[user.id][4][2] = True
+            if not user_tutorial_completion[user.id][4][2]:
+                user_tutorial_completion[user.id][4][2] = True
                 
-                if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                if user.id not in user_coins:
+                    user_coins[user.id] = 0
                     
                 await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-                if False not in tutorial.user_tutorial_completion[user.id][4]:
+                if False not in user_tutorial_completion[user.id][4]:
                     user_coins[user.id] += 500
-                    tutorial.user_current_tutorial[user.id] = 5
+                    user_current_tutorial[user.id] = 5
                     await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             return
 
@@ -633,7 +645,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if correct_player and correct_pos:
             new_embed = discord.Embed(
-                title=f"{user.name}'s Starting XI" if bot.user_club_name[user.id] == "" else bot.user_club_name[user.id],
+                title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
                 description=user_teams[user.id].description,
                 color=user_teams[user.id].color
             )
@@ -692,30 +704,30 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 print("1st reward")
                 user_team_rewards[user.id][0] = True
                  
-                if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                if user.id not in user_coins:
+                    user_coins[user.id] = 0
                     
-                bot.user_coins[user.id] += 1000
+                user_coins[user.id] += 1000
                 await msg.channel.send(f"Congratulations {user.mention}! You have built your first ever starting XI. You have been rewarded **1000 \U0001f4a0**!")
                 
             if overall_value >= 300 and not user_team_rewards[user.id][1]:
                 print("2nd reward")
                 user_team_rewards[user.id][1] = True
                 
-                if user.id not in bot.user_free_claims:
-                    bot.user_free_claims[user.id] = 0
+                if user.id not in user_free_claims:
+                    user_free_claims[user.id] = 0
                     
-                bot.user_free_claims[user.id] += 2
+                user_free_claims[user.id] += 2
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 300. You have been rewarded **2 free claims**!")
                 
             if overall_value >= 400 and not user_team_rewards[user.id][2]:
                 print("3rd reward")
                 user_team_rewards[user.id][2] = True
                 
-                if user.id not in bot.user_coins:
-                    bot.user_coins[user.id] = 0
+                if user.id not in user_coins:
+                    user_coins[user.id] = 0
                     
-                bot.user_coins[user.id] += 2000
+                user_coins[user.id] += 2000
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 4000. You have been rewarded **2000 \U0001f4a0** !")
             
             if overall_value >= 500 and not user_team_rewards[user.id][3]:
@@ -735,28 +747,28 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 user_team_rewards[user.id][5] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 700. You have been rewarded a random **830+ player**!")
-                await bot.team_rewards(msg, user, 700)
+                await team_rewards(msg, user, 700)
                 
             if overall_value >= 800 and not user_team_rewards[user.id][6]:
                 print("7th reward")
                 user_team_rewards[user.id][6] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 800. You have been rewarded a random **legend player**!")
-                await bot.team_rewards(msg, user, 800)
+                await team_rewards(msg, user, 800)
         
         user_teams[user.id] = new_embed
         
-        if not tutorial.user_tutorial_completion[user.id][4][1]:
-            tutorial.user_tutorial_completion[user.id][4][1] = True
+        if not user_tutorial_completion[user.id][4][1]:
+            user_tutorial_completion[user.id][4][1] = True
                 
-            if user.id not in bot.user_coins:
-                bot.user_coins[user.id] = 0
+            if user.id not in user_coins:
+                user_coins[user.id] = 0
                 
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                 
-            if False not in tutorial.user_tutorial_completion[user.id][4]:
+            if False not in user_tutorial_completion[user.id][4]:
                 user_coins[user.id] += 500
-                tutorial.user_current_tutorial[user.id] = 5
+                user_current_tutorial[user.id] = 5
                 await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
                 
         return user_teams[user.id]
@@ -813,17 +825,17 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     inline=False
                 )
                 
-                if not tutorial.user_tutorial_completion[user.id][5][1]:
-                    tutorial.user_tutorial_completion[user.id][5][1] = True
+                if not user_tutorial_completion[user.id][5][1]:
+                    user_tutorial_completion[user.id][5][1] = True
                     
-                    if user.id not in bot.user_free_claims:
-                        bot.user_free_claims[user.id] = 0
+                    if user.id not in user_free_claims:
+                        user_free_claims[user.id] = 0
                         
                     await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                         
-                    if False not in tutorial.user_tutorial_completion[user.id][5]:
-                        bot.user_free_claims[user.id] += 1
-                        tutorial.user_current_tutorial[user.id] = 6
+                    if False not in user_tutorial_completion[user.id][5]:
+                        user_free_claims[user.id] += 1
+                        user_current_tutorial[user.id] = 6
                         await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                 return embed
@@ -834,24 +846,24 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = stadium_prices[user_upgrades[user.id][0]]
-                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
-                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][0] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your stadium to level **{user_upgrades[user.id][0]}**!")
                     
-                    if not tutorial.user_tutorial_completion[user.id][5][2]:
-                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                    if not user_tutorial_completion[user.id][5][2]:
+                        user_tutorial_completion[user.id][5][2] = True
                             
-                        if user.id not in bot.user_free_claims:
-                            bot.user_free_claims[user.id] = 0
+                        if user.id not in user_free_claims:
+                            user_free_claims[user.id] = 0
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-                        if False not in tutorial.user_tutorial_completion[user.id][5]:
-                            bot.user_free_claims[user.id] += 1
-                            tutorial.user_current_tutorial[user.id] = 6
+                        if False not in user_tutorial_completion[user.id][5]:
+                            user_free_claims[user.id] += 1
+                            user_current_tutorial[user.id] = 6
                             await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                     
                     return
@@ -864,24 +876,24 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = board_prices[user_upgrades[user.id][1]]
-                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
-                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][1] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your board to level **{user_upgrades[user.id][1]}**!")
                     
-                    if not tutorial.user_tutorial_completion[user.id][5][2]:
-                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                    if not user_tutorial_completion[user.id][5][2]:
+                        user_tutorial_completion[user.id][5][2] = True
                             
-                        if user.id not in bot.user_free_claims:
-                            bot.user_free_claims[user.id] = 0
+                        if user.id not in user_free_claims:
+                            user_free_claims[user.id] = 0
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-                        if False not in tutorial.user_tutorial_completion[user.id][5]:
-                            bot.user_free_claims[user.id] += 1
-                            tutorial.user_current_tutorial[user.id] = 6
+                        if False not in user_tutorial_completion[user.id][5]:
+                            user_free_claims[user.id] += 1
+                            user_current_tutorial[user.id] = 6
                             await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                     return
@@ -894,24 +906,24 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = training_prices[user_upgrades[user.id][2]]
-                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
-                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][2] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your training facility to level **{user_upgrades[user.id][2]}**!")
                     
-                    if not tutorial.user_tutorial_completion[user.id][5][2]:
-                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                    if not user_tutorial_completion[user.id][5][2]:
+                        user_tutorial_completion[user.id][5][2] = True
                             
-                        if user.id not in bot.user_free_claims:
-                            bot.user_free_claims[user.id] = 0
+                        if user.id not in user_free_claims:
+                            user_free_claims[user.id] = 0
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-                        if False not in tutorial.user_tutorial_completion[user.id][5]:
-                            bot.user_free_claims[user.id] += 1
-                            tutorial.user_current_tutorial[user.id] = 6
+                        if False not in user_tutorial_completion[user.id][5]:
+                            user_free_claims[user.id] += 1
+                            user_current_tutorial[user.id] = 6
                             await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")                            
                     return
                 else:
@@ -923,24 +935,24 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = transfer_prices[user_upgrades[user.id][3]]
-                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
-                    bot.user_coins[user.id] -= price_to_upgrade
+                    user_coins[user.id] -= price_to_upgrade
                     user_upgrades[user.id][3] += 1
                     await msg.channel.send(f"{user.mention} Successfully upgraded your transfer market to level **{user_upgrades[user.id][3]}**!")
                     
-                    if not tutorial.user_tutorial_completion[user.id][5][2]:
-                        tutorial.user_tutorial_completion[user.id][5][2] = True
+                    if not user_tutorial_completion[user.id][5][2]:
+                        user_tutorial_completion[user.id][5][2] = True
                             
-                        if user.id not in bot.user_free_claims:
-                            bot.user_free_claims[user.id] = 0
+                        if user.id not in user_free_claims:
+                            user_free_claims[user.id] = 0
                             
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-                        if False not in tutorial.user_tutorial_completion[user.id][5]:
-                            bot.user_free_claims[user.id] += 1
-                            tutorial.user_current_tutorial[user.id] = 6
+                        if False not in user_tutorial_completion[user.id][5]:
+                            user_free_claims[user.id] += 1
+                            user_current_tutorial[user.id] = 6
                             await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                             
                     return
@@ -949,7 +961,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                             
         embed = discord.Embed(
             title=f"{user.name}'s Upgrades",
-            description= f"You have **{bot.user_coins[user.id]} \U0001f4a0** !\n" + "\n" + "Use your coins to increase the level of the following upgrades.",
+            description= f"You have **{user_coins[user.id]} \U0001f4a0** !\n" + "\n" + "Use your coins to increase the level of the following upgrades.",
             color=0x00008B
         )
         
@@ -984,17 +996,17 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             inline=False
         )
         
-        if not tutorial.user_tutorial_completion[user.id][5][0]:
-            tutorial.user_tutorial_completion[user.id][5][0] = True
+        if not user_tutorial_completion[user.id][5][0]:
+            user_tutorial_completion[user.id][5][0] = True
                 
-            if user.id not in bot.user_free_claims:
-                bot.user_free_claims[user.id] = 0
+            if user.id not in user_free_claims:
+                user_free_claims[user.id] = 0
                 
             await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                             
-            if False not in tutorial.user_tutorial_completion[user.id][5]:
-                bot.user_free_claims[user.id] += 1
-                tutorial.user_current_tutorial[user.id] = 6
+            if False not in user_tutorial_completion[user.id][5]:
+                user_free_claims[user.id] += 1
+                user_current_tutorial[user.id] = 6
                 await msg.channel.send("Tutorial 6 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
             
         return embed

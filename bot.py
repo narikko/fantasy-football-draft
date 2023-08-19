@@ -766,7 +766,7 @@ async def remove_player(user, msg, player):
                 found_player_value += found_player_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
                 found_player_value = int(found_player_value)
                 
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player['title']} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()

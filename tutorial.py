@@ -255,6 +255,7 @@ async def tutorial(msg, user, page_num):
             tutorial_msg = tutorial_messages[user.id]
             await tutorial_msg.clear_reactions()
             await tutorial_msg.edit(embed=embed_to_show)
+            await msg.channel.send(tutorial_msg)
         else:
             tutorial_msg = await msg.channel.send(embed=embed_to_show)
             await tutorial_msg.clear_reactions()

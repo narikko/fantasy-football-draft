@@ -206,7 +206,7 @@ async def sort_collection(msg, user):
             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
             
 async def dailies(msg, user):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
         
     if user.id not in server_data[server_id]["user_daily_bool"]:
         server_data[server_id]["user_daily_bool"][user.id] = True

@@ -29,6 +29,73 @@ def get_time_remaining(server_id, user):
             return format_time(time_remaining)
     return ""
 
+async def show_collection(user, msg, page_num, mention):
+    server_id = str(msg.guild.id)
+    
+    if user.id not in server_data[server_id]["user_current_page"]:
+        server_data[server_id]["user_current_page"][user.id] = 0
+        
+    mention_id = 0
+        
+    if mention == "":
+        mention_id = user.id
+    else:
+        mention_id = await extract_user_id(mention)
+
+    if mention_id in server_data[server_id]["user_collections"]:
+        collection = server_data[server_id]["user_collections"][mention_id]
+        if 0 <= page_num < len(collection):
+            server_data[server_id]["user_current_page"][user.id] = page_num
+            embed_to_show = collection[page_num]
+            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user.id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
+        
+            if user.id in server_data[server_id]["collection_messages"]:
+                collection_msg = server_data[server_id]["collection_messages"][user.id]
+                await collection_msg.clear_reactions()
+                await collection_msg.edit(embed=embed_to_show)
+            else:
+                collection_msg = await msg.channel.send(embed=embed_to_show)
+                await collection_msg.clear_reactions()
+                server_data[server_id]["collection_messages"][user.id] = collection_msg
+
+            await collection_msg.add_reaction("⬅️")
+            await collection_msg.add_reaction("➡️")
+            
+            if mention == "":    
+                if not server_data[server_id]["user_tutorial_completion"][user.id][2][1]:
+                    server_data[server_id]["user_tutorial_completion"][user.id][2][1] = True
+                    
+                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                    
+                    print(server_data[server_id]["user_tutorial_completion"][user.id][2])
+                            
+                    if user.id not in server_data[server_id]["user_max_rolls"]:
+                        server_data[server_id]["user_max_rolls"][user.id] = 9
+                            
+                    if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+                        server_data[server_id]["user_max_rolls"][user.id] += 1
+                        server_data[server_id]["user_current_tutorial"][user.id] = 3
+                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
+            else:
+                if not server_data[server_id]["user_tutorial_completion"][user.id][2][5]:
+                    server_data[server_id]["user_tutorial_completion"][user.id][2][5] = True
+                    
+                    await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                    
+                    print(server_data[server_id]["user_tutorial_completion"][user.id][2])
+                    
+                    if user.id not in server_data[server_id]["user_max_rolls"]:
+                        server_data[server_id]["user_max_rolls"][user.id] = 9
+                            
+                    if False not in server_data[server_id]["user_tutorial_completion"][user.id][2]:
+                        server_data[server_id]["user_max_rolls"][user.id] += 1
+                        server_data[server_id]["user_current_tutorial"][user.id] = 3
+                        await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
+        else:
+            await msg.channel.send("Error: Page not found.")
+    else:
+        await msg.channel.send("Error : No players found in your collection.")
+
 async def rename_club(msg, user, name):
     server_id = msg.guild.id
     if "user_club_name" not in server_data[server_id]:

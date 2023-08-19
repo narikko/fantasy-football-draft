@@ -8,6 +8,7 @@ async def tutorial(msg, user, page_num):
     user_tutorial_completion = server_data.get('user_tutorial_completion', {})
     user_current_page = server_data.get('user_current_page', {})
     tutorial_messages = server_data.get('tutorial_messages', {})
+    user_current_tutorial = server_data.get('user_current_tutorial', {})
     
     if user.id not in user_tutorial:
         tutorial_list = []

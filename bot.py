@@ -173,7 +173,7 @@ async def move_player(msg, user, player, position):
             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
      
 async def sort_collection(msg, user):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
     if "user_collections" not in server_data[server_id]:
         server_data[server_id]["user_collections"] = {}
         
@@ -226,7 +226,7 @@ async def dailies(msg, user):
         if server_data[server_id]["user_upgrades"][user.id][1] != 0:
             daily_reward += daily_reward * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
             
-        await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}**!")
+        await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}** \U0001f4a0!")
         server_data[server_id]["user_coins"][user.id] += int(daily_reward)
         server_data[server_id]["user_daily_bool"][user.id] = False
         server_data[server_id]["user_daily_wait"][user.id] = time.time() + 86400

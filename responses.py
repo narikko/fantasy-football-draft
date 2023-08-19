@@ -155,6 +155,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
         rolled_times[player_id] = (rolled_time, expiration_time)
         
+        print(rolled_times[player_id])
+        
         user_rolls[user.id] -= 1
         
         return embed

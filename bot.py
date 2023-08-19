@@ -1013,7 +1013,7 @@ def run_discord_bot():
                 await rename_club(msg, msg.author, name)
                 
         elif user_msg.startswith("%tuto"):
-            tutorial.tutorial_messages = {}
+            server_data[server_id]["tutorial_messages"] = {}
             if len(user_msg.split()) == 1:
                 await tutorial.tutorial(msg, msg.author, server_data[server_id]["user_current_tutorial"][msg.author.id])
             else:

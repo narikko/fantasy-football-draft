@@ -924,8 +924,6 @@ def run_discord_bot():
         
         server_id = str(msg.guild.id)
         
-        global server_data
-        
         username = str(msg.author)
         user_msg = str(msg.content)
         channel = str(msg.channel)

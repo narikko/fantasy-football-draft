@@ -139,11 +139,6 @@ async def sort_collection(msg, user):
             
 async def dailies(msg, user):
     server_id = msg.guild.id
-    if "user_daily_bool" not in server_data[server_id]:
-        server_data[server_id]["user_daily_bool"] = {}
-        
-    if "user_daily_wait" not in server_data[server_id]:
-        server_data[server_id]["user_daily_wait"] = {}
         
     if user.id not in server_data[server_id]["user_daily_bool"]:
         server_data[server_id]["user_daily_bool"][user.id] = True

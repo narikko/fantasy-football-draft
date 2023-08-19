@@ -22,7 +22,7 @@ transfer_prices = [2000, 5000, 8000, 12000, 24000]
 
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
-    server_data = bot.server_data.get(msg.guild.id, {})
+    server_data = bot.server_data.get(str(msg.guild.id), {})
         
     user_upgrades = server_data.get('user_upgrades', {})
     user_favorite_club = server_data.get('user_favorite_club', {})

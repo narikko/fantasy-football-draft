@@ -941,20 +941,20 @@ def run_discord_bot():
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
             server_data[server_id]["collection_messages"] = {}
-            mentioned_user[msg.author.id] = ""
+            server_data[server_id]["mentioned_user"][msg.author.id] = ""
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0, "")
             
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 2:
-                mentioned_user[msg.author.id] = user_msg.split()[1]
+                server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
                 await show_collection(msg.author, msg, 0, mentioned_user[msg.author.id])
                 
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 3:
-                mentioned_user[msg.author.id] = user_msg.split()[1]
+                server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
                 await show_collection(msg.author, msg, int(user_msg.split()[2]) - 1, mentioned_user[msg.author.id])
                 
             elif "@" in user_msg.split()[2] and len(user_msg.split()) == 3:
-                mentioned_user[msg.author.id] = user_msg.split()[2]
+                server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[2]
                 await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, mentioned_user[msg.author.id])
             
             else:

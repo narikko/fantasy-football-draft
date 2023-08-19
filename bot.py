@@ -1013,15 +1013,15 @@ def run_discord_bot():
             
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 2:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
-                await show_collection(msg.author, msg, 0, mentioned_user[msg.author.id])
+                await show_collection(msg.author, msg, 0, server_data[server_id]["mentioned_user"][msg.author.id])
                 
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 3:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
-                await show_collection(msg.author, msg, int(user_msg.split()[2]) - 1, mentioned_user[msg.author.id])
+                await show_collection(msg.author, msg, int(user_msg.split()[2]) - 1, server_data[server_id]["mentioned_user"][msg.author.id])
                 
             elif "@" in user_msg.split()[2] and len(user_msg.split()) == 3:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[2]
-                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, mentioned_user[msg.author.id])
+                await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, server_data[server_id]["mentioned_user"][msg.author.id])
             
             else:
                 await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, "")

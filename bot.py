@@ -97,7 +97,7 @@ async def show_collection(user, msg, page_num, mention):
         await msg.channel.send("Error : No players found in your collection.")
 
 async def rename_club(msg, user, name):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
     if "user_club_name" not in server_data[server_id]:
         server_data[server_id]["user_club_name"] = {}
         
@@ -129,7 +129,7 @@ async def rename_club(msg, user, name):
             await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
 
 async def move_player(msg, user, player, position):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
     if "user_collections" not in server_data[server_id]:
         server_data[server_id]["user_collections"] = {}
         
@@ -251,7 +251,7 @@ async def dailies(msg, user):
         await msg.channel.send(f"Your daily reward is not available yet. Please wait **{time_left}**.")
         
 async def team_rewards(msg, user, value):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
     if "user_collections" not in server_data[server_id]:
         server_data[server_id]["user_collections"] = {}
     
@@ -339,7 +339,7 @@ async def team_rewards(msg, user, value):
         await msg.channel.send(embed=embed)
         
 async def free_claim(msg, user):
-    server_id = msg.guild.id
+    server_id = str(msg.guild.id)
     if "user_free_claims" not in server_data[server_id]:
         server_data[server_id]["user_free_claims"] = {}
     

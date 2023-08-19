@@ -2,7 +2,7 @@ import discord
 import bot
 
 async def tutorial(msg, user, page_num):
-    server_data = bot.server_data.get(msg.guild.id, {})
+    server_data = bot.server_data.get(str(msg.guild.id), {})
     
     user_tutorial = server_data.get('user_tutorial', {})
     user_tutorial_completion = server_data.get('user_tutorial_completion', {})

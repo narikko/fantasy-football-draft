@@ -752,15 +752,15 @@ async def remove_player(user, msg, player):
         found_player_value = 0
         
         for embed in collection:
-            if embed["title"] == player:
+            if embed.title.lower() == player.lower():
                 found_player = embed
                 break
             i += 1
             
         if found_player:
-            for field in found_player["fields"]:
-                if "Value:" in field["name"]:
-                    found_player_value = float(field["name"].split()[1])
+            for field in found_player.fields:
+                if "Value:" in field.name:
+                    found_player_value = float(field.name.split()[1])
             
             if server_data[server_id]["user_upgrades"][user.id][1] != 0:
                 found_player_value += found_player_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
@@ -782,13 +782,13 @@ async def remove_player(user, msg, player):
                         j += 1
                     
                     server_data[server_id]["user_coins"][user.id] += int(found_player_value)
-                    await msg.channel.send(f"{removed_embed['title']} was removed from {user.mention}'s collection.")
+                    await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
                     
                     if user.id not in server_data[server_id]["user_team_players"]:
                         server_data[server_id]["user_team_players"][user.id] = []
                     
                     for player in server_data[server_id]["user_team_players"][user.id]:
-                        if player["title"] == removed_embed["title"]:
+                        if player.title == removed_embed.title:
                             await responses.handle_responses(msg, f"%t rm {removed_embed['title']}", msg.author)
                     
                     if not server_data[server_id]["user_tutorial_completion"][user.id][2][4]:

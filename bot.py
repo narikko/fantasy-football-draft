@@ -12,6 +12,8 @@ import json
 
 server_data = {}
 
+print("bruh")
+
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
 intents.members = True

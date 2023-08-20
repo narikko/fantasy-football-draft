@@ -989,8 +989,8 @@ async def trade_player(user, msg, player, mention):
                     user_removed = user_collection.pop(user_i)
                     other_removed = other_collection.pop(other_i)
                     
-                    user_removed_playerid = user_removed.[4].split(", ")[1]
-                    other_removed_playerid = other_removed.[4].split(", ")[1]
+                    user_removed_playerid = user_removed[4].split(", ")[1]
+                    other_removed_playerid = other_removed[4].split(", ")[1]
                     
                     for playerid in server_data[server_id]["playerids"]:
                         if user_removed_playerid == playerid:

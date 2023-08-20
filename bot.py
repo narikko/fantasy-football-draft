@@ -17,6 +17,21 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+def create_tables():
+    conn = sqlite3.connect("server_data.db")
+    cursor = conn.cursor()
+
+    # Create the server_data table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS server_data (
+            server_id TEXT PRIMARY KEY,
+            data TEXT
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
+
 def connect_to_database():
     # Connect to the database (create it if it doesn't exist)
     conn = sqlite3.connect('server_data.db')

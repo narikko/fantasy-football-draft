@@ -230,7 +230,7 @@ async def move_player(msg, user, player, position):
         return
   
     collection.insert(position - 1, player_to_move)
-    await msg.channel.send(f"Succesfully moved {player_to_move.title}!")
+    await msg.channel.send(f"Succesfully moved {player_to_move[0]}!")
     
     if not server_data[server_id]["user_tutorial_completion"][user.id][2][3]:
         server_data[server_id]["user_tutorial_completion"][user.id][2][3] = True

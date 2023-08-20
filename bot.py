@@ -22,7 +22,7 @@ def format_time(seconds):
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
 def get_time_remaining(server_id, user):
-    if user_id in server_data[server_id]["user_transfer_tasks"]:
+    if user.id in server_data[server_id]["user_transfer_tasks"]:
         task = server_data[server_id]["user_transfer_tasks"][user.id]
         if task is not None and not task.done():
             time_remaining = server_data[server_id]["user_market_wait"][user.id] - time.time()

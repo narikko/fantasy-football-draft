@@ -1008,6 +1008,8 @@ def run_discord_bot():
     async def on_ready():
         print(f'{client.user} is now running!')
         
+        create_tables()
+        
         for guild in client.guilds:
             server_id = str(guild.id)
             loaded_data = load_server_data(server_id)

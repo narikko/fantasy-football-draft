@@ -433,13 +433,20 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             embed.add_field(name="Overall Value", value="0", inline=False)
             
-            user_teams[user.id] = embed
+            embed_data = [
+                embed.title,
+                embed.description,
+                embed.color,
+                embed.fields
+            ]
+            
+            user_teams[user.id] = embed_data
         
         if len(p_msg.split()) == 1:
             new_embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
-                description=user_teams[user.id].description,
-                color=user_teams[user.id].color
+                description=user_teams[user.id][1],
+                color=user_teams[user.id][2]
             )
             
             overall_value = 0
@@ -462,9 +469,16 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if field.name.strip() == "Overall Value":
                     new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
                 else:
-                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline) 
+                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    
+            embed_data = [
+                new_embed.title,
+                new_embed.description,
+                new_embed.color,
+                new_embed.fields
+            ]
             
-            user_teams[user.id] = new_embed
+            user_teams[user.id] = embed_data
             
             if not user_tutorial_completion[user.id][4][0]:
                 user_tutorial_completion[user.id][4][0] = True
@@ -479,7 +493,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     
                     await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
-            return user_teams[user.id]
+            return new_embed
         
         if p_msg.split()[1] == "rewards":
             ovl_value = ""
@@ -543,9 +557,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if p_msg.split()[1] == "rm":
             print("this happened")
             new_embed = discord.Embed(
-                title=user_teams[user.id].title,
-                description=user_teams[user.id].description,
-                color=user_teams[user.id].color
+                title=user_teams[user.id][0],
+                description=user_teams[user.id][1],
+                color=user_teams[user.id].[2]
             )
             
             for field in user_teams[user.id].fields:
@@ -556,7 +570,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
                     
-            user_teams[user.id] = new_embed
+            embed_data = [
+                new_embed.title,
+                new_embed.description,
+                new_embed.color,
+                new_embed.fields
+            ]
+                    
+            user_teams[user.id] = embed_data
             
             removed_player = ""
             for player in user_team_players[user.id]:
@@ -568,9 +589,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     removed_player = player.title
             
             newer_embed = discord.Embed(
-                title=user_teams[user.id].title,
-                description=user_teams[user.id].description,
-                color=user_teams[user.id].color
+                title=user_teams[user.id][0],
+                description=user_teams[user.id][1],
+                color=user_teams[user.id][2]
             )
             
             overall_value = 0
@@ -595,8 +616,15 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     newer_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
                 else:
                     newer_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    
+            embed_data = [
+                newer_embed.title,
+                newer_embed.description,
+                newer_embed.color,
+                newer_embed.fields
+            ]
 
-            user_teams[user.id] = newer_embed
+            user_teams[user.id] = embed_data
             
             await msg.channel.send(f"{removed_player} was removed from your starting XI.")
             
@@ -615,10 +643,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             return
 
         for player in collection:
-            if all(term.lower() in player.title.lower() for term in search_terms):
+            if all(term.lower() in player[0].lower() for term in search_terms):
                 correct_player = True
-                sel_player = player.title
-                for field in player.fields:
+                sel_player = player[0]
+                for field in player[3]:
                     positions = field.name.split("/")
                     for pos in positions:
                         if (pos in forward_pos) and (p_msg.split()[1] in fpos):
@@ -649,11 +677,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if correct_player and correct_pos:
             new_embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
-                description=user_teams[user.id].description,
-                color=user_teams[user.id].color
+                description=user_teams[user.id].[1],
+                color=user_teams[user.id].[2]
             )
 
-            for field in user_teams[user.id].fields:
+            for field in user_teams[user.id][3]:
                 if field.value.strip().lower() == sel_player.lower():
                     if field.name.strip().lower() != p_msg.split()[1]:
                         new_embed.add_field(name=field.name, value="", inline=field.inline)
@@ -663,12 +691,19 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
                 else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    
+            embed_data = [
+                new_embed.title,
+                new_embed.description,
+                new_embed.color,
+                new_embed.fields
+            ]
 
-            user_teams[user.id] = new_embed
+            user_teams[user.id] = embed_data
         
         new_embed = discord.Embed(
-                title=user_teams[user.id].title,
-                description=user_teams[user.id].description,
+                title=user_teams[user.id][0],
+                description=user_teams[user.id][1],
                 color=0x7CFC00
         )
         
@@ -676,7 +711,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         player_values = []
         if len(user_team_players[user.id]) != 0:
             for player in user_team_players[user.id]:
-                for field in player.fields:
+                for field in player[3]:
                     if "Value:" in field.name:
                         player_values.append(int(field.name.split()[1]))
                         break
@@ -688,7 +723,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             overall_value += overall_value * (training_upgrades[user_upgrades[user.id][2] - 1] / 100)
             overall_value = int(overall_value)
         
-        for field in user_teams[user.id].fields:
+        for field in user_teams[user.id][3]:
             if field.name.strip() == "Overall Value":
                 new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
             else:
@@ -758,8 +793,15 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 800. You have been rewarded a random **legend player**!")
                 await team_rewards(msg, user, 800)
+                
+        embed_data = [
+            new_embed.title,
+            new_embed.description,
+            new_embed.color,
+            new_embed.fields
+        ]
         
-        user_teams[user.id] = new_embed
+        user_teams[user.id] = embed_data
         
         if not user_tutorial_completion[user.id][4][1]:
             user_tutorial_completion[user.id][4][1] = True
@@ -774,7 +816,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 user_current_tutorial[user.id] = 5
                 await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
                 
-        return user_teams[user.id]
+        return new_embed
     
     if p_msg.startswith("%u"):
         if user.id not in user_upgrades:

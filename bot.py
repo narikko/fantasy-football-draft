@@ -323,8 +323,6 @@ async def dailies(msg, user):
         
 async def team_rewards(msg, user, value):
     server_id = str(msg.guild.id)
-    if "user_collections" not in server_data[server_id]:
-        server_data[server_id]["user_collections"] = {}
     
     if "playerids" not in server_data[server_id]:
         server_data[server_id]["playerids"] = []
@@ -365,7 +363,16 @@ async def team_rewards(msg, user, value):
         if user.id not in server_data[server_id]["user_collections"]:
             server_data[server_id]["user_collections"][user.id] = []
             
-        server_data[server_id]["user_collections"][user.id].append(embed)
+        player_embed_data = [
+            embed.title,
+            embed.description,
+            embed.color,
+            embed.fields,
+            embed.footer.text,
+            embed.image.url if player_embed.image else None
+        ]
+            
+        server_data[server_id]["user_collections"][user.id].append(player_embed_data)
 
         player_id = embed.footer.text.split(", ")[1]
         server_data[server_id]["playerids"].append(player_id)
@@ -401,7 +408,16 @@ async def team_rewards(msg, user, value):
         if user.id not in server_data[server_id]["user_collections"]:
             server_data[server_id]["user_collections"][user.id] = []
             
-        server_data[server_id]["user_collections"][user.id].append(embed)
+        player_embed_data = [
+            embed.title,
+            embed.description,
+            embed.color,
+            embed.fields,
+            embed.footer.text,
+            embed.image.url if player_embed.image else None
+        ]
+            
+        server_data[server_id]["user_collections"][user.id].append(player_embed_data)
 
         player_id = embed.footer.text.split(", ")[1]
         server_data[server_id]["playerids"].append(player_id)
@@ -512,12 +528,12 @@ async def transfer_market(msg, user, player_to_list, command):
         if not server_data[server_id]["user_market_bool"][user_id]:
             search_terms = player_to_list
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
-            collection = server_data[server_id]["user_collections"].get(user_id, [])
+            collection = server_data[server_id]["user_collections"][user.id]
             
             for player in collection:
                 normalized_title = unidecode.unidecode(player.title.lower())
                 if all(term.lower() in normalized_title for term in normalized_search_terms):
-                    for field in player.fields:
+                    for field in player[3]:
                         if "Value:" in field.name:
                             server_data[server_id]["user_market"][user_id] = int(field.name.split()[1])
                             break
@@ -823,13 +839,13 @@ async def remove_player(user, msg, player):
         found_player_value = 0
         
         for embed in collection:
-            if embed.title.lower() == player.lower():
+            if embed[0].lower() == player.lower():
                 found_player = embed
                 break
             i += 1
             
         if found_player:
-            for field in found_player.fields:
+            for field in found_player[3]:
                 if "Value:" in field.name:
                     found_player_value = float(field.name.split()[1])
             
@@ -837,14 +853,14 @@ async def remove_player(user, msg, player):
                 found_player_value += found_player_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)
                 found_player_value = int(found_player_value)
                 
-            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player.title} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"Are you sure you want to remove {found_player[0]} from your collection? You will receive {int(found_player_value)} \U0001f4a0 (y/n/yes/no)")
             try:
                 response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
                 response_content = response.content.lower()
                 if response_content == 'yes' or response_content == 'y':
                     removed_embed = collection.pop(i)
                     
-                    removed_player_id = removed_embed.footer.text.split(", ")[1]
+                    removed_player_id = removed_embed[4].split(", ")[1]
                     j = 0
                     for player_id in server_data[server_id]["playerids"]:
                         if removed_player_id == player_id:
@@ -853,14 +869,14 @@ async def remove_player(user, msg, player):
                         j += 1
                     
                     server_data[server_id]["user_coins"][user.id] += int(found_player_value)
-                    await msg.channel.send(f"{removed_embed.title} was removed from {user.mention}'s collection.")
+                    await msg.channel.send(f"{removed_embed[0]} was removed from {user.mention}'s collection.")
                     
                     if user.id not in server_data[server_id]["user_team_players"]:
                         server_data[server_id]["user_team_players"][user.id] = []
                     
                     for player in server_data[server_id]["user_team_players"][user.id]:
                         if player.title == removed_embed.title:
-                            await responses.handle_responses(msg, f"%t rm {removed_embed['title']}", msg.author)
+                            await responses.handle_responses(msg, f"%t rm {removed_embed[0]}", msg.author)
                     
                     if not server_data[server_id]["user_tutorial_completion"][user.id][2][4]:
                         server_data[server_id]["user_tutorial_completion"][user.id][2][4] = True
@@ -902,7 +918,7 @@ async def trade_player(user, msg, player, mention):
     other_i = 0
     
     for embed in user_collection:
-        if embed.title == player:
+        if embed[0].lower() == player.lower():
             user_embed_trade = embed
             break
         user_i += 1
@@ -927,7 +943,7 @@ async def trade_player(user, msg, player, mention):
                 repeat = False
             else:
                 for embed in other_collection:
-                    if embed.title.lower() == response_content:
+                    if embed[0].lower() == response_content:
                         other_embed_trade = embed
                         repeat = False
                         break
@@ -942,7 +958,7 @@ async def trade_player(user, msg, player, mention):
         user_confirm = False
         
         if other_embed_trade:
-            confirmation_msg = await msg.channel.send(f"{user.mention} You are trading {user_embed_trade.title} for {other_embed_trade.title}. Do you confirm this trade? (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"{user.mention} You are trading {user_embed_trade[0]} for {other_embed_trade[0]}. Do you confirm this trade? (y/n/yes/no)")
             
             def check_user_response(m):
                     return m.author.id == user_id and m.channel == msg.channel
@@ -958,7 +974,7 @@ async def trade_player(user, msg, player, mention):
                 await msg.channel.send("Confirmation timed out. Trade cancelled.")
         
         if user_confirm:
-            confirmation_msg = await msg.channel.send(f"<@{other_id}> You are trading {other_embed_trade.title} for {user_embed_trade.title}. Do you confirm this trade? (y/n/yes/no)")
+            confirmation_msg = await msg.channel.send(f"<@{other_id}> You are trading {other_embed_trade[0]} for {user_embed_trade[0]}. Do you confirm this trade? (y/n/yes/no)")
             
             def check_response(m):
                 return m.author.id == other_id and m.channel == msg.channel
@@ -973,8 +989,8 @@ async def trade_player(user, msg, player, mention):
                     user_removed = user_collection.pop(user_i)
                     other_removed = other_collection.pop(other_i)
                     
-                    user_removed_playerid = user_removed.footer.text.split(", ")[1]
-                    other_removed_playerid = other_removed.footer.text.split(", ")[1]
+                    user_removed_playerid = user_removed.[4].split(", ")[1]
+                    other_removed_playerid = other_removed.[4].split(", ")[1]
                     
                     for playerid in server_data[server_id]["playerids"]:
                         if user_removed_playerid == playerid:
@@ -985,8 +1001,8 @@ async def trade_player(user, msg, player, mention):
                             server_data[server_id]["usernames"].pop(j)
                         j += 1
                     
-                    user_removed.description = user_removed.description.replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
-                    other_removed.description = other_removed.description.replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
+                    user_removed.[1] = user_removed.[1].replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
+                    other_removed.[1] = other_removed.[1].replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
                     
                     server_data[server_id]["user_collections"][user_id].append(other_removed)
                     server_data[server_id]["user_collections"][other_id].append(user_removed)

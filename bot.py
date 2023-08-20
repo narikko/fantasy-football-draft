@@ -7,15 +7,60 @@ import unidecode
 import time
 import random
 import tutorial
+import sqlite3
+import json
 
 server_data = {}
-
-print("bruh")
 
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
+
+def connect_to_database():
+    # Connect to the database (create it if it doesn't exist)
+    conn = sqlite3.connect('server_data.db')
+    return conn
+
+def save_server_data(server_id, data_to_store):
+    conn = connect_to_database()
+    cursor = conn.cursor()
+
+    # Create table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS server_data (
+            server_id TEXT PRIMARY KEY,
+            data TEXT
+        )
+    ''')
+
+    # Insert or replace the server data
+    cursor.execute('''
+        INSERT OR REPLACE INTO server_data (server_id, data) VALUES (?, ?)
+    ''', (str(server_id), json.dumps(data_to_store)))
+
+    # Commit changes and close connection
+    conn.commit()
+    conn.close()
+
+def load_server_data(server_id):
+    conn = connect_to_database()
+    cursor = conn.cursor()
+
+    # Retrieve data from the database
+    cursor.execute('''
+        SELECT data FROM server_data WHERE server_id = ?
+    ''', (str(server_id),))
+    
+    data = cursor.fetchone()
+
+    # Close connection
+    conn.close()
+
+    if data:
+        return json.loads(data[0])
+    else:
+        return None
 
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
@@ -950,39 +995,44 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            server_data.setdefault(server_id, {
-                "user_collections": {},
-                "user_current_page": {},
-                "collection_messages": {},
-                "user_coins": {},
-                "user_favorite_club": {},
-                "user_free_claims": {},
-                "user_club_name": {},
-                "mentioned_user": {},
-                "user_daily_wait": {},
-                "user_daily_bool": {},
-                "user_market": {},
-                "user_market_player": {},
-                "user_market_bool": {},
-                "user_transfer_tasks": {},
-                "user_market_wait": {},
-                "playerids": [],
-                "usernames": [],
-                "roll_reset_time": time.time(),
-                "claim_reset_time": time.time(),
-                "user_teams": {},
-                "user_team_players": {},
-                "user_upgrades": {},
-                "user_team_rewards": {},
-                "rolled_times": {},
-                "user_max_rolls": {},
-                "user_rolls": {},
-                "user_can_claim": {},
-                "user_tutorial": {},
-                "tutorial_messages": {},
-                "user_tutorial_completion": {},
-                "user_current_tutorial": {}
-            })
+            loaded_data = load_server_data(server_id)
+            
+            if loaded_data:
+                server_data[server_id] = loaded_data
+            else:
+                server_data.setdefault(server_id, {
+                    "user_collections": {},
+                    "user_current_page": {},
+                    "collection_messages": {},
+                    "user_coins": {},
+                    "user_favorite_club": {},
+                    "user_free_claims": {},
+                    "user_club_name": {},
+                    "mentioned_user": {},
+                    "user_daily_wait": {},
+                    "user_daily_bool": {},
+                    "user_market": {},
+                    "user_market_player": {},
+                    "user_market_bool": {},
+                    "user_transfer_tasks": {},
+                    "user_market_wait": {},
+                    "playerids": [],
+                    "usernames": [],
+                    "roll_reset_time": time.time(),
+                    "claim_reset_time": time.time(),
+                    "user_teams": {},
+                    "user_team_players": {},
+                    "user_upgrades": {},
+                    "user_team_rewards": {},
+                    "rolled_times": {},
+                    "user_max_rolls": {},
+                    "user_rolls": {},
+                    "user_can_claim": {},
+                    "user_tutorial": {},
+                    "tutorial_messages": {},
+                    "user_tutorial_completion": {},
+                    "user_current_tutorial": {}
+                })
         
     @client.event
     async def on_message(msg):
@@ -1011,81 +1061,104 @@ def run_discord_bot():
             server_data[server_id]["mentioned_user"][msg.author.id] = ""
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0, "")
+                save_server_data(server_id, server_data[server_id])
             
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 2:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
                 await show_collection(msg.author, msg, 0, server_data[server_id]["mentioned_user"][msg.author.id])
+                save_server_data(server_id, server_data[server_id])
                 
             elif "@" in user_msg.split()[1] and len(user_msg.split()) == 3:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[1]
                 await show_collection(msg.author, msg, int(user_msg.split()[2]) - 1, server_data[server_id]["mentioned_user"][msg.author.id])
+                save_server_data(server_id, server_data[server_id])
                 
             elif "@" in user_msg.split()[2] and len(user_msg.split()) == 3:
                 server_data[server_id]["mentioned_user"][msg.author.id] = user_msg.split()[2]
                 await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, server_data[server_id]["mentioned_user"][msg.author.id])
+                save_server_data(server_id, server_data[server_id])
             
             else:
                 await show_collection(msg.author, msg, int(user_msg.split()[1]) - 1, "")
+                save_server_data(server_id, server_data[server_id])
+                
         elif user_msg.startswith("%rm"):
             if len(user_msg.split()) == 1:
                 await msg.channel.send("Please specify who you wish to remove from your collection.")
+                save_server_data(server_id, server_data[server_id])
             else:
                 player_name = user_msg[4:].strip()
                 await remove_player(msg.author, msg, player_name)
+                save_server_data(server_id, server_data[server_id])
         
         elif user_msg.startswith("%trade") or user_msg.startswith("%tr"):
             mention = user_msg.split()[1]
             player_to_trade = " ".join(user_msg.split()[2:])
             await trade_player(msg.author, msg, player_to_trade, mention)
+            save_server_data(server_id, server_data[server_id])
         
         elif user_msg == "%p":
             await display_profile(msg, msg.author)
+            save_server_data(server_id, server_data[server_id])
         
         elif user_msg.startswith("%sc"):
             club = user_msg.split()[1:]
             await set_favorite_club(msg, msg.author, club)
+            save_server_data(server_id, server_data[server_id])
             
         elif user_msg.startswith("%tm"):
             if len(user_msg.split()) == 1:
                 await transfer_market(msg, msg.author, [], "")
+                save_server_data(server_id, server_data[server_id])
             else:
                 player_to_list = user_msg.split()[2:]
                 command = user_msg.split()[1]
                 await transfer_market(msg, msg.author, player_to_list, command)
+                save_server_data(server_id, server_data[server_id])
                 
         elif user_msg == "%fc":
             await free_claim(msg, msg.author)
+            save_server_data(server_id, server_data[server_id])
         
         elif user_msg == "%d":
             await dailies(msg, msg.author)
+            save_server_data(server_id, server_data[server_id])
             
         elif user_msg == "%s":
             await sort_collection(msg, msg.author)
+            save_server_data(server_id, server_data[server_id])
             
         elif user_msg.startswith("%m"):
             position = int(user_msg.split()[1])
             player_to_move = user_msg.split()[2:]
             await move_player(msg, msg.author, player_to_move, position)
+            save_server_data(server_id, server_data[server_id])
             
         elif user_msg.startswith("%n"):
             if len(user_msg.split()) == 1:
                 await rename_club(msg, msg.author, [])
+                save_server_data(server_id, server_data[server_id])
             else:
                 name = user_msg.split()[1:]
-                await rename_club(msg, msg.author, name)
+                await rename_club(msg, msg.author, name)\
+                save_server_data(server_id, server_data[server_id])
                 
         elif user_msg.startswith("%tuto"):
             server_data[server_id]["tutorial_messages"] = {}
             if len(user_msg.split()) == 1:
                 await tutorial.tutorial(msg, msg.author, server_data[server_id]["user_current_tutorial"][msg.author.id])
+                save_server_data(server_id, server_data[server_id])
             else:
                 page_num = int(user_msg.split()[1])
                 await tutorial.tutorial(msg, msg.author, page_num)
+                save_server_data(server_id, server_data[server_id])
                 
         elif user_msg == "%r" or user_msg.startswith("%v") or user_msg.startswith("%lc") or user_msg.startswith("%t") or user_msg.startswith("%u") or user_msg == "%index":
             await send_message(msg, user_msg, is_private=False)
+            save_server_data(server_id, server_data[server_id])
             
         else:
+            save_server_data(server_id, server_data[server_id])
             return
             
     client.loop.create_task(clean_up_rolled_times())

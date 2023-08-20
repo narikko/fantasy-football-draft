@@ -1051,6 +1051,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         )
         
         return embed
+    
+    
         
         
         

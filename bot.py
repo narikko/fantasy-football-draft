@@ -114,7 +114,7 @@ async def show_collection(user, msg, page_num, mention):
             embed_to_show = discord.Embed(
                 title=embed_data[0],
                 description=embed_data[1],
-                color=embed_data[2]
+                color=discord.Colour(int(embed_data[2]))
             )
             
             for field in embed_data[3]:
@@ -1332,7 +1332,7 @@ async def on_reaction_add(reaction, user):
             player_embed_data = [
                 player_embed.title,
                 player_embed.description,
-                player_embed.color,
+                str(player_embed.color),
                 player_embed.fields,
                 player_embed.footer.text,
                 player_embed.image.url if player_embed.image else None

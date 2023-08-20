@@ -543,7 +543,7 @@ async def transfer_market(msg, user, player_to_list, command):
     if command == "":
         menu = "**Welcome to the Transfer Market \U0001f4dc !**\n"
         if server_data[server_id]["user_upgrades"][user_id][3] != 0:
-            menu += f"Here you can add a player from your collection to the transfer list, and in **{server_data[server_id]['transfer_upgrades'][server_data[server_id]['user_upgrades'][user_id][3] - 1]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
+            menu += f"Here you can add a player from your collection to the transfer list, and in **{responses.transfer_upgrades[server_data[server_id]['user_upgrades'][user_id][3] - 1]}**, you will receive 150% of the value of the player you sold!\n" + "\n"
         else:
             menu += f"Here you can add a player from your collection to the transfer list, and in **5 days**, you will receive 150% of the value of the player you sold!\n" + "\n"
             

@@ -849,7 +849,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = stadium_prices[user_upgrades[user.id][0]]
-                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
                     user_coins[user.id] -= price_to_upgrade
@@ -879,7 +879,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = board_prices[user_upgrades[user.id][1]]
-                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
                     user_coins[user.id] -= price_to_upgrade
@@ -909,7 +909,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = training_prices[user_upgrades[user.id][2]]
-                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
                     user_coins[user.id] -= price_to_upgrade
@@ -938,7 +938,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     return
                 
                 price_to_upgrade = transfer_prices[user_upgrades[user.id][3]]
-                confirmed = await purchase_confirmation(price_to_upgrade, user, msg)
+                confirmed = await bot.purchase_confirmation(price_to_upgrade, user, msg)
                 
                 if confirmed:
                     user_coins[user.id] -= price_to_upgrade

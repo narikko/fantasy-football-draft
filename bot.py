@@ -205,9 +205,7 @@ async def rename_club(msg, user, name):
 
 async def move_player(msg, user, player, position):
     server_id = str(msg.guild.id)
-    if "user_collections" not in server_data[server_id]:
-        server_data[server_id]["user_collections"] = {}
-        
+
     if user.id not in server_data[server_id]["user_collections"]:
         server_data[server_id]["user_collections"][user.id] = []
         
@@ -221,7 +219,7 @@ async def move_player(msg, user, player, position):
     normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
     i = 0
     for embed in collection:
-        embed_title = unidecode.unidecode(embed.title.lower().strip())
+        embed_title = unidecode.unidecode(embed[0].lower().strip())
         if embed_title == " ".join(normalized_search_terms):
             player_to_move = collection.pop(i)
             break
@@ -249,14 +247,12 @@ async def move_player(msg, user, player, position):
      
 async def sort_collection(msg, user):
     server_id = str(msg.guild.id)
-    if "user_collections" not in server_data[server_id]:
-        server_data[server_id]["user_collections"] = {}
         
     if user.id not in server_data[server_id]["user_collections"]:
         server_data[server_id]["user_collections"][user.id] = []
         
     def get_embed_value(embed):
-        for field in embed.fields:
+        for field in embed[3]:
             if "Value:" in field.name:
                 return int(field.name.split()[1])
                                   

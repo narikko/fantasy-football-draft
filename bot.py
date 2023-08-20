@@ -118,7 +118,7 @@ async def show_collection(user, msg, page_num, mention):
             )
             
             for field in embed_data[3]:
-                embed_to_show.add_field(field)
+                embed_to_show.add_field(name=field[0], value=field[1], inline=field[2])
             
             embed_to_show.set_footer(text=embed_data[4].split(", ")[0] + ", " + embed_data[4].split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user.id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
         

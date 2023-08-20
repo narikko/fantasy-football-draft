@@ -1140,7 +1140,7 @@ def run_discord_bot():
                 save_server_data(server_id, server_data[server_id])
             else:
                 name = user_msg.split()[1:]
-                await rename_club(msg, msg.author, name)\
+                await rename_club(msg, msg.author, name)
                 save_server_data(server_id, server_data[server_id])
                 
         elif user_msg.startswith("%tuto"):

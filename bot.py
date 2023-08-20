@@ -109,8 +109,18 @@ async def show_collection(user, msg, page_num, mention):
         collection = server_data[server_id]["user_collections"][mention_id]
         if 0 <= page_num < len(collection):
             server_data[server_id]["user_current_page"][user.id] = page_num
-            embed_to_show = collection[page_num]
-            embed_to_show.set_footer(text=embed_to_show.footer.text.split(", ")[0] + ", " + embed_to_show.footer.text.split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user.id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
+            embed_data = collection[page_num]
+            
+            embed_to_show = discord.Embed(
+                title=embed_data[0],
+                description=embed_data[1],
+                color=embed_data[2]
+            )
+            
+            for field in embed_data[3]:
+                embed_to_show.add_field(field)
+            
+            embed_to_show.set_footer(text=embed_data[4].split(", ")[0] + ", " + embed_data[4].split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user.id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
         
             if user.id in server_data[server_id]["collection_messages"]:
                 collection_msg = server_data[server_id]["collection_messages"][user.id]
@@ -1303,9 +1313,11 @@ async def on_reaction_add(reaction, user):
             if user.id not in server_data[server_id]["user_collections"]:
                 server_data[server_id]["user_collections"][user.id] = []
                 
-            player_embed.description = player_embed.description.replace("**React with any emoji to claim!**", f"**Claimed by {user.name}**") 
+            player_embed.description = player_embed.description.replace("**React with any emoji to claim!**", f"**Claimed by {user.name}**")
+            
+            player_embed_data = [player_embed.title, player_embed.description, player_embed.color, player_embed.fields, player_embed.footer.text]
 
-            server_data[server_id]["user_collections"][user.id].append(player_embed)
+            server_data[server_id]["user_collections"][user.id].append(player_embed_data)
 
             player_id = player_embed.footer.text.split(", ")[1]
             server_data[server_id]["playerids"].append(player_id)

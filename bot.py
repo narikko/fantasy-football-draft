@@ -1219,6 +1219,9 @@ async def on_reaction_add(reaction, user):
                 
                 current_page = server_data[server_id]["user_current_page"][user.id]
                 await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user.id])
+                
+                save_server_data(server_id, server_data[server_id])
+                
                 return
                 
             elif reaction.emoji == "➡️":
@@ -1236,6 +1239,9 @@ async def on_reaction_add(reaction, user):
                     
                 current_page = server_data[server_id]["user_current_page"][user.id]
                 await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user.id])
+                
+                save_server_data(server_id, server_data[server_id])
+                
                 return
             
             elif reaction.emoji == "\u2b05":
@@ -1246,10 +1252,16 @@ async def on_reaction_add(reaction, user):
                         server_data[server_id]["user_current_page"][user.id] -= 1
                     
                     current_page = server_data[server_id]["user_current_page"][user.id]
-                    await tutorial.tutorial(reaction.message, user, current_page) 
+                    await tutorial.tutorial(reaction.message, user, current_page)
+                    
+                    save_server_data(server_id, server_data[server_id])
+                    
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
+                    
+                    save_server_data(server_id, server_data[server_id])
+                    
                     return
             
             elif reaction.emoji == "\u27a1":
@@ -1260,10 +1272,16 @@ async def on_reaction_add(reaction, user):
                         server_data[server_id]["user_current_page"][user.id] += 1
                     
                     current_page = server_data[server_id]["user_current_page"][user.id]
-                    await tutorial.tutorial(reaction.message, user, current_page) 
+                    await tutorial.tutorial(reaction.message, user, current_page)
+                    
+                    save_server_data(server_id, server_data[server_id])
+                    
                     return
                 else:
                     await reaction.message.channel.send("Please complete the current tutorial before moving onto another one.")
+                    
+                    save_server_data(server_id, server_data[server_id])
+                    
                     return
                 
     if isinstance(reaction.message.embeds[0], discord.Embed) and "Fantasy Football Draft" in reaction.message.embeds[0].footer.text:
@@ -1319,6 +1337,8 @@ async def on_reaction_add(reaction, user):
                         server_data[server_id]["user_max_rolls"][user.id] += 1
                         server_data[server_id]["user_current_tutorial"][user.id] = 3
                         await reaction.message.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")
+                        
+            save_server_data(server_id, server_data[server_id])
 
 
 

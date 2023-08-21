@@ -677,8 +677,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if correct_player and correct_pos:
             new_embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
-                description=user_teams[user.id].[1],
-                color=discord.Colour(int(user_teams[user.id].[2]))
+                description=user_teams[user.id][1],
+                color=discord.Colour(int(user_teams[user.id][2]))
             )
 
             for field in user_teams[user.id][3]:
@@ -702,9 +702,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             user_teams[user.id] = embed_data
         
         new_embed = discord.Embed(
-                title=user_teams[user.id][0],
-                description=user_teams[user.id][1],
-                color=0x7CFC00
+            title=user_teams[user.id][0],
+            description=user_teams[user.id][1],
+            color=0x7CFC00
         )
         
         overall_value = 0

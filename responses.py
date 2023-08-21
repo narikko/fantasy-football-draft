@@ -436,7 +436,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 embed.title,
                 embed.description,
-                embed.color,
+                str(embed.color),
                 embed.fields
             ]
             
@@ -446,7 +446,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             new_embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
                 description=user_teams[user.id][1],
-                color=user_teams[user.id][2]
+                color=discord.Colour(int(user_teams[user.id][2]))
             )
             
             overall_value = 0
@@ -474,7 +474,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                new_embed.color,
+                str(new_embed.color),
                 new_embed.fields
             ]
             
@@ -559,7 +559,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             new_embed = discord.Embed(
                 title=user_teams[user.id][0],
                 description=user_teams[user.id][1],
-                color=user_teams[user.id].[2]
+                color=discord.Colour(int(user_teams[user.id][2]))
             )
             
             for field in user_teams[user.id].fields:
@@ -573,7 +573,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                new_embed.color,
+                str(new_embed.color),
                 new_embed.fields
             ]
                     
@@ -591,7 +591,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             newer_embed = discord.Embed(
                 title=user_teams[user.id][0],
                 description=user_teams[user.id][1],
-                color=user_teams[user.id][2]
+                color=discord.Colour(int(user_teams[user.id][2]))
             )
             
             overall_value = 0
@@ -620,7 +620,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 newer_embed.title,
                 newer_embed.description,
-                newer_embed.color,
+                str(newer_embed.color),
                 newer_embed.fields
             ]
 
@@ -678,7 +678,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             new_embed = discord.Embed(
                 title=f"{user.name}'s Starting XI" if user_club_name[user.id] == "" else user_club_name[user.id],
                 description=user_teams[user.id].[1],
-                color=user_teams[user.id].[2]
+                color=discord.Colour(int(user_teams[user.id].[2]))
             )
 
             for field in user_teams[user.id][3]:
@@ -695,7 +695,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                new_embed.color,
+                str(new_embed.color),
                 new_embed.fields
             ]
 
@@ -797,7 +797,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed_data = [
             new_embed.title,
             new_embed.description,
-            new_embed.color,
+            str(new_embed.color),
             new_embed.fields
         ]
         

@@ -1001,8 +1001,8 @@ async def trade_player(user, msg, player, mention):
                             server_data[server_id]["usernames"].pop(j)
                         j += 1
                     
-                    user_removed.[1] = user_removed.[1].replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
-                    other_removed.[1] = other_removed.[1].replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
+                    user_removed.[1] = user_removed[1].replace(f"**Claimed by {user.name}**", f"**Claimed by {other_user.name}**") 
+                    other_removed.[1] = other_removed[1].replace(f"**Claimed by {other_user.name}**", f"**Claimed by {user.name}**")
                     
                     server_data[server_id]["user_collections"][user_id].append(other_removed)
                     server_data[server_id]["user_collections"][other_id].append(user_removed)

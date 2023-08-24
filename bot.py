@@ -1332,7 +1332,7 @@ async def on_reaction_add(reaction, user):
             player_embed_data = [
                 player_embed.title,
                 player_embed.description,
-                str(player_embed.color),
+                player_embed.color.value,
                 [(field.name, field.value, field.inline) for field in player_embed.fields],
                 player_embed.footer.text,
                 player_embed.image.url if player_embed.image else None

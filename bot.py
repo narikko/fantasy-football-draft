@@ -255,6 +255,7 @@ async def sort_collection(msg, user):
         for player in collection:
             for field in player[3]:
                 if "Value:" in field[0]:
+                    print(int(field[0].split()[1]))
                     return int(field[0].split()[1])
                                   
     collection = server_data[server_id]["user_collections"][user.id]

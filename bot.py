@@ -255,17 +255,11 @@ async def sort_collection(msg, user):
         for player in collection:
             for field in player[3]:
                 if "Value:" in field[0]:
-                    print(int(field[0].split()[1]))
                     return int(field[0].split()[1])
                                   
     collection = server_data[server_id]["user_collections"][user.id]
-    
-    for player in collection:
-        for field in player[3]:
-            if "Value:" in field[0]:
-                print(int(field[0].split()[1]))
+    collection.sort(key=get_embed_value, reverse=True)
 
-    
     await msg.channel.send("Your collection has been successfully sorted from highest to lowest value.")
     
     if not server_data[server_id]["user_tutorial_completion"][user.id][2][2]:

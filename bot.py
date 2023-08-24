@@ -118,7 +118,7 @@ async def show_collection(user, msg, page_num, mention):
             )
             
             for field in embed_data[3]:
-                embed_to_show.add_field(name=field.name, value=field.value, inline=field.inline)
+                embed_to_show.add_field(name=field[0], value=field[1], inline=field[2])
             
             if embed_data[5] is not None:
                 embed_to_show.set_image(url=embed_data[5])

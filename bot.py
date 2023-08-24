@@ -252,11 +252,10 @@ async def sort_collection(msg, user):
         server_data[server_id]["user_collections"][user.id] = []
         
     def get_embed_value(embed):
-        for player in embed:
-            for field in player[3]:
-                if "Value:" in field[0]:
-                    print(int(field[0].split()[1]))
-                    return int(field[0].split()[1])
+        for field in embed[3]:
+            if "Value:" in field[0]:
+                print(int(field[0].split()[1]))
+                return int(field[0].split()[1])
                                   
     collection = server_data[server_id]["user_collections"][user.id]
     collection.sort(key=get_embed_value, reverse=True)

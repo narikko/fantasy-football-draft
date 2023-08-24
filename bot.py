@@ -259,6 +259,11 @@ async def sort_collection(msg, user):
                     return int(field[0].split()[1])
                                   
     collection = server_data[server_id]["user_collections"][user.id]
+    
+    for player in collection:
+        for field in player[3]:
+            if "Value:" in field[0]:
+                print(int(field[0].split()[1]))
 
     
     await msg.channel.send("Your collection has been successfully sorted from highest to lowest value.")

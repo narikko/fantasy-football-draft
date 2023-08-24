@@ -847,8 +847,8 @@ async def remove_player(user, msg, player):
             
         if found_player:
             for field in found_player[3]:
-                if "Value:" in field.name:
-                    found_player_value = float(field.name.split()[1])
+                if "Value:" in field[0]:
+                    found_player_value = float(field[0].split()[1])
             
             if server_data[server_id]["user_upgrades"][user.id][1] != 0:
                 found_player_value += found_player_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user.id][1] - 1] / 100)

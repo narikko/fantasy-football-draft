@@ -1044,7 +1044,7 @@ def run_discord_bot():
             
             if loaded_data:
                 server_data[server_id] = loaded_data
-                print(loaded_data)
+                print("this happened")
             else:
                 server_data.setdefault(server_id, {
                     "user_collections": {},

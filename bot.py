@@ -515,7 +515,7 @@ async def roll_timer():
             for user_id in server_data[server_id]["user_max_rolls"]:
                 server_data[server_id]["user_rolls"][user_id] = server_data[server_id]["user_max_rolls"][user_id]
 
-        await asyncio.sleep(3600)
+        await asyncio.sleep(1)
 
 async def clean_up_rolled_times():
     while True:

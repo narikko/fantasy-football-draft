@@ -58,7 +58,7 @@ def save_server_data(server_id, data_to_store):
         ON CONFLICT (server_id)
         DO UPDATE SET data = EXCLUDED.data
     ''')
-    cursor.execute(insert_query, (str(server_id), data_to_store))
+    cursor.execute(insert_query, (str(server_id), str(data_to_store)))
 
     conn.commit()
     cursor.close()
@@ -77,7 +77,7 @@ def load_server_data(server_id):
 
         if data:
             print("Stored JSON data:", data[0])  # Debug print
-            return json.loads(str(data[0]))
+            return json.loads(data[0])
         else:
             return None
 

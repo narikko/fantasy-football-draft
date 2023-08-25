@@ -563,6 +563,49 @@ async def transfer_market(msg, user, player_to_list, command):
     
     task = None
     print(command)
+    
+    async def transfer_time(time_to_wait, player):
+        try:
+            await msg.channel.send(f"{user.mention} Successfully added {player[0]} to the transfer list.")
+            task = asyncio.create_task(asyncio.sleep(time_to_wait))
+            task.starttime = time.time()
+            user_transfer_tasks[user_id] = task
+            server_data[server_id]["user_market_wait"][user_id] = time.time() + time_to_wait
+                            
+            new_value = float(server_data[server_id]["user_market"][user_id] * 1.5)
+            if server_data[server_id]["user_upgrades"][user_id][1] != 0:
+                new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
+                                
+            server_data[server_id]["user_refund"][user_id] += int(new_value)
+                            
+            await task
+                            
+            server_data[server_id]["user_refund"][user_id] -= int(new_value)
+                                
+            server_data[server_id]["user_coins"][user_id] += int(new_value)
+            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
+            server_data[server_id]["user_market_player"][user_id] = ""
+            server_data[server_id]["user_market"][user_id] = 0
+            server_data[server_id]["user_market_bool"][user_id] = False
+            server_data[server_id]["user_market_wait"][user_id] = 0
+                            
+            if not server_data[server_id]["user_tutorial_completion"][user_id][6][3]:
+                server_data[server_id]["user_tutorial_completion"][user_id][6][3] = True
+                                                    
+                if user_id not in server_data[server_id]["user_coins"]:
+                    server_data[server_id]["user_coins"][user_id] = 0
+                                                    
+                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                                                    
+                if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
+                    server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
+                    server_data[server_id]["user_coins"][user_id] += 750
+                    server_data[server_id]["user_current_tutorial"][user_id] = 7
+                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
+        except asyncio.CancelledError:
+            await msg.channel.send("Failed to list player.")
+            return
+                        
     if command == "add":
         print("this happened")
         if not server_data[server_id]["user_market_bool"][user_id]:
@@ -594,48 +637,6 @@ async def transfer_market(msg, user, player_to_list, command):
                             server_data[server_id]["user_coins"][user_id] += 750
                             server_data[server_id]["user_current_tutorial"][user_id] = 7
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                            
-                    async def transfer_time(time_to_wait, player):
-                        try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player[0]} to the transfer list.")
-                            task = asyncio.create_task(asyncio.sleep(time_to_wait))
-                            task.starttime = time.time()
-                            user_transfer_tasks[user_id] = task
-                            server_data[server_id]["user_market_wait"][user_id] = time.time() + time_to_wait
-                            
-                            new_value = float(server_data[server_id]["user_market"][user_id] * 1.5)
-                            if server_data[server_id]["user_upgrades"][user_id][1] != 0:
-                                new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
-                                
-                            server_data[server_id]["user_refund"][user_id] += int(new_value)
-                            
-                            await task
-                            
-                            server_data[server_id]["user_refund"][user_id] -= int(new_value)
-                                
-                            server_data[server_id]["user_coins"][user_id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
-                            server_data[server_id]["user_market_player"][user_id] = ""
-                            server_data[server_id]["user_market"][user_id] = 0
-                            server_data[server_id]["user_market_bool"][user_id] = False
-                            server_data[server_id]["user_market_wait"][user_id] = 0
-                            
-                            if not server_data[server_id]["user_tutorial_completion"][user_id][6][3]:
-                                server_data[server_id]["user_tutorial_completion"][user_id][6][3] = True
-                                                    
-                                if user_id not in server_data[server_id]["user_coins"]:
-                                    server_data[server_id]["user_coins"][user_id] = 0
-                                                    
-                                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                                    
-                                if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
-                                    server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
-                                    server_data[server_id]["user_coins"][user_id] += 750
-                                    server_data[server_id]["user_current_tutorial"][user_id] = 7
-                                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-                        except asyncio.CancelledError:
-                            await msg.channel.send("Failed to list player.")
-                            return
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
                         await transfer_time(30, player)

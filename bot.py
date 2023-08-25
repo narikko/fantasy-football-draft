@@ -399,7 +399,7 @@ async def team_rewards(msg, user, value):
             embed.title,
             embed.description,
             embed.color.value,
-            [(field.name, field.value, field.inline) for field in embed.fields],,
+            [(field.name, field.value, field.inline) for field in embed.fields],
             embed.footer.text,
             embed.image.url if player_embed.image else None
         ]
@@ -444,7 +444,7 @@ async def team_rewards(msg, user, value):
             embed.title,
             embed.description,
             embed.color.value,
-            [(field.name, field.value, field.inline) for field in embed.fields],,
+            [(field.name, field.value, field.inline) for field in embed.fields],
             embed.footer.text,
             embed.image.url if player_embed.image else None
         ]

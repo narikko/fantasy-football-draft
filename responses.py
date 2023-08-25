@@ -52,7 +52,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
     p_msg = user_msg.lower()
     print(p_msg)
-    print(user_tutorial_completion)
+    print(user_tutorial_completion[user_id][3][0])
     
     claimed = False
     legend = False

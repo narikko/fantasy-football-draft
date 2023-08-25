@@ -25,6 +25,16 @@ client = discord.Client(intents=intents)
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
+def replace_quotes(data):
+    if isinstance(data, str):
+        return data.replace("'", '"')
+    elif isinstance(data, dict):
+        return {key: replace_quotes(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [replace_quotes(item) for item in data]
+    else:
+        return data
+
 def create_tables():
     conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
     cursor = conn.cursor()
@@ -50,7 +60,7 @@ def save_server_data(server_id, data_to_store):
     cursor = conn.cursor()
     
     # Replace single quotes with double quotes in the dictionary
-    new_data_to_store = {key: value.replace("'", '"') for key, value in data_to_store.items()}
+    new_data_to_store = replace_quotes(data_to_store)
     
     # Convert the dictionary to JSON-encoded string
     data_to_store_json = json.dumps(new_data_to_store)

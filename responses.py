@@ -82,6 +82,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                   
             return
         
+        rare_players = []
+        for line in players_list:
+            if int(line.split(", ")[4].split()[1]) >= 830:
+                rare_players.append(line)
+        
         num_player_club = 0
         club_upgrade_chance = 0
         normal_roll = False
@@ -114,7 +119,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 rolled_player = random.choice(legends_list)
                 legend = True
             else:
-                rolled_player = random.choice(players_list)
+                rolled_player = random.choice(rare_players)
         
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info

@@ -17,6 +17,7 @@ server_data = {}
 collection_messages = {}
 
 
+
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
 intents.members = True

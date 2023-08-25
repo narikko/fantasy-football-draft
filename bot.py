@@ -603,7 +603,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
                         await transfer_time(43200)
                     else:
-                        await transfer_time(432000)
+                        await transfer_time(10)
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return

@@ -88,7 +88,6 @@ def load_server_data(server_id):
         data = cursor.fetchone()
 
         if data:
-            print("Stored JSON data:", data[0])  # Debug print
             return json.loads(json.dumps(data[0]))
         else:
             return None
@@ -1067,7 +1066,6 @@ def run_discord_bot():
             if loaded_data:
                 server_data[server_id] = loaded_data
                 print("this happened")
-                print(loaded_data)
             else:
                 print("this is happening instead always")
                 server_data.setdefault(server_id, {

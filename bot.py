@@ -1144,10 +1144,10 @@ def run_discord_bot():
         print(f"{username} said: '{user_msg}' ({channel})")
         
         if str(msg.author.id) not in server_data[server_id]["user_coins"]:
-            server_data[server_id]["user_coins"][user_id] = 0
+            server_data[server_id]["user_coins"][str(msg.author.id)] = 0
             
         if str(msg.author.id) not in server_data[server_id]["user_refund"]:
-            server_data[server_id]["user_refund"][user_id] = 0
+            server_data[server_id]["user_refund"][str(msg.author.id)] = 0
         
         server_data[server_id]["user_coins"][user_id] += server_data[server_id]["user_refund"][user_id] 
         

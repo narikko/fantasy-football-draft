@@ -1087,12 +1087,12 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            loaded_data = load_server_data(server_id)
+            #loaded_data = load_server_data(server_id)
             
-            if loaded_data:
-                server_data[server_id] = loaded_data
-            else:
-                server_data.setdefault(server_id, {
+            #if loaded_data:
+                #server_data[server_id] = loaded_data
+            #else:
+            server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
                     "user_coins": {},
@@ -1122,7 +1122,7 @@ def run_discord_bot():
                     "user_tutorial": {},
                     "user_tutorial_completion": {},
                     "user_current_tutorial": {}
-                })
+            })
         
     @client.event
     async def on_message(msg):

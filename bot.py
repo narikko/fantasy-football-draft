@@ -1113,7 +1113,6 @@ def run_discord_bot():
                     "user_rolls": {},
                     "user_can_claim": {},
                     "user_tutorial": {},
-                    "tutorial_messages": {},
                     "user_tutorial_completion": {},
                     "user_current_tutorial": {}
                 })
@@ -1233,7 +1232,7 @@ def run_discord_bot():
                 save_server_data(server_id, server_data[server_id])
                 
         elif user_msg.startswith("%tuto"):
-            server_data[server_id]["tutorial_messages"] = {}
+            tutorial.tutorial_messages = {}
             if len(user_msg.split()) == 1:
                 await tutorial.tutorial(msg, msg.author, server_data[server_id]["user_current_tutorial"][str(msg.author.id)])
                 save_server_data(server_id, server_data[server_id])

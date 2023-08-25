@@ -1,13 +1,14 @@
 import discord
 import bot
 
+tutorial_messages = {}
+
 async def tutorial(msg, user, page_num):
     server_data = bot.server_data.get(str(msg.guild.id), {})
     
     user_tutorial = server_data.get('user_tutorial', {})
     user_tutorial_completion = server_data.get('user_tutorial_completion', {})
     user_current_page = server_data.get('user_current_page', {})
-    tutorial_messages = server_data.get('tutorial_messages', {})
     user_current_tutorial = server_data.get('user_current_tutorial', {})
     
     if user.id not in user_tutorial:
@@ -204,15 +205,71 @@ async def tutorial(msg, user, page_num):
             description="Type %index for a summary of all the commands." + "\n" + "Type %tuto [page_number] to go back on a specific tutorial.",
             color=0xFFA500 
         )
+        
+        tuto_1_data = [
+            tuto_1.title,
+            tuto_1.description,
+            tuto_1.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_1.fields],
+        ]
+        
+        tuto_2_data = [
+            tuto_2.title,
+            tuto_2.description,
+            tuto_2.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_2.fields],
+        ]
+        
+        tuto_3_data = [
+            tuto_3.title,
+            tuto_3.description,
+            tuto_3.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_3.fields],
+        ]
+        
+        tuto_4_data = [
+            tuto_4.title,
+            tuto_4.description,
+            tuto_4.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_4.fields],
+        ]
+        
+        tuto_5_data = [
+            tuto_5.title,
+            tuto_5.description,
+            tuto_5.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_5.fields],
+        ]
+        
+        tuto_6_data = [
+            tuto_6.title,
+            tuto_6.description,
+            tuto_6.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_6.fields],
+        ]
+        
+        tuto_7_data = [
+            tuto_7.title,
+            tuto_7.description,
+            tuto_7.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_7.fields],
+        ]
+        
+        tuto_8_data = [
+            tuto_8.title,
+            tuto_8.description,
+            tuto_8.color.value,
+            [(field.name, field.value, field.inline) for field in tuto_8.fields],
+        ]
                 
-        tutorial_list.append(tuto_1)
-        tutorial_list.append(tuto_2)
-        tutorial_list.append(tuto_3)
-        tutorial_list.append(tuto_4)
-        tutorial_list.append(tuto_5)
-        tutorial_list.append(tuto_6)
-        tutorial_list.append(tuto_7)
-        tutorial_list.append(tuto_8)
+        tutorial_list.append(tuto_1_data)
+        tutorial_list.append(tuto_2_data)
+        tutorial_list.append(tuto_3_data)
+        tutorial_list.append(tuto_4_data)
+        tutorial_list.append(tuto_5_data)
+        tutorial_list.append(tuto_6_data)
+        tutorial_list.append(tuto_7_data)
+        tutorial_list.append(tuto_8_data)
         
         user_tutorial[user.id] = tutorial_list
         
@@ -223,20 +280,27 @@ async def tutorial(msg, user, page_num):
         
         j = 0
         new_page = discord.Embed(
-            title=page.title,
-            description=page.description,
-            color=page.color
+            title=page[0],
+            description=page[1],
+            color=page[2]
             )
-        for field in page.fields:
+        for field in page[3]:
             print(user_tutorial_completion[user.id][i][j])
             if user_tutorial_completion[user.id][i][j]:
-                new_page.add_field(name=field.name.split(":")[0] + ": " + "\u2705", value=field.value, inline=field.inline)
+                new_page.add_field(name=field[0].split(":")[0] + ": " + "\u2705", value=field[1], inline=field[2])
             else:
-                new_page.add_field(name=field.name, value= field.value, inline=field.inline)
+                new_page.add_field(name=field[0], value= field[1], inline=field[2])
                 
             j += 1
-            
-        user_tutorial[user.id][i] = new_page
+        
+        new_page_data = [
+            new_page.title,
+            new_page.description,
+            new_page.color.value,
+            [(field.name, field.value, field.inline) for field in new_page.fields],
+        ]
+        
+        user_tutorial[user.id][i] = new_page_data
         i += 1
 
     if page_num > user_current_tutorial[user.id]:
@@ -248,7 +312,14 @@ async def tutorial(msg, user, page_num):
    
     if 0 <= page_num < len(tutorials):
         user_current_page[user.id] = page_num
-        embed_to_show = tutorials[page_num]
+        embed_to_show_data = tutorials[page_num]
+        
+        embed_to_show = discord.Embed(
+            title=embed_to_show_data[0],
+            description=embed_to_show_data[1],
+            color=embed_to_show_data[2]
+        )
+        
         embed_to_show.set_footer(text=f"{user_current_page[user.id] + 1}/{len(tutorials)}")
        
         if user.id in tutorial_messages:

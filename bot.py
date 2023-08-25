@@ -47,6 +47,9 @@ def connect_to_database():
 def save_server_data(server_id, data_to_store):
     conn = connect_to_database()
     cursor = conn.cursor()
+    
+    # Convert the dictionary to JSON-encoded string
+    data_to_store_json = json.dumps(data_to_store)
 
     # Insert or replace the server data
     insert_query = sql.SQL('''
@@ -55,7 +58,7 @@ def save_server_data(server_id, data_to_store):
         ON CONFLICT (server_id)
         DO UPDATE SET data = EXCLUDED.data
     ''')
-    cursor.execute(insert_query, (str(server_id), json.dumps(data_to_store)))
+    cursor.execute(insert_query, (str(server_id), data_to_store_json))
 
     conn.commit()
     cursor.close()

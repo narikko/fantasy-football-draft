@@ -77,7 +77,7 @@ def load_server_data(server_id):
 
         if data:
             print("Stored JSON data:", data[0])  # Debug print
-            return json.loads(data[0])
+            return json.loads(str(data[0]))
         else:
             return None
 

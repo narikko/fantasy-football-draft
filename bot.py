@@ -9,66 +9,57 @@ import random
 import tutorial
 import sqlite3
 import json
+import os
+import psycopg2
+from psycopg2 import sql
 
 server_data = {}
 collection_messages = {}
 
 print("bruh")
 
-TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
+TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
 def create_tables():
-    conn = sqlite3.connect("server_data.db")
-    
-    if conn:
-        print("conn connected")
-    
+    conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
     cursor = conn.cursor()
 
     # Create the server_data table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS server_data (
             server_id TEXT PRIMARY KEY,
-            data TEXT
+            data JSONB
         )
     ''')
 
     conn.commit()
-    print("table was created")
+    cursor.close()
     conn.close()
 
 def connect_to_database():
-    # Connect to the database (create it if it doesn't exist)
-    conn = sqlite3.connect('server_data.db')
-    return conn
+    # Connect to the database
+    return psycopg2.connect(os.environ.get('DATABASE_URL'))
 
 def save_server_data(server_id, data_to_store):
-    
-    print(data_to_store)
-    
     conn = connect_to_database()
-    if conn:
-        print("it opened conn")
     cursor = conn.cursor()
 
-    # Create table if it doesn't exist
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS server_data (
-            server_id TEXT PRIMARY KEY,
-            data TEXT
-        )
-    ''')
-
     # Insert or replace the server data
-    cursor.execute('''
-        INSERT OR REPLACE INTO server_data (server_id, data) VALUES (?, ?)
-    ''', (str(server_id), json.dumps(data_to_store)))
+    insert_query = sql.SQL('''
+        INSERT INTO server_data (server_id, data)
+        VALUES (%s, %s)
+        ON CONFLICT (server_id)
+        DO UPDATE SET data = EXCLUDED.data
+    ''')
+    cursor.execute(insert_query, (str(server_id), json.dumps(data_to_store)))
 
-    # Commit changes and close connection
     conn.commit()
+    cursor.close()
     conn.close()
 
 def load_server_data(server_id):
@@ -77,9 +68,9 @@ def load_server_data(server_id):
 
     try:
         cursor.execute('''
-            SELECT data FROM server_data WHERE server_id = ?
+            SELECT data FROM server_data WHERE server_id = %s
         ''', (str(server_id),))
-        
+
         data = cursor.fetchone()
 
         if data:

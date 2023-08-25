@@ -436,8 +436,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 embed.title,
                 embed.description,
-                str(embed.color),
-                embed.fields
+                embed.color.value,
+                [(field.name, field.value, field.inline) for field in embed.fields]
             ]
             
             user_teams[user.id] = embed_data
@@ -453,9 +453,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             player_values = []
             if len(user_team_players[user.id]) != 0:
                 for player in user_team_players[user.id]:
-                    for field in player.fields:
-                        if "Value:" in field.name:
-                            player_values.append(int(field.name.split()[1]))
+                    for field in player[3]:
+                        if "Value:" in field[0]:
+                            player_values.append(int(field[0].split()[1]))
                             break
                                 
                 overall_value = round(sum(player_values) / len(user_team_players[user.id]))
@@ -465,8 +465,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 overall_value += overall_value * (training_upgrades[user_upgrades[user.id][2] - 1] / 100)
                 overall_value = int(overall_value)
             
-            for field in user_teams[user.id].fields:
-                if field.name.strip() == "Overall Value":
+            for field in user_teams[user.id][3]:
+                if field[0].strip() == "Overall Value":
                     new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
                 else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
@@ -474,8 +474,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                str(new_embed.color),
-                new_embed.fields
+                new_embed.color.value,
+                [(field.name, field.value, field.inline) for field in new_embed.fields]
             ]
             
             user_teams[user.id] = embed_data
@@ -497,9 +497,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if p_msg.split()[1] == "rewards":
             ovl_value = ""
-            for field in user_teams[user.id].fields:
-                if field.name.strip() == "Overall Value":
-                    ovl_value = field.value.strip()
+            for field in user_teams[user.id][3]:
+                if field[0].strip() == "Overall Value":
+                    ovl_value = field[1].strip()
                     
             reward_info = f"The overall value of your starting XI is **{ovl_value}**!\n" + "You must build a full team of 11 players to earn rewards.\n" + "\n"
             reward_info += "Build your first ever starting XI - Reward: **1000 \U0001f4a0**"
@@ -562,8 +562,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 color=discord.Colour(int(user_teams[user.id][2]))
             )
             
-            for field in user_teams[user.id].fields:
-                if field.name.strip().lower() == p_msg.split()[2]:
+            for field in user_teams[user.id][3]:
+                if field[0].strip().lower() == p_msg.split()[2]:
                     new_embed.add_field(name=field.name, value="", inline=field.inline)
                 elif all(term.lower() in field.value.strip().lower() for term in search_terms):
                      new_embed.add_field(name=field.name, value="", inline=field.inline)
@@ -573,8 +573,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                str(new_embed.color),
-                new_embed.fields
+                new_embed.color.value,
+                [(field.name, field.value, field.inline) for field in new_embed.fields]
             ]
                     
             user_teams[user.id] = embed_data
@@ -583,10 +583,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             for player in user_team_players[user.id]:
                 print("title: " + player.title.lower())
                 print("msg: " + p_msg.split()[2])
-                if player.title.lower() == " ".join(p_msg.split()[2:]):
+                if player[0].lower() == " ".join(p_msg.split()[2:]):
                     print("this is happening")
                     user_team_players[user.id].remove(player)
-                    removed_player = player.title
+                    removed_player = player[0]
             
             newer_embed = discord.Embed(
                 title=user_teams[user.id][0],
@@ -598,10 +598,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             player_values = []
             if len(user_team_players[user.id]) != 0:
                 for player in user_team_players[user.id]:
-                    for field in player.fields:
-                        if "Value:" in field.name:
-                            print(int(field.name.split()[1]))
-                            player_values.append(int(field.name.split()[1]))
+                    for field in player[3]:
+                        if "Value:" in field[0]:
+                            print(int(field[0].split()[1]))
+                            player_values.append(int(field[0].split()[1]))
                             break
                                 
                 overall_value = round(sum(player_values) / len(user_team_players[user.id]))
@@ -611,8 +611,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 overall_value += overall_value * (training_upgrades[user_upgrades[user.id][2] - 1] / 100)
                 overall_value = int(overall_value)
             
-            for field in user_teams[user.id].fields:
-                if field.name.strip() == "Overall Value":
+            for field in user_teams[user.id][3]:
+                if field[0].strip() == "Overall Value":
                     newer_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
                 else:
                     newer_embed.add_field(name=field.name, value=field.value, inline=field.inline)
@@ -620,8 +620,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 newer_embed.title,
                 newer_embed.description,
-                str(newer_embed.color),
-                newer_embed.fields
+                newer_embed.color.value,
+                [(field.name, field.value, field.inline) for field in newer_embed.fields]
             ]
 
             user_teams[user.id] = embed_data
@@ -647,7 +647,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 correct_player = True
                 sel_player = player[0]
                 for field in player[3]:
-                    positions = field.name.split("/")
+                    positions = field[0].split("/")
                     for pos in positions:
                         if (pos in forward_pos) and (p_msg.split()[1] in fpos):
                             correct_pos = True
@@ -682,12 +682,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             )
 
             for field in user_teams[user.id][3]:
-                if field.value.strip().lower() == sel_player.lower():
-                    if field.name.strip().lower() != p_msg.split()[1]:
+                if field[1].strip().lower() == sel_player.lower():
+                    if field[0].strip().lower() != p_msg.split()[1]:
                         new_embed.add_field(name=field.name, value="", inline=field.inline)
                         continue 
                     
-                if field.name.strip().lower() == p_msg.split()[1]:
+                if field[0].strip().lower() == p_msg.split()[1]:
                     new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
                 else:
                     new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
@@ -695,8 +695,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             embed_data = [
                 new_embed.title,
                 new_embed.description,
-                str(new_embed.color),
-                new_embed.fields
+                new_embed.color.value,
+                [(field.name, field.value, field.inline) for field in new_embed.fields]
             ]
 
             user_teams[user.id] = embed_data
@@ -712,8 +712,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         if len(user_team_players[user.id]) != 0:
             for player in user_team_players[user.id]:
                 for field in player[3]:
-                    if "Value:" in field.name:
-                        player_values.append(int(field.name.split()[1]))
+                    if "Value:" in field[0]:
+                        player_values.append(int(field[0].split()[1]))
                         break
                             
             overall_value = round(sum(player_values) / len(user_team_players[user.id]))
@@ -724,7 +724,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             overall_value = int(overall_value)
         
         for field in user_teams[user.id][3]:
-            if field.name.strip() == "Overall Value":
+            if field[0].strip() == "Overall Value":
                 new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
             else:
                 new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
@@ -797,8 +797,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed_data = [
             new_embed.title,
             new_embed.description,
-            str(new_embed.color),
-            new_embed.fields
+            new_embed.color.value,
+            [(field.name, field.value, field.inline) for field in new_embed.fields]
         ]
         
         user_teams[user.id] = embed_data

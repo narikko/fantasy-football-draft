@@ -532,14 +532,14 @@ async def transfer_market(msg, user, player_to_list, command):
             collection = server_data[server_id]["user_collections"][user.id]
             
             for player in collection:
-                normalized_title = unidecode.unidecode(player.title.lower())
+                normalized_title = unidecode.unidecode(player[0].lower())
                 if all(term.lower() in normalized_title for term in normalized_search_terms):
                     for field in player[3]:
-                        if "Value:" in field.name:
-                            server_data[server_id]["user_market"][user_id] = int(field.name.split()[1])
+                        if "Value:" in field[0]:
+                            server_data[server_id]["user_market"][user_id] = int(field[0].split()[1])
                             break
                     
-                    server_data[server_id]["user_market_player"][user_id] = player.title
+                    server_data[server_id]["user_market_player"][user_id] = player[0]
                     server_data[server_id]["user_market_bool"][user_id] = True
                     
                     if not server_data[server_id]["user_tutorial_completion"][user_id][6][2]:
@@ -556,9 +556,9 @@ async def transfer_market(msg, user, player_to_list, command):
                             server_data[server_id]["user_current_tutorial"][user_id] = 7
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
                             
-                    async def transfer_time(time_to_wait):
+                    async def transfer_time(time_to_wait, player):
                         try:
-                            await msg.channel.send(f"{user.mention} Successfully added {player.title} to the transfer list.")
+                            await msg.channel.send(f"{user.mention} Successfully added {player[0]} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(time_to_wait))
                             task.starttime = time.time()
                             server_data[server_id]["user_transfer_tasks"][user_id] = task
@@ -571,7 +571,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                 new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
                                 
                             server_data[server_id]["user_coins"][user_id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player.title} has been sold for {new_value} \U0001f4a0 !")
+                            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {new_value} \U0001f4a0 !")
                             server_data[server_id]["user_market_player"][user_id] = ""
                             server_data[server_id]["user_market"][user_id] = 0
                             server_data[server_id]["user_market_bool"][user_id] = False
@@ -595,15 +595,15 @@ async def transfer_market(msg, user, player_to_list, command):
                             return
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
-                        await transfer_time(30)
+                        await transfer_time(30, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 2:
-                        await transfer_time(172800)
+                        await transfer_time(172800, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 3:
-                        await transfer_time(86400)
+                        await transfer_time(86400, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
-                        await transfer_time(43200)
+                        await transfer_time(43200, player)
                     else:
-                        await transfer_time(10)
+                        await transfer_time(10, player)
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return

@@ -11,6 +11,7 @@ import sqlite3
 import json
 
 server_data = {}
+collection_messages = {}
 
 print("bruh")
 
@@ -124,14 +125,14 @@ async def show_collection(user, msg, page_num, mention):
                 embed_to_show.set_image(url=embed_data[5])
             embed_to_show.set_footer(text=embed_data[4].split(", ")[0] + ", " + embed_data[4].split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user.id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
         
-            if user.id in server_data[server_id]["collection_messages"]:
-                collection_msg = server_data[server_id]["collection_messages"][user.id]
+            if user.id in collection_messages:
+                collection_msg = collection_messages[user.id]
                 await collection_msg.clear_reactions()
                 await collection_msg.edit(embed=embed_to_show)
             else:
                 collection_msg = await msg.channel.send(embed=embed_to_show)
                 await collection_msg.clear_reactions()
-                server_data[server_id]["collection_messages"][user.id] = collection_msg
+                collection_messages[user.id] = collection_msg
 
             await collection_msg.add_reaction("⬅️")
             await collection_msg.add_reaction("➡️")
@@ -1048,7 +1049,6 @@ def run_discord_bot():
                 server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
-                    "collection_messages": {},
                     "user_coins": {},
                     "user_favorite_club": {},
                     "user_free_claims": {},
@@ -1105,7 +1105,7 @@ def run_discord_bot():
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)
         elif user_msg.startswith("%c"):
-            server_data[server_id]["collection_messages"] = {}
+            collection_messages = {}
             server_data[server_id]["mentioned_user"][msg.author.id] = ""
             if len(user_msg.split()) == 1:
                 await show_collection(msg.author, msg, 0, "")

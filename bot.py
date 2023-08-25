@@ -12,7 +12,6 @@ import json
 import os
 import psycopg2
 from psycopg2 import sql
-import ast
 
 server_data = {}
 collection_messages = {}
@@ -49,9 +48,12 @@ def save_server_data(server_id, data_to_store):
     conn = connect_to_database()
     cursor = conn.cursor()
     
-    # Use ast.literal_eval to convert dictionary to JSON
-    data_to_store_json = ast.literal_eval(json.dumps(data_to_store))
+    # Replace single quotes with double quotes in the dictionary
+    data_to_store = json.loads(json.dumps(data_to_store).replace("'", "\""))
     
+    # Convert the dictionary to JSON-encoded string
+    data_to_store_json = json.dumps(data_to_store)
+
     # Insert or replace the server data
     insert_query = sql.SQL('''
         INSERT INTO server_data (server_id, data)

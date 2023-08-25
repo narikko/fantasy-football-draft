@@ -219,7 +219,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 claimed_user = usernames[i]
                 break
             i += 1
-        
+        """
         embed = discord.Embed(
                 title=player_name,
                 description=player_club + "\n" + player_nationality,
@@ -244,7 +244,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
-                
+        """        
         if not user_tutorial_completion[user.id][3][0]:
             user_tutorial_completion[user.id][3][0] = True
             
@@ -257,8 +257,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 user_coins[user.id] += 500
                 user_current_tutorial[user.id] = 4
                 await msg.channel.send("Tutorial 4 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
-            
-        return embed
+           
+        #return embed
     
     if p_msg.split()[0] == "%lc":
         club = p_msg.split()[1:]

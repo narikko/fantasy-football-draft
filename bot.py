@@ -13,6 +13,7 @@ import json
 server_data = {}
 collection_messages = {}
 
+print("bruh")
 
 TOKEN = 'MTEzMjE3MDE4MTAxMjExNTU1Ng.GDeG1g.BDqacvjsdnOz_SHEh-OO7DFsC4_-xfwWreF4Qk'
 intents = discord.Intents.default()
@@ -41,6 +42,8 @@ def connect_to_database():
 
 def save_server_data(server_id, data_to_store):
     conn = connect_to_database()
+    if conn:
+        print("it opened conn")
     cursor = conn.cursor()
 
     # Create table if it doesn't exist

@@ -401,7 +401,7 @@ async def team_rewards(msg, user, value):
             embed.color.value,
             [(field.name, field.value, field.inline) for field in embed.fields],
             embed.footer.text,
-            embed.image.url if player_embed.image else None
+            embed.image.url if embed.image else None
         ]
             
         server_data[server_id]["user_collections"][user_id].append(player_embed_data)
@@ -446,7 +446,7 @@ async def team_rewards(msg, user, value):
             embed.color.value,
             [(field.name, field.value, field.inline) for field in embed.fields],
             embed.footer.text,
-            embed.image.url if player_embed.image else None
+            embed.image.url if embed.image else None
         ]
             
         server_data[server_id]["user_collections"][user_id].append(player_embed_data)
@@ -1091,12 +1091,12 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            loaded_data = load_server_data(server_id)
+            #loaded_data = load_server_data(server_id)
             
-            if loaded_data:
+            #if loaded_data:
                 server_data[server_id] = loaded_data
-            else:
-                server_data.setdefault(server_id, {
+            #else:
+            server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
                     "user_coins": {},

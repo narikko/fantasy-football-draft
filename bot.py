@@ -398,8 +398,8 @@ async def team_rewards(msg, user, value):
         player_embed_data = [
             embed.title,
             embed.description,
-            embed.color,
-            embed.fields,
+            embed.color.value,
+            [(field.name, field.value, field.inline) for field in embed.fields],,
             embed.footer.text,
             embed.image.url if player_embed.image else None
         ]
@@ -443,8 +443,8 @@ async def team_rewards(msg, user, value):
         player_embed_data = [
             embed.title,
             embed.description,
-            embed.color,
-            embed.fields,
+            embed.color.value,
+            [(field.name, field.value, field.inline) for field in embed.fields],,
             embed.footer.text,
             embed.image.url if player_embed.image else None
         ]
@@ -659,9 +659,9 @@ async def transfer_market(msg, user, player_to_list, command):
                 user_transfer_tasks[user_id].cancel()
                 try:
                     await user_transfer_tasks[user_id]
-                    await msg.channel.send("Succesfully emptied transfer list.")
-                except:
                     await msg.channel.send("Failed to remove player from transfer list.")
+                except:
+                    await msg.channel.send("Succesfully emptied transfer list.")
                     return
                         
             except asyncio.CancelledError:

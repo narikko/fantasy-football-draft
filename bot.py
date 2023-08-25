@@ -602,7 +602,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     server_data[server_id]["user_coins"][user_id] += 750
                     server_data[server_id]["user_current_tutorial"][user_id] = 7
                     await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
-        except asyncio.CancelledError:
+        except Exception as e:
             await msg.channel.send("Failed to list player.")
             return
                         

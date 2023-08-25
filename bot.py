@@ -41,6 +41,9 @@ def connect_to_database():
     return conn
 
 def save_server_data(server_id, data_to_store):
+    
+    print(server_data[server_id])
+    
     conn = connect_to_database()
     if conn:
         print("it opened conn")

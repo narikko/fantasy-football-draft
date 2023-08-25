@@ -22,6 +22,10 @@ client = discord.Client(intents=intents)
 
 def create_tables():
     conn = sqlite3.connect("server_data.db")
+    
+    if conn:
+        print("conn connected")
+    
     cursor = conn.cursor()
 
     # Create the server_data table

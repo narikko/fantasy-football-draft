@@ -16,7 +16,6 @@ from psycopg2 import sql
 server_data = {}
 collection_messages = {}
 
-print("bruh")
 
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()

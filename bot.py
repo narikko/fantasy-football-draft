@@ -1047,6 +1047,7 @@ def run_discord_bot():
                 print("this happened")
                 print(loaded_data)
             else:
+                print("this is happening instead always")
                 server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},

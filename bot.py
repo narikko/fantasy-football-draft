@@ -42,7 +42,7 @@ def connect_to_database():
 
 def save_server_data(server_id, data_to_store):
     
-    print(server_data[server_id])
+    print(data_to_store)
     
     conn = connect_to_database()
     if conn:

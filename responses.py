@@ -467,9 +467,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for field in user_teams[user.id][3]:
                 if field[0].strip() == "Overall Value":
-                    new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+                    new_embed.add_field(name=field[0], value=overall_value, inline=field[2])
                 else:
-                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    new_embed.add_field(name=field[0], value=field[1], inline=field[2])
                     
             embed_data = [
                 new_embed.title,
@@ -564,11 +564,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for field in user_teams[user.id][3]:
                 if field[0].strip().lower() == p_msg.split()[2]:
-                    new_embed.add_field(name=field.name, value="", inline=field.inline)
-                elif all(term.lower() in field.value.strip().lower() for term in search_terms):
-                     new_embed.add_field(name=field.name, value="", inline=field.inline)
+                    new_embed.add_field(name=field[0], value="", inline=field[2])
+                elif all(term.lower() in field[1].strip().lower() for term in search_terms):
+                     new_embed.add_field(name=field[0], value="", inline=field[2])
                 else:
-                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    new_embed.add_field(name=field[0], value=field[1], inline=field[2])
                     
             embed_data = [
                 new_embed.title,
@@ -613,9 +613,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             
             for field in user_teams[user.id][3]:
                 if field[0].strip() == "Overall Value":
-                    newer_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+                    newer_embed.add_field(name=field[0], value=overall_value, inline=field[2])
                 else:
-                    newer_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    newer_embed.add_field(name=field[0], value=field[1], inline=field[2])
                     
             embed_data = [
                 newer_embed.title,
@@ -684,13 +684,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             for field in user_teams[user.id][3]:
                 if field[1].strip().lower() == sel_player.lower():
                     if field[0].strip().lower() != p_msg.split()[1]:
-                        new_embed.add_field(name=field.name, value="", inline=field.inline)
+                        new_embed.add_field(name=field[0], value="", inline=field[2])
                         continue 
                     
                 if field[0].strip().lower() == p_msg.split()[1]:
-                    new_embed.add_field(name=field.name, value=sel_player, inline=field.inline)
+                    new_embed.add_field(name=field[0], value=sel_player, inline=field[2])
                 else:
-                    new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                    new_embed.add_field(name=field[0], value=field[1], inline=field[2])
                     
             embed_data = [
                 new_embed.title,
@@ -725,9 +725,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         for field in user_teams[user.id][3]:
             if field[0].strip() == "Overall Value":
-                new_embed.add_field(name=field.name, value=overall_value, inline=field.inline)
+                new_embed.add_field(name=field[0], value=overall_value, inline=field[2])
             else:
-                new_embed.add_field(name=field.name, value=field.value, inline=field.inline)
+                new_embed.add_field(name=field[0], value=field[1], inline=field[2])
         
         num_players = 0
         for field in new_embed.fields:

@@ -15,6 +15,7 @@ from psycopg2 import sql
 
 server_data = {}
 collection_messages = {}
+user_transfer_tasks = {}
 
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
@@ -108,8 +109,8 @@ def format_time(seconds):
 def get_time_remaining(server_id, user):
     user_id = str(user.id)
     
-    if user_id in server_data[server_id]["user_transfer_tasks"]:
-        task = server_data[server_id]["user_transfer_tasks"][user_id]
+    if user_id in user_transfer_tasks:
+        task = user_transfer_tasks[user_id]
         if task is not None and not task.done():
             time_remaining = server_data[server_id]["user_market_wait"][user_id] - time.time()
             return format_time(time_remaining)
@@ -551,11 +552,14 @@ async def transfer_market(msg, user, player_to_list, command):
     if user_id not in server_data[server_id]["user_market_player"]:
         server_data[server_id]["user_market_player"][user_id] = ""
         
-    if user_id not in server_data[server_id]["user_transfer_tasks"]:
-        server_data[server_id]["user_transfer_tasks"][user_id] = None
+    if user_id not in user_transfer_tasks:
+        user_transfer_tasks[user_id] = None
         
     if user_id not in server_data[server_id]["user_market_wait"]:
         server_data[server_id]["user_market_wait"][user_id] = 0
+        
+    if user_id not in server_data[server_id]["user_refund"]:
+        server_data[server_id]["user_refund"][user_id] = 0
     
     task = None
     if command == "add":
@@ -594,14 +598,18 @@ async def transfer_market(msg, user, player_to_list, command):
                             await msg.channel.send(f"{user.mention} Successfully added {player[0]} to the transfer list.")
                             task = asyncio.create_task(asyncio.sleep(time_to_wait))
                             task.starttime = time.time()
-                            server_data[server_id]["user_transfer_tasks"][user_id] = task
+                            user_transfer_tasks[user_id] = task
                             server_data[server_id]["user_market_wait"][user_id] = time.time() + time_to_wait
-                            
-                            await task
                             
                             new_value = float(server_data[server_id]["user_market"][user_id] * 1.5)
                             if server_data[server_id]["user_upgrades"][user_id][1] != 0:
                                 new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
+                                
+                            server_data[server_id]["user_refund"][user_id] += int(new_value)
+                            
+                            await task
+                            
+                            server_data[server_id]["user_refund"][user_id] -= int(new_value)
                                 
                             server_data[server_id]["user_coins"][user_id] += int(new_value)
                             await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
@@ -648,9 +656,9 @@ async def transfer_market(msg, user, player_to_list, command):
             server_data[server_id]["user_market"][user_id] = 0
             server_data[server_id]["user_market_bool"][user_id] = False
             try:
-                server_data[server_id]["user_transfer_tasks"][user_id].cancel()
+                user_transfer_tasks[user_id].cancel()
                 try:
-                    await server_data[server_id]["user_transfer_tasks"][user_id]
+                    await user_transfer_tasks[user_id]
                     await msg.channel.send("Succesfully emptied transfer list.")
                 except:
                     await msg.channel.send("Failed to remove player from transfer list.")
@@ -1083,10 +1091,7 @@ def run_discord_bot():
             
             if loaded_data:
                 server_data[server_id] = loaded_data
-                print("this happened")
-                print(server_data[server_id])
             else:
-                print("this is happening instead always")
                 server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
@@ -1100,7 +1105,7 @@ def run_discord_bot():
                     "user_market": {},
                     "user_market_player": {},
                     "user_market_bool": {},
-                    "user_transfer_tasks": {},
+                    "user_refund": {},
                     "user_market_wait": {},
                     "playerids": [],
                     "usernames": [],
@@ -1135,6 +1140,14 @@ def run_discord_bot():
         global collection_messages
         
         print(f"{username} said: '{user_msg}' ({channel})")
+        
+        if str(msg.author.id) not in server_data[server_id]["user_coins"]:
+            server_data[server_id]["user_coins"][user_id] = 0
+            
+        if str(msg.author.id) not in server_data[server_id]["user_refund"]:
+            server_data[server_id]["user_refund"][user_id] = 0
+        
+        server_data[server_id]["user_coins"][user_id] += server_data[server_id]["user_refund"][user_id] 
         
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:
             server_data[server_id]["user_tutorial_completion"][str(msg.author.id)] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]

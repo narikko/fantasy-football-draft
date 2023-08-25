@@ -122,7 +122,7 @@ async def show_collection(user, msg, page_num, mention):
     mention_id = 0
         
     if mention == "":
-        mention_id = user.id
+        mention_id = "" + user.id
     else:
         mention_id = await extract_user_id(mention)
 

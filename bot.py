@@ -33,6 +33,7 @@ def create_tables():
     ''')
 
     conn.commit()
+    print("table was created")
     conn.close()
 
 def connect_to_database():

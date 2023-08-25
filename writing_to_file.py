@@ -9,7 +9,7 @@ for player in fifa_players:
     id_ += 1
     player_id = f"{id_:05d}"
     
-    f.write(f"{player['name']}, {player['club']}, {player['nationality']}, Value: {player['value']}, {player['imageURL']}, {player_id}\n")
+    f.write(f"{player['name']}, {player['positions']}, {player['club']}, {player['nationality']}, Value: {player['value']}, {player['imageURL']}, {player_id}\n")
 
 print("Done!")            
 f.close()

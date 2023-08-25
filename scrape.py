@@ -61,6 +61,23 @@ def scrape_fifa_players():
                     club = club_element['title'].replace(' FIFA 23', '')
                 except AttributeError:
                     club = "N/A"
+                    
+                try:
+                    position_td = row.find('td', {'data-title': 'Preferred Positions'})
+                    if position_td:
+                        positions_list = position_td.find_all('a', class_='link-position')
+                        positions = ""
+                        i = 0
+                        for position in positions_list:
+                            if i == len(positions_list) - 1:
+                                positions += position.text
+                            else:
+                                positions += position.text + "/"
+                            i += 1
+                    else:
+                        positions = "N/A"
+                except Exception as e:
+                    positions = "N/A" 
 
                 img_element = row.find('img', class_='player')
                 image_url = img_element['src'] if img_element else "N/A"
@@ -69,6 +86,7 @@ def scrape_fifa_players():
                     player_data = {
                         'name': player_name,
                         'value': overall_value,
+                        'positions': positions,
                         'club': club,
                         'nationality': nationality,
                         'imageURL': image_url

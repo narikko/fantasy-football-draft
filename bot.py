@@ -596,19 +596,15 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
                         await transfer_time(30, player)
-                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 2:
                         await transfer_time(172800, player)
-                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 3:
                         await transfer_time(86400, player)
-                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
                         await transfer_time(43200, player)
-                        await remove_player(user, msg, player)
                     else:
                         await transfer_time(10, player)
-                        await remove_player(user, msg, player)
+                
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return

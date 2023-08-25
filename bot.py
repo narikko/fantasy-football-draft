@@ -50,7 +50,7 @@ def save_server_data(server_id, data_to_store):
     cursor = conn.cursor()
     
     # Replace single quotes with double quotes in the dictionary
-    data_to_store = json.loads(json.dumps(data_to_store).replace("'", "\""))
+    data_to_store = data_to_store.replace("'", "\"")
     
     # Convert the dictionary to JSON-encoded string
     data_to_store_json = json.dumps(data_to_store)
@@ -62,7 +62,7 @@ def save_server_data(server_id, data_to_store):
         ON CONFLICT (server_id)
         DO UPDATE SET data = EXCLUDED.data
     ''')
-    cursor.execute(insert_query, (str(server_id), data_to_store_json))
+    cursor.execute(insert_query, (str(server_id), data_to_store))
 
     conn.commit()
     cursor.close()

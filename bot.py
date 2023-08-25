@@ -1066,6 +1066,7 @@ def run_discord_bot():
             if loaded_data:
                 server_data[server_id] = loaded_data
                 print("this happened")
+                print(server_data[server_id])
             else:
                 print("this is happening instead always")
                 server_data.setdefault(server_id, {
@@ -1103,10 +1104,12 @@ def run_discord_bot():
         
     @client.event
     async def on_message(msg):
+        
         if msg.author == client.user:
             return
         
         server_id = str(msg.guild.id)
+        print(server_data[server_id])
         
         username = str(msg.author)
         user_msg = str(msg.content)

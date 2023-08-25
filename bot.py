@@ -1130,6 +1130,8 @@ def run_discord_bot():
         user_msg = str(msg.content)
         channel = str(msg.channel)
         
+        global collection_messages
+        
         print(f"{username} said: '{user_msg}' ({channel})")
         
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:

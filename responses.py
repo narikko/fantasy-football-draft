@@ -220,13 +220,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 break
             i += 1
         
-        if player_legend == "not legend":
-            embed = discord.Embed(
+        embed = discord.Embed(
                 title=player_name,
                 description=player_club + "\n" + player_nationality,
                 color=0xAF0000
             )
-            
+        
+        if player_legend == "not legend":
             embed.add_field(name=player_positions, value="", inline=False)
             embed.add_field(name=player_value, value="", inline=False)
             embed.set_image(url=player_imageURL)
@@ -236,12 +236,6 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
         else:
-            embed = discord.Embed(
-                title=player_name,
-                description=player_club + "\n" + player_nationality,
-                color=0xFFD700
-            )
-            
             embed.add_field(name=player_positions, value="", inline=False)
             embed.add_field(name=player_value, value="", inline=False)
             embed.set_image(url=player_imageURL)

@@ -1097,6 +1097,9 @@ def run_discord_bot():
         if msg.author.id not in server_data[server_id]["user_current_tutorial"]:
             server_data[server_id]["user_current_tutorial"][msg.author.id] = 0
         
+        if msg.author.id not in server_data[server_id]["user_upgrades"]:
+            server_data[server_id]["user_upgrades"][msg.author.id] = [0,0,0,0]
+        
         if user_msg[0] == "?":
             user_msg = user_msg[1:]
             await send_message(msg, user_msg, is_private=True)

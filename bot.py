@@ -71,7 +71,7 @@ def save_server_data(server_id, data_to_store):
         ON CONFLICT (server_id)
         DO UPDATE SET data = EXCLUDED.data
     ''')
-    cursor.execute(insert_query, (str(server_id), data_to_store_json))
+    cursor.execute(insert_query, (str(server_id), new_data_to_store))
 
     conn.commit()
     cursor.close()

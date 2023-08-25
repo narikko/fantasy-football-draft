@@ -321,6 +321,9 @@ async def tutorial(msg, user, page_num):
             color=embed_to_show_data[2]
         )
         
+        for field in embed_to_show_data[3]:
+            embed_to_show.add_field(name=field[0], value=field[1], inline=field[2])
+        
         embed_to_show.set_footer(text=f"{user_current_page[user_id] + 1}/{len(tutorials)}")
        
         if user_id in tutorial_messages:

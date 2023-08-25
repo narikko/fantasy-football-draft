@@ -24,7 +24,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
     server_data = bot.server_data.get(str(msg.guild.id), {})
     
-    user_id = user.id
+    user_id = str(user.id)
     
     user_upgrades = server_data.get('user_upgrades', {})
     user_favorite_club = server_data.get('user_favorite_club', {})
@@ -52,7 +52,6 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
     p_msg = user_msg.lower()
     print(p_msg)
-    print(user_tutorial_completion[user_id][3][0])
     
     claimed = False
     legend = False

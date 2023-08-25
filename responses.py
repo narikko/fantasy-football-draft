@@ -785,14 +785,14 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 user_team_rewards[user_id][5] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 700. You have been rewarded a random **830+ player**!")
-                await team_rewards(msg, user, 700)
+                await bot.team_rewards(msg, user, 700)
                 
             if overall_value >= 800 and not user_team_rewards[user_id][6]:
                 print("7th reward")
                 user_team_rewards[user_id][6] = True
 
                 await msg.channel.send(f"Congratulations {user.mention}! You have built a starting XI with an overall value of at least 800. You have been rewarded a random **legend player**!")
-                await team_rewards(msg, user, 800)
+                await bot.team_rewards(msg, user, 800)
                 
         embed_data = [
             new_embed.title,

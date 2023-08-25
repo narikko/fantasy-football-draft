@@ -562,7 +562,9 @@ async def transfer_market(msg, user, player_to_list, command):
         server_data[server_id]["user_refund"][user_id] = 0
     
     task = None
+    print(command)
     if command == "add":
+        print("this happened")
         if not server_data[server_id]["user_market_bool"][user_id]:
             search_terms = player_to_list
             normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
@@ -651,6 +653,7 @@ async def transfer_market(msg, user, player_to_list, command):
             return
         
     if command == "rm":
+        print("this also happened")
         if server_data[server_id]["user_market_bool"][user_id]:
             server_data[server_id]["user_market_player"][user_id] = ""
             server_data[server_id]["user_market"][user_id] = 0

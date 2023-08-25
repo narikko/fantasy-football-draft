@@ -571,7 +571,7 @@ async def transfer_market(msg, user, player_to_list, command):
                                 new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
                                 
                             server_data[server_id]["user_coins"][user_id] += int(new_value)
-                            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {new_value} \U0001f4a0 !")
+                            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
                             server_data[server_id]["user_market_player"][user_id] = ""
                             server_data[server_id]["user_market"][user_id] = 0
                             server_data[server_id]["user_market_bool"][user_id] = False
@@ -596,14 +596,19 @@ async def transfer_market(msg, user, player_to_list, command):
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
                         await transfer_time(30, player)
+                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 2:
                         await transfer_time(172800, player)
+                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 3:
                         await transfer_time(86400, player)
+                        await remove_player(user, msg, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
                         await transfer_time(43200, player)
+                        await remove_player(user, msg, player)
                     else:
                         await transfer_time(10, player)
+                        await remove_player(user, msg, player)
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
             return

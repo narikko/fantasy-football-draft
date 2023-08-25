@@ -5,13 +5,14 @@ tutorial_messages = {}
 
 async def tutorial(msg, user, page_num):
     server_data = bot.server_data.get(str(msg.guild.id), {})
+    user_id = str(user.id)
     
     user_tutorial = server_data.get('user_tutorial', {})
     user_tutorial_completion = server_data.get('user_tutorial_completion', {})
     user_current_page = server_data.get('user_current_page', {})
     user_current_tutorial = server_data.get('user_current_tutorial', {})
     
-    if user.id not in user_tutorial:
+    if user_id not in user_tutorial:
         tutorial_list = []
         
         tuto_1 = discord.Embed(
@@ -271,10 +272,10 @@ async def tutorial(msg, user, page_num):
         tutorial_list.append(tuto_7_data)
         tutorial_list.append(tuto_8_data)
         
-        user_tutorial[user.id] = tutorial_list
+        user_tutorial[user_id] = tutorial_list
         
     i = 0
-    for page in user_tutorial[user.id]:
+    for page in user_tutorial[user_id]:
         if i == 7:
             break
         
@@ -285,8 +286,8 @@ async def tutorial(msg, user, page_num):
             color=page[2]
             )
         for field in page[3]:
-            print(user_tutorial_completion[user.id][i][j])
-            if user_tutorial_completion[user.id][i][j]:
+            print(user_tutorial_completion[user_id][i][j])
+            if user_tutorial_completion[user_id][i][j]:
                 new_page.add_field(name=field[0].split(":")[0] + ": " + "\u2705", value=field[1], inline=field[2])
             else:
                 new_page.add_field(name=field[0], value= field[1], inline=field[2])
@@ -300,18 +301,18 @@ async def tutorial(msg, user, page_num):
             [(field.name, field.value, field.inline) for field in new_page.fields],
         ]
         
-        user_tutorial[user.id][i] = new_page_data
+        user_tutorial[user_id][i] = new_page_data
         i += 1
 
-    if page_num > user_current_tutorial[user.id]:
-        if False in user_current_tutorial[user.id][page_num]:
+    if page_num > user_current_tutorial[user_id]:
+        if False in user_current_tutorial[user_id][page_num]:
             await msg.channel.send("Please complete the current tutorial before moving onto another one.")
             return
         
-    tutorials = user_tutorial[user.id]
+    tutorials = user_tutorial[user_id]
    
     if 0 <= page_num < len(tutorials):
-        user_current_page[user.id] = page_num
+        user_current_page[user_id] = page_num
         embed_to_show_data = tutorials[page_num]
         
         embed_to_show = discord.Embed(
@@ -320,16 +321,16 @@ async def tutorial(msg, user, page_num):
             color=embed_to_show_data[2]
         )
         
-        embed_to_show.set_footer(text=f"{user_current_page[user.id] + 1}/{len(tutorials)}")
+        embed_to_show.set_footer(text=f"{user_current_page[user_id] + 1}/{len(tutorials)}")
        
-        if user.id in tutorial_messages:
-            tutorial_msg = tutorial_messages[user.id]
+        if user_id in tutorial_messages:
+            tutorial_msg = tutorial_messages[user_id]
             await tutorial_msg.clear_reactions()
             await tutorial_msg.edit(embed=embed_to_show)
         else:
             tutorial_msg = await msg.channel.send(embed=embed_to_show)
             await tutorial_msg.clear_reactions()
-            tutorial_messages[user.id] = tutorial_msg
+            tutorial_messages[user_id] = tutorial_msg
         
         await tutorial_msg.add_reaction("\u2b05")
         await tutorial_msg.add_reaction("\u27a1")

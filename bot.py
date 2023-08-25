@@ -64,20 +64,25 @@ def load_server_data(server_id):
     conn = connect_to_database()
     cursor = conn.cursor()
 
-    # Retrieve data from the database
-    cursor.execute('''
-        SELECT data FROM server_data WHERE server_id = ?
-    ''', (str(server_id),))
-    
-    data = cursor.fetchone()
+    try:
+        cursor.execute('''
+            SELECT data FROM server_data WHERE server_id = ?
+        ''', (str(server_id),))
+        
+        data = cursor.fetchone()
 
-    # Close connection
-    conn.close()
+        if data:
+            return json.loads(data[0])
+        else:
+            return None
 
-    if data:
-        return json.loads(data[0])
-    else:
+    except Exception as e:
+        print("Error loading server data:", e)
         return None
+
+    finally:
+        conn.close()
+
 
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)

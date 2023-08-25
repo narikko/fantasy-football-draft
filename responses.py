@@ -198,14 +198,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         players_found = search_player(search_terms)
         print("Players found:", players_found)
-        print(len(players_found))
-        if len(players_found) == 1:
-            print("this happened")
-            player_info = players_found[0]
-            print(player_info)
-            player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
-            player_value += " " + emoji.emojize(":diamond_with_a_dot:")
-        else:
+
+        if len(players_found) != 1:
             players_found_msg = f"{len(players_found)} matches:\n"
             for players in players_found:
                 players_found_msg += players[0] + " " + players[4] + "\n"
@@ -223,6 +217,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 claimed_user = usernames[i]
                 break
             i += 1
+            
+        player_info = players_found[0]
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
+        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         
         if player_legend == "not legend":
             embed = discord.Embed(

@@ -1149,7 +1149,7 @@ def run_discord_bot():
         if str(msg.author.id) not in server_data[server_id]["user_refund"]:
             server_data[server_id]["user_refund"][str(msg.author.id)] = 0
         
-        server_data[server_id]["user_coins"][user_id] += server_data[server_id]["user_refund"][user_id] 
+        server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)] 
         
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:
             server_data[server_id]["user_tutorial_completion"][str(msg.author.id)] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]

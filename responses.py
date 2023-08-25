@@ -207,6 +207,10 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             await msg.channel.send(players_found_msg)
             return
         
+        player_info = players_found[0]
+        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
+        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
+        
         claimed = False
         
         i = 0
@@ -218,9 +222,6 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 break
             i += 1
             
-        player_info = players_found[0]
-        player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
-        player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         
         if player_legend == "not legend":
             embed = discord.Embed(
@@ -238,6 +239,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
         else:
+            print("this is happening")
             embed = discord.Embed(
                 title=player_name,
                 description=player_club + "\n" + player_nationality,

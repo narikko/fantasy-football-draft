@@ -248,6 +248,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             if claimed:
                 player_status = f"**Claimed by {claimed_user}**" 
                 embed.description += ("\n" + player_status)
+                
+        await msg.channel.send(embed=embed)
         
         print(user_tutorial_completion[user_id][3][0])
         if not user_tutorial_completion[user_id][3][0]:

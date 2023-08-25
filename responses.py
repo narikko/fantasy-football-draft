@@ -201,6 +201,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         
         if len(players_found) == 1:
             player_info = players_found[0]
+            print(player_info)
             player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id, player_legend = player_info
             player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         else:

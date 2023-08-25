@@ -1139,6 +1139,8 @@ def run_discord_bot():
         
         global collection_messages
         
+        save_server_data(server_id, server_data[server_id])
+        
         print(f"{username} said: '{user_msg}' ({channel})")
         
         if str(msg.author.id) not in server_data[server_id]["user_coins"]:

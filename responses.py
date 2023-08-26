@@ -660,7 +660,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                     if correct_pos:
                         break
                     else:
-                        return discord.Embed(title="Error", description=f"You cannot add {player.title} to {p_msg.split()[1]}", color=0xFF0000)
+                        return discord.Embed(title="Error", description=f"You cannot add {player[0]} to {p_msg.split()[1]}", color=0xFF0000)
             
             if correct_player:
                 user_team_players[user_id].append(player)    

@@ -1135,7 +1135,6 @@ def run_discord_bot():
             return
         
         server_id = str(msg.guild.id)
-        print(server_data[server_id])
         
         username = str(msg.author)
         user_msg = str(msg.content)

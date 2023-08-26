@@ -498,7 +498,7 @@ async def claim_timer():
             for key in server_data[server_id]["user_can_claim"]:
                 server_data[server_id]["user_can_claim"][key] = True
 
-        await asyncio.sleep(1)
+        await asyncio.sleep(10800)
 
 async def roll_timer():
     while True:
@@ -515,7 +515,7 @@ async def roll_timer():
             for user_id in server_data[server_id]["user_max_rolls"]:
                 server_data[server_id]["user_rolls"][user_id] = server_data[server_id]["user_max_rolls"][user_id]
 
-        await asyncio.sleep(1)
+        await asyncio.sleep(3600)
 
 async def clean_up_rolled_times():
     while True:
@@ -639,7 +639,7 @@ async def transfer_market(msg, user, player_to_list, command):
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
-                        await transfer_time(30, player)
+                        await transfer_time(259200, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 2:
                         await transfer_time(172800, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 3:
@@ -647,7 +647,7 @@ async def transfer_market(msg, user, player_to_list, command):
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
                         await transfer_time(43200, player)
                     else:
-                        await transfer_time(10, player)
+                        await transfer_time(432000, player)
                 
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
@@ -819,7 +819,7 @@ async def display_profile(msg, user):
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     
-    time_left_claim = format_time(1 - (curr_time - server_data[server_id]["claim_reset_time"]))
+    time_left_claim = format_time(10800 - (curr_time - server_data[server_id]["claim_reset_time"]))
     if server_data[server_id]["user_can_claim"][user_id]:
         profile += f"You can __claim__ now! Claim reset is in **{time_left_claim}**.\n"
     else:

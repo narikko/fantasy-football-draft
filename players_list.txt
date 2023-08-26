@@ -41,7 +41,7 @@ Christopher Nkunku, CF/CAM/ST, RB Leipzig, France, Value: 866, https://fifastati
 Milan Škriniar, CB, Inter, Slovakia, Value: 862, https://fifastatic.fifaindex.com/FIFA23/players/232363.png, 00041
 Lautaro Martínez, ST, Inter, Argentina, Value: 866, https://fifastatic.fifaindex.com/FIFA23/players/231478.png, 00042
 Nicolò Barella, CM, Inter, Italy, Value: 866, https://fifastatic.fifaindex.com/FIFA23/players/224232.png, 00043
-Sergej Milinković-Savić, CM, Latium, Serbia, Value: 862, https://fifastatic.fifaindex.com/FIFA23/players/223848.png, 00044
+Sergej Milinković-Savić, CM, S.S. Lazio, Serbia, Value: 862, https://fifastatic.fifaindex.com/FIFA23/players/223848.png, 00044
 Marcelo Brozović, CDM/CM, Inter, Croatia, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/216352.png, 00045
 Andrew Robertson, LB, Liverpool, Scotland, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/216267.png, 00046
 Aymeric Laporte, CB, Manchester City, Spain, Value: 862, https://fifastatic.fifaindex.com/FIFA23/players/212218.png, 00047
@@ -50,7 +50,7 @@ Paulo Dybala, CF/CAM, Roma, Argentina, Value: 860, https://fifastatic.fifaindex.
 Fabinho, CDM, Liverpool, Brazil, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/209499.png, 00050
 Kalidou Koulibaly, CB, Chelsea, Senegal, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/201024.png, 00051
 David Alaba, CB/LB, Real Madrid, Austria, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/197445.png, 00052
-Ciro Immobile, ST, Latium, Italy, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/192387.png, 00053
+Ciro Immobile, ST, S.S. Lazio, Italy, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/192387.png, 00053
 Parejo, CM/CDM, Villarreal CF, Spain, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/189513.png, 00054
 Thiago, CM, Liverpool, Spain, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/189509.png, 00055
 Kevin Trapp, GK, Frankfurt, Germany, Value: 860, https://fifastatic.fifaindex.com/FIFA23/players/188943.png, 00056
@@ -181,7 +181,7 @@ Mateo Kovačić, CM, Chelsea, Croatia, Value: 830, https://fifastatic.fifaindex.
 Nick Pope, GK, Newcastle Utd, England, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/203841.png, 00181
 John Stones, CB/RB, Manchester City, England, Value: 832, https://fifastatic.fifaindex.com/FIFA23/players/203574.png, 00182
 Roberto Firmino, CF, Liverpool, Brazil, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/201942.png, 00183
-Luis Alberto, CM, Latium, Spain, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/198706.png, 00184
+Luis Alberto, CM, S.S. Lazio, Spain, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/198706.png, 00184
 Lorenzo Insigne, LW/CF/LM, Toronto FC, Italy, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/198219.png, 00185
 Christian Eriksen, CM/CDM, Manchester Utd, Denmark, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/190460.png, 00186
 Chris Smalling, CB, Roma, England, Value: 830, https://fifastatic.fifaindex.com/FIFA23/players/189881.png, 00187
@@ -327,7 +327,7 @@ Robert Andrich, CDM/CM, Leverkusen, Germany, Value: 532, https://fifastatic.fifa
 Odisseas Vlachodimos, GK, SL Benfica, Greece, Value: 534, https://fifastatic.fifaindex.com/FIFA23/players/211990.png, 00328
 Mark Flekken, GK, SC Freiburg, Netherlands, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/211738.png, 00329
 Nicolás Tagliafico, LB, OL, Argentina, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/211256.png, 00330
-Alessio Romagnoli, CB, Latium, Italy, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/210413.png, 00331
+Alessio Romagnoli, CB, S.S. Lazio, Italy, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/210413.png, 00331
 Jonas Hofmann, CAM/RM/LM, M'gladbach, Germany, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/210324.png, 00332
 Gaëtan Laborde, ST, OGC Nice, France, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/209519.png, 00333
 Lucas Vázquez, RB/RW, Real Madrid, Spain, Value: 530, https://fifastatic.fifaindex.com/FIFA23/players/208618.png, 00334
@@ -540,7 +540,7 @@ Brais Méndez, CM/RM, Real Sociedad, Spain, Value: 512, https://fifastatic.fifai
 Marcus Edwards, RW/LW/ST, Sporting CP, England, Value: 522, https://fifastatic.fifaindex.com/FIFA23/players/235619.png, 00541
 Tanguy Ndombele, CM/CDM/CAM, Napoli FC, France, Value: 516, https://fifastatic.fifaindex.com/FIFA23/players/235569.png, 00542
 Salih Özcan, CDM/CM, Borussia Dortmund, Turkey, Value: 516, https://fifastatic.fifaindex.com/FIFA23/players/235407.png, 00543
-Manuel Lazzari, RB, Latium, Italy, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/235374.png, 00544
+Manuel Lazzari, RB, S.S. Lazio, Italy, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/235374.png, 00544
 Florian Neuhaus, CM, M'gladbach, Germany, Value: 520, https://fifastatic.fifaindex.com/FIFA23/players/234943.png, 00545
 Emanuel Reynoso, CAM/LM, Minnesota United, Argentina, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/234468.png, 00546
 Marcão, CB, Sevilla FC, Brazil, Value: 518, https://fifastatic.fifaindex.com/FIFA23/players/234426.png, 00547
@@ -577,7 +577,7 @@ Nordi Mukiele, RB/CB, Paris SG, France, Value: 518, https://fifastatic.fifaindex
 Nicolas Pépé, RM/LM/LW, OGC Nice, Ivory Coast, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/226110.png, 00578
 Alexandr Golovin, LM/RM/CAM, AS Monaco, Russia, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/225663.png, 00579
 Ellyes Skhiri, CDM/CM, 1. FC Köln, Tunisia, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/225126.png, 00580
-Adam Marušić, LB/RB, Latium, Montenegro, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/224031.png, 00581
+Adam Marušić, LB/RB, S.S. Lazio, Montenegro, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/224031.png, 00581
 Wout Weghorst, ST, Manchester Utd, Netherlands, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/223689.png, 00582
 Jonas Omlin, GK, M'gladbach, Switzerland, Value: 514, https://fifastatic.fifaindex.com/FIFA23/players/223550.png, 00583
 Enes Ünal, ST, Getafe CF, Turkey, Value: 518, https://fifastatic.fifaindex.com/FIFA23/players/223197.png, 00584
@@ -586,7 +586,7 @@ Victor Lindelöf, CB, Manchester Utd, Sweden, Value: 512, https://fifastatic.fif
 Sebastián Driussi, CAM/ST, Austin FC, Argentina, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/221125.png, 00587
 Davinson Sánchez, CB, Spurs, Colombia, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/220793.png, 00588
 Renato Tapia, CDM/CM, RC Celta, Peru, Value: 514, https://fifastatic.fifaindex.com/FIFA23/players/220673.png, 00589
-Mattia Zaccagni, LW, Latium, Italy, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/220502.png, 00590
+Mattia Zaccagni, LW, S.S. Lazio, Italy, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/220502.png, 00590
 Martin Dúbravka, GK, Newcastle Utd, Slovakia, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/220407.png, 00591
 Munir, LW/RW/ST, Getafe CF, Morocco, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/220253.png, 00592
 Morales, ST/LM, Villarreal CF, Spain, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/216475.png, 00593
@@ -619,7 +619,7 @@ Héctor Bellerín, RWB/RB, Sporting CP, Spain, Value: 512, https://fifastatic.fi
 Alessandro Florenzi, RB, Milan, Italy, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/203551.png, 00620
 Suso, RW, Sevilla FC, Spain, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/202651.png, 00621
 Julian Draxler, LM/CAM/LW, SL Benfica, Germany, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/202166.png, 00622
-Felipe Anderson Pereira Gomes, RW/ST, Latium, Brazil, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/201995.png, 00623
+Felipe Anderson Pereira Gomes, RW/ST, S.S. Lazio, Brazil, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/201995.png, 00623
 Jordan Veretout, CDM/CM, OM, France, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/201519.png, 00624
 Ismaily, LB, LOSC Lille, Brazil, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/201119.png, 00625
 Agustín Marchesín, GK, RC Celta, Argentina, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/201095.png, 00626
@@ -643,7 +643,7 @@ Marco Silvestri, GK, Udinese, Italy, Value: 510, https://fifastatic.fifaindex.co
 Benjamin André, CDM/CM, LOSC Lille, France, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/190674.png, 00644
 Luuk de Jong, ST, PSV, Netherlands, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/189805.png, 00645
 Guaita, GK, Crystal Palace, Spain, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/189690.png, 00646
-Pedro, LW/RW, Latium, Spain, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/189505.png, 00647
+Pedro, LW/RW, S.S. Lazio, Spain, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/189505.png, 00647
 Javier Hernández, ST, LA Galaxy, Mexico, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/178224.png, 00648
 Axel Witsel, CDM/CM/CB, Atlético de Madrid, Belgium, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/177413.png, 00649
 Claudio Bravo, GK, Real Betis, Chile, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/174543.png, 00650
@@ -671,7 +671,7 @@ Giovanni Reyna, RM/CAM/LM, Borussia Dortmund, United States, Value: 516, https:/
 Alexander Bah, RB/RM, SL Benfica, Denmark, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/245235.png, 00672
 Sancet, CM/CAM/ST, Athletic Club, Spain, Value: 516, https://fifastatic.fifaindex.com/FIFA23/players/244675.png, 00673
 Vladimír Coufal, RB, West Ham, Czech Republic, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/244470.png, 00674
-Luís Maximiano, GK, Latium, Portugal, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/244316.png, 00675
+Luís Maximiano, GK, S.S. Lazio, Portugal, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/244316.png, 00675
 Alexis Saelemaekers, RW/RM, Milan, Belgium, Value: 208, https://fifastatic.fifaindex.com/FIFA23/players/242664.png, 00676
 Cheick Doucouré, CDM/CM, Crystal Palace, Mali, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/242619.png, 00677
 Christoph Baumgartner, CAM/CM/ST, TSG Hoffenheim, Austria, Value: 512, https://fifastatic.fifaindex.com/FIFA23/players/242187.png, 00678
@@ -737,7 +737,7 @@ Nélson Semedo, RB/RWB, Wolves, Portugal, Value: 200, https://fifastatic.fifaind
 Kyle Walker-Peters, RB/LB, Southampton, England, Value: 510, https://fifastatic.fifaindex.com/FIFA23/players/227927.png, 00738
 Moussa Niakhaté, CB, Nott'm Forest, Senegal, Value: 204, https://fifastatic.fifaindex.com/FIFA23/players/225859.png, 00739
 Abdou Diallo, CB/LB, RB Leipzig, Senegal, Value: 206, https://fifastatic.fifaindex.com/FIFA23/players/225711.png, 00740
-Ivan Provedel, GK, Latium, Italy, Value: 202, https://fifastatic.fifaindex.com/FIFA23/players/224987.png, 00741
+Ivan Provedel, GK, S.S. Lazio, Italy, Value: 202, https://fifastatic.fifaindex.com/FIFA23/players/224987.png, 00741
 Joachim Andersen, CB, Crystal Palace, Denmark, Value: 206, https://fifastatic.fifaindex.com/FIFA23/players/224221.png, 00742
 Sofyan Amrabat, CDM/CM, Fiorentina, Morocco, Value: 206, https://fifastatic.fifaindex.com/FIFA23/players/224158.png, 00743
 Henry Martín, ST, Free Agents, Mexico, Value: 200, https://fifastatic.fifaindex.com/FIFA23/players/224151.png, 00744
@@ -953,7 +953,7 @@ David Raya, GK, Brentford, Spain, Value: 194, https://fifastatic.fifaindex.com/F
 Rafael Santos Borré, ST, Frankfurt, Colombia, Value: 192, https://fifastatic.fifaindex.com/FIFA23/players/220883.png, 00955
 Demarai Gray, LM/LW/CAM, Everton, England, Value: 192, https://fifastatic.fifaindex.com/FIFA23/players/220633.png, 00956
 Enner Valencia, ST/LW/RW, Fenerbahçe, Ecuador, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/220295.png, 00957
-Matías Vecino, CM/CDM, Latium, Uruguay, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/219985.png, 00958
+Matías Vecino, CM/CDM, S.S. Lazio, Uruguay, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/219985.png, 00958
 Samuel Gigot, CB, OM, France, Value: 192, https://fifastatic.fifaindex.com/FIFA23/players/219581.png, 00959
 Matt Targett, LB, Newcastle Utd, England, Value: 192, https://fifastatic.fifaindex.com/FIFA23/players/218659.png, 00960
 Sequeira, LB/CB, SC Braga, Portugal, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/217546.png, 00961
@@ -1131,7 +1131,7 @@ Omar Alderete, CB, Getafe CF, Paraguay, Value: 188, https://fifastatic.fifaindex
 Andreas Skov Olsen, RM/CAM/RW, Club Brugge, Denmark, Value: 194, https://fifastatic.fifaindex.com/FIFA23/players/240017.png, 01134
 Aaron Boupendza, LW/ST/RW, Al Shabab, Gabon, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/239910.png, 01135
 Boubakary Soumaré, CDM/CM, Leicester City, France, Value: 186, https://fifastatic.fifaindex.com/FIFA23/players/239817.png, 01136
-Nicolò Casale, CB, Latium, Italy, Value: 196, https://fifastatic.fifaindex.com/FIFA23/players/239770.png, 01137
+Nicolò Casale, CB, S.S. Lazio, Italy, Value: 196, https://fifastatic.fifaindex.com/FIFA23/players/239770.png, 01137
 Szymon Żurkowski, CM, La Spezia, Poland, Value: 190, https://fifastatic.fifaindex.com/FIFA23/players/239732.png, 01138
 Kai Wagner, LB/LWB, Philadelphia, Germany, Value: 188, https://fifastatic.fifaindex.com/FIFA23/players/239704.png, 01139
 Pascal Struijk, CB/CDM/LB, Leeds United, Netherlands, Value: 192, https://fifastatic.fifaindex.com/FIFA23/players/239360.png, 01140
@@ -1278,7 +1278,7 @@ Riechedly Bazoer, CM/CDM/CB, AZ, Netherlands, Value: 186, https://fifastatic.fif
 Brandon Mechele, CB, Club Brugge, Belgium, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/212204.png, 01281
 Roberto Gagliardini, CDM/CM, Inter, Italy, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/212153.png, 01282
 Sofiane Boufal, CF/LM/ST, Free Agents, Morocco, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/211381.png, 01283
-Danilo Cataldi, CDM, Latium, Italy, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/211361.png, 01284
+Danilo Cataldi, CDM, S.S. Lazio, Italy, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/211361.png, 01284
 Daniele Rugani, CB, Juventus, Italy, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/211320.png, 01285
 Guillermo Fernández, CM/CDM, Boca Juniors, Argentina, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/211269.png, 01286
 Rubén Peña, RB/RM/LB, CA Osasuna, Spain, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/211241.png, 01287
@@ -1301,7 +1301,7 @@ Mitchell Weiser, RWB/RM, SV Werder Bremen, Germany, Value: 180, https://fifastat
 Patrick Bamford, ST, Leeds United, England, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206534.png, 01304
 Miroslav Stevanović, RW/RM/CM, Servette FC, Bosnia & Herzegovina, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206254.png, 01305
 Sanjin Prcić, CDM/CM, Strasbourg, Bosnia & Herzegovina, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206167.png, 01306
-Patric, CB/RB, Latium, Spain, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206098.png, 01307
+Patric, CB/RB, S.S. Lazio, Spain, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206098.png, 01307
 Mattia De Sciglio, RB/LB/RM, Juventus, Italy, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/206058.png, 01308
 Léo Baptistão, ST/RW/RM, UD Almería, Brazil, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/205976.png, 01309
 Jed Wallace, RM/CAM/RW, West Brom, England, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/205970.png, 01310
@@ -1420,7 +1420,7 @@ Iddrisu Baba, CDM/CM/CB, RCD Mallorca, Ghana, Value: 176, https://fifastatic.fif
 Kyogo Furuhashi, ST, Celtic, Japan, Value: 170, https://fifastatic.fifaindex.com/FIFA23/players/245538.png, 01423
 Pietro Beruatto, LB, Pisa, Italy, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/245491.png, 01424
 Marash Kumbulla, CB, Roma, Albania, Value: 182, https://fifastatic.fifaindex.com/FIFA23/players/245426.png, 01425
-Toma Bašić, CM/CDM, Latium, Croatia, Value: 174, https://fifastatic.fifaindex.com/FIFA23/players/245275.png, 01426
+Toma Bašić, CM/CDM, S.S. Lazio, Croatia, Value: 174, https://fifastatic.fifaindex.com/FIFA23/players/245275.png, 01426
 Michal Sadílek, CDM/CM/LB, FC Twente, Czech Republic, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/245209.png, 01427
 Luis Javier Suárez, ST, UD Almería, Colombia, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/245158.png, 01428
 Santiago Giménez, ST, Feyenoord, Mexico, Value: 188, https://fifastatic.fifaindex.com/FIFA23/players/245152.png, 01429
@@ -1440,7 +1440,7 @@ Andriy Lunin, GK, Real Madrid, Ukraine, Value: 184, https://fifastatic.fifaindex
 Djed Spence, RWB/RB, Stade Rennais FC, England, Value: 188, https://fifastatic.fifaindex.com/FIFA23/players/243702.png, 01443
 Yacine Adli, CM/CAM, Milan, France, Value: 184, https://fifastatic.fifaindex.com/FIFA23/players/243627.png, 01444
 Armand Laurienté, LW/RW/ST, Sassuolo, France, Value: 180, https://fifastatic.fifaindex.com/FIFA23/players/243593.png, 01445
-Luca Pellegrini, LB/LWB, Latium, Italy, Value: 178, https://fifastatic.fifaindex.com/FIFA23/players/243237.png, 01446
+Luca Pellegrini, LB/LWB, S.S. Lazio, Italy, Value: 178, https://fifastatic.fifaindex.com/FIFA23/players/243237.png, 01446
 Luis Romo, CM/CDM, Free Agents, Mexico, Value: 172, https://fifastatic.fifaindex.com/FIFA23/players/243015.png, 01447
 Bryan Mbeumo, RW/ST, Brentford, Cameroon, Value: 176, https://fifastatic.fifaindex.com/FIFA23/players/243014.png, 01448
 Anthony Gordon, LM/RM/LW, Newcastle Utd, England, Value: 188, https://fifastatic.fifaindex.com/FIFA23/players/242964.png, 01449
@@ -2160,7 +2160,7 @@ Rubén Blanco, GK, OM, Spain, Value: 168, https://fifastatic.fifaindex.com/FIFA2
 Jang Hyeon Soo, CB, Al Hilal, Korea Republic, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/211005.png, 02163
 Federico Ceccherini, CB, Hellas Verona, Italy, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/210964.png, 02164
 Pablo De Blasis, CAM/CM, FC Cartagena, Argentina, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/210950.png, 02165
-Elseid Hysaj, LB/RB, Latium, Albania, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/210864.png, 02166
+Elseid Hysaj, LB/RB, S.S. Lazio, Albania, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/210864.png, 02166
 Joakim Nilsson, CB, Free Agents, Sweden, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/210802.png, 02167
 Wladimiro Falcone, GK, Lecce, Italy, Value: 164, https://fifastatic.fifaindex.com/FIFA23/players/210676.png, 02168
 Kortney Hause, CB, Watford, England, Value: 164, https://fifastatic.fifaindex.com/FIFA23/players/210635.png, 02169
@@ -2309,7 +2309,7 @@ Jack Cork, CDM/CM, Burnley, England, Value: 160, https://fifastatic.fifaindex.co
 Zeca, CDM/CM, F.C. København, Greece, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/168621.png, 02312
 Vladimir Stojković, GK, Al Fayha, Serbia, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/167993.png, 02313
 Bebé, RM/LM, Real Zaragoza, Cape Verde, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/166074.png, 02314
-Ștefan Radu, CB, Latium, Romania, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/165109.png, 02315
+Ștefan Radu, CB, S.S. Lazio, Romania, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/165109.png, 02315
 Lior Refaelov, LM/CAM/CF, RSC Anderlecht, Israel, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/164878.png, 02316
 Adrian Mierzejewski, CM/CAM/ST, Henan SSLM FC, Poland, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/162280.png, 02317
 Sebastián Viera, GK, Junior, Uruguay, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/161663.png, 02318
@@ -2329,7 +2329,7 @@ Lukáš Sadílek, CM/CDM, Sparta Praha, Czech Republic, Value: 156, https://fifa
 Yahya Attiat-Allah, LB, Free Agents, Morocco, Value: 152, https://fifastatic.fifaindex.com/FIFA23/players/268866.png, 02332
 David Jurásek, LB/LM, Slavia Praha, Czech Republic, Value: 160, https://fifastatic.fifaindex.com/FIFA23/players/267594.png, 02333
 Kristjan Asllani, CDM/CM, Inter, Albania, Value: 170, https://fifastatic.fifaindex.com/FIFA23/players/264699.png, 02334
-Matteo Cancellieri, RW/CF, Latium, Italy, Value: 176, https://fifastatic.fifaindex.com/FIFA23/players/263929.png, 02335
+Matteo Cancellieri, RW/CF, S.S. Lazio, Italy, Value: 176, https://fifastatic.fifaindex.com/FIFA23/players/263929.png, 02335
 Abner, LB, Real Betis, Brazil, Value: 168, https://fifastatic.fifaindex.com/FIFA23/players/263815.png, 02336
 Adem Zorgane, CM/CDM, Sp. Charleroi, Algeria, Value: 162, https://fifastatic.fifaindex.com/FIFA23/players/262925.png, 02337
 Raphael Onyedika, CDM/CM, Club Brugge, Nigeria, Value: 172, https://fifastatic.fifaindex.com/FIFA23/players/262880.png, 02338
@@ -2403,7 +2403,7 @@ Sergio Camello, ST, Rayo Vallecano, Spain, Value: 170, https://fifastatic.fifain
 Zakaria Aboukhlal, RW/LW, Toulouse FC, Morocco, Value: 164, https://fifastatic.fifaindex.com/FIFA23/players/248564.png, 02406
 Ian Maatsen, LB/LWB, Burnley, Netherlands, Value: 172, https://fifastatic.fifaindex.com/FIFA23/players/248465.png, 02407
 Jaime Seoane, CM/CAM/CDM, Getafe CF, Spain, Value: 156, https://fifastatic.fifaindex.com/FIFA23/players/247793.png, 02408
-Marcos Antonio, CM/CDM, Latium, Brazil, Value: 166, https://fifastatic.fifaindex.com/FIFA23/players/247377.png, 02409
+Marcos Antonio, CM/CDM, S.S. Lazio, Brazil, Value: 166, https://fifastatic.fifaindex.com/FIFA23/players/247377.png, 02409
 Joël Piroe, ST/RW, Swansea City, Netherlands, Value: 164, https://fifastatic.fifaindex.com/FIFA23/players/247249.png, 02410
 Dino Hotić, CAM/CM/RW, Cercle Brugge, Bosnia & Herzegovina, Value: 152, https://fifastatic.fifaindex.com/FIFA23/players/247144.png, 02411
 Iván Martín, RM/CM/CAM, Girona FC, Spain, Value: 162, https://fifastatic.fifaindex.com/FIFA23/players/246928.png, 02412
@@ -3275,7 +3275,7 @@ Younes Namli, RM/CAM/CM, Sparta Rotterdam, Denmark, Value: 140, https://fifastat
 Sead Hakšabanović, LW, Celtic, Montenegro, Value: 156, https://fifastatic.fifaindex.com/FIFA23/players/226430.png, 03279
 Cristian Espinoza, RM, SJ Earthquakes, Argentina, Value: 140, https://fifastatic.fifaindex.com/FIFA23/players/226385.png, 03280
 Ramón Ábila, ST, Colón, Argentina, Value: 140, https://fifastatic.fifaindex.com/FIFA23/players/226378.png, 03281
-Mohamed Fares, LW/LM, Latium, Algeria, Value: 142, https://fifastatic.fifaindex.com/FIFA23/players/226356.png, 03282
+Mohamed Fares, LW/LM, S.S. Lazio, Algeria, Value: 142, https://fifastatic.fifaindex.com/FIFA23/players/226356.png, 03282
 Sean Davis, CDM/CM, Nashville SC, United States, Value: 140, https://fifastatic.fifaindex.com/FIFA23/players/226273.png, 03283
 Andrea Cistana, CB, Brescia, Italy, Value: 146, https://fifastatic.fifaindex.com/FIFA23/players/226260.png, 03284
 Ryan Manning, LWB/CB/LB, Swansea City, Republic of Ireland, Value: 144, https://fifastatic.fifaindex.com/FIFA23/players/226012.png, 03285
@@ -5182,7 +5182,7 @@ Bartholomew Ogbeche, ST/CAM, Hyderabad FC, Nigeria, Value: 120, https://fifastat
 Yuri, ST/CAM, SD Ponferradina, Brazil, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/3467.png, 05186
 Saul Duarte, CB, Free Agents, Mexico, Value: 128, https://fifastatic.fifaindex.com/FIFA23/players/280917.png, 05187
 Eden Karzev, CDM, Başakşehir, Israel, Value: 120, https://fifastatic.fifaindex.com/FIFA23/players/274024.png, 05188
-Diego Luis Gonzalez Alcaraz, LW/RW, Latium, Paraguay, Value: 128, https://fifastatic.fifaindex.com/FIFA23/players/273934.png, 05189
+Diego Luis Gonzalez Alcaraz, LW/RW, S.S. Lazio, Paraguay, Value: 128, https://fifastatic.fifaindex.com/FIFA23/players/273934.png, 05189
 Luizão, CB, West Ham, Brazil, Value: 132, https://fifastatic.fifaindex.com/FIFA23/players/272936.png, 05190
 Roman Květ, CAM/CDM, Viktoria Plzeň, Czech Republic, Value: 118, https://fifastatic.fifaindex.com/FIFA23/players/272872.png, 05191
 Eliesse Ben Seghir, ST, AS Monaco, France, Value: 140, https://fifastatic.fifaindex.com/FIFA23/players/272781.png, 05192
@@ -7257,7 +7257,7 @@ Matthias Braunöder, CM/CDM, FK Austria Wien, Austria, Value: 116, https://fifas
 Bart Verbruggen, GK, RSC Anderlecht, Netherlands, Value: 112, https://fifastatic.fifaindex.com/FIFA23/players/258498.png, 07261
 Filip Jörgensen, GK, Villarreal CF, Denmark, Value: 114, https://fifastatic.fifaindex.com/FIFA23/players/258485.png, 07262
 Gabriele Ferrarini, RB/RM, Modena, Italy, Value: 104, https://fifastatic.fifaindex.com/FIFA23/players/258484.png, 07263
-Luka Romero, RW, Latium, Argentina, Value: 128, https://fifastatic.fifaindex.com/FIFA23/players/258467.png, 07264
+Luka Romero, RW, S.S. Lazio, Argentina, Value: 128, https://fifastatic.fifaindex.com/FIFA23/players/258467.png, 07264
 Leo Román, GK, RCD Mallorca, Spain, Value: 114, https://fifastatic.fifaindex.com/FIFA23/players/258466.png, 07265
 Martín Calderón, CDM/CM, RC Celta, Spain, Value: 106, https://fifastatic.fifaindex.com/FIFA23/players/258359.png, 07266
 Elias K. Hagen, CDM/CM, IFK Göteborg, Norway, Value: 106, https://fifastatic.fifaindex.com/FIFA23/players/258355.png, 07267
@@ -11290,7 +11290,7 @@ Nelson Freitosa, GK, Ceará SC, Brazil, Value: 60, https://fifastatic.fifaindex.
 Liam Cullen, ST, Swansea City, Wales, Value: 72, https://fifastatic.fifaindex.com/FIFA23/players/233941.png, 11294
 Gino Fechner, RB/CDM/RM, Wehen Wiesbaden, Germany, Value: 70, https://fifastatic.fifaindex.com/FIFA23/players/233880.png, 11295
 Piao Shihao, RWB/CM, Cangzhou FC, China PR, Value: 60, https://fifastatic.fifaindex.com/FIFA23/players/233719.png, 11296
-Marius Adamonis, GK, Latium, Lithuania, Value: 66, https://fifastatic.fifaindex.com/FIFA23/players/233691.png, 11297
+Marius Adamonis, GK, S.S. Lazio, Lithuania, Value: 66, https://fifastatic.fifaindex.com/FIFA23/players/233691.png, 11297
 Park Dong Jin, ST/CB, FC Seoul, Korea Republic, Value: 60, https://fifastatic.fifaindex.com/FIFA23/players/233279.png, 11298
 Iván González, CB/RB, East Bengal, Spain, Value: 60, https://fifastatic.fifaindex.com/FIFA23/players/233068.png, 11299
 Dan Cleary, CB, Shamrock Rovers, Republic of Ireland, Value: 64, https://fifastatic.fifaindex.com/FIFA23/players/233056.png, 11300
@@ -12973,7 +12973,7 @@ Edoardo Duca, CAM/CM, Modena, Italy, Value: 50, https://fifastatic.fifaindex.com
 Martin Turk, GK, Sampdoria, Slovenia, Value: 70, https://fifastatic.fifaindex.com/FIFA23/players/268912.png, 12977
 Tony Springett, RM/LM, Derby County, Republic of Ireland, Value: 70, https://fifastatic.fifaindex.com/FIFA23/players/268909.png, 12978
 Yusuf Abdurisag, RW/LW, Free Agents, Qatar, Value: 54, https://fifastatic.fifaindex.com/FIFA23/players/268877.png, 12979
-Mario Gila, CB, Latium, Spain, Value: 62, https://fifastatic.fifaindex.com/FIFA23/players/268804.png, 12980
+Mario Gila, CB, S.S. Lazio, Spain, Value: 62, https://fifastatic.fifaindex.com/FIFA23/players/268804.png, 12980
 Raphael Odogwu, ST, Südtirol, Italy, Value: 40, https://fifastatic.fifaindex.com/FIFA23/players/268759.png, 12981
 Brian Aguilar, CB/RB, Lanús, Argentina, Value: 68, https://fifastatic.fifaindex.com/FIFA23/players/268749.png, 12982
 Alessandro Gabrielloni, ST, Como, Italy, Value: 40, https://fifastatic.fifaindex.com/FIFA23/players/268674.png, 12983

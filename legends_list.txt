@@ -85,7 +85,7 @@ Carles Puyol, CB/RB, FC Barcelona, Spain, Value: 1050, https://editorial.uefa.co
 John Terry, CB, Chelsea, England, Value: 1050, https://img.chelseafc.com/image/upload/f_auto,w_1440,c_fill,q_90/mobile-app/John-Terry-686385252.jpg, 18229
 Yaya Touré, CM/CDM, Manchester City, Ivory Coast, Value: 1050, https://static.standard.co.uk/s3fs-public/thumbnails/image/2014/03/29/13/Yaya%20Toure%20Ars.jpg, 18230
 Xabi Alonso, CDM, Liverpool/Real Madrid, Spain, Value: 1050, https://backend.liverpoolfc.com/sites/default/files/styles/xl/public/acquiadam/2022-09/xabi-alonso-liverpool-fc-090911.jpg, 18231
-Pavel Nedvěd, LW/LM/CAM, Lazio/Juventus, Czech Republic, Value: 1050, https://cdn1.i-scmp.com/sites/default/files/images/methode/2016/03/31/6404a326-f6ea-11e5-91e4-cb0759506578_image_hires.JPG, 18232
+Pavel Nedvěd, LW/LM/CAM, S.S. Lazio/Juventus, Czech Republic, Value: 1050, https://cdn1.i-scmp.com/sites/default/files/images/methode/2016/03/31/6404a326-f6ea-11e5-91e4-cb0759506578_image_hires.JPG, 18232
 Petr Čech, GK, Chelsea, Czech Republic, Value: 1050, https://www.telegraph.co.uk/content/dam/football/2019/01/16/TELEMMGLPICT000023352079_trans_NvBQzQNjv4BqOIbv7jq0qIjj_jR2hQHxslVPlCHzqVo1kMPO1MrndaU.jpeg, 18233
 Paul Scholes, CM, Manchester Utd, England, Value: 1050, https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2016/02/scholes.jpg, 18234
 David Villa, ST, Valencia CF/FC Barcelona, Spain, Value: 1050, https://d3nfwcxd527z59.cloudfront.net/content/uploads/2018/07/30214236/David-Villa-Spain-Portugal-World-Cup-2010.jpg, 18235

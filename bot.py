@@ -16,6 +16,7 @@ from psycopg2 import sql
 server_data = {}
 collection_messages = {}
 user_transfer_tasks = {}
+user_refund_bool = {}
 
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
@@ -1129,7 +1130,7 @@ def run_discord_bot():
                     "user_can_claim": {},
                     "user_tutorial": {},
                     "user_tutorial_completion": {},
-                    "user_current_tutorial": {}
+                    "user_current_tutorial": {},
             })
         
         client.loop.create_task(clean_up_rolled_times())
@@ -1181,7 +1182,7 @@ def run_discord_bot():
                 "user_can_claim": {},
                 "user_tutorial": {},
                 "user_tutorial_completion": {},
-                "user_current_tutorial": {}
+                "user_current_tutorial": {},
             }
         
         save_server_data(server_id, server_data[server_id])
@@ -1193,8 +1194,13 @@ def run_discord_bot():
             
         if str(msg.author.id) not in server_data[server_id]["user_refund"]:
             server_data[server_id]["user_refund"][str(msg.author.id)] = 0
+            
+        if str(msg.author.id) not in user_refund_bool:
+            user_refund_bool[str(msg.author.id)] = False 
         
-        server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)] 
+        if not user_refund_bool[str(msg.author.id)]:
+            server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)]
+            user_refund_bool[str(msg.author.id)] = True
         
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:
             server_data[server_id]["user_tutorial_completion"][str(msg.author.id)] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]

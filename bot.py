@@ -985,7 +985,7 @@ async def trade_player(user, msg, player, mention):
         trade_msg = await msg.channel.send(f"<@{other_id}> Please enter the player you would like to trade or type n/no to decline.")
         
         def check_response(m):
-            return m.author.id == other_id and m.channel == msg.channel
+            return m.author.id == int(other_id) and m.channel == msg.channel
         
         try:
             response = await client.wait_for('message', timeout=180, check=check_response)
@@ -1001,7 +1001,7 @@ async def trade_player(user, msg, player, mention):
                         repeat = False
                         break
                     else:
-                        await msg.channel.send(f"<@{other_id}> Could not find that player in your collection. Please try again.")
+                        await msg.channel.send(f"<@{other_id)}> Could not find that player in your collection. Please try again.")
                     other_i += 1
                           
         except asyncio.TimeoutError:
@@ -1030,7 +1030,7 @@ async def trade_player(user, msg, player, mention):
             confirmation_msg = await msg.channel.send(f"<@{other_id}> You are trading {other_embed_trade[0]} for {user_embed_trade[0]}. Do you confirm this trade? (y/n/yes/no)")
             
             def check_response(m):
-                return m.author.id == other_id and m.channel == msg.channel
+                return m.author.id == int(other_id) and m.channel == msg.channel
         
             try:
                 response = await client.wait_for('message', timeout=100, check=check_response)

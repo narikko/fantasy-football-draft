@@ -1259,7 +1259,7 @@ def run_discord_bot():
                 await tutorial.tutorial(msg, msg.author, server_data[server_id]["user_current_tutorial"][str(msg.author.id)])
                 save_server_data(server_id, server_data[server_id])
             else:
-                page_num = int(user_msg.split()[1])
+                page_num = int(user_msg.split()[1]) - 1
                 await tutorial.tutorial(msg, msg.author, page_num)
                 save_server_data(server_id, server_data[server_id])
                 

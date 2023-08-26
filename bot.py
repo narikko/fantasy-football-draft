@@ -660,6 +660,7 @@ async def transfer_market(msg, user, player_to_list, command):
             server_data[server_id]["user_market_player"][user_id] = ""
             server_data[server_id]["user_market"][user_id] = 0
             server_data[server_id]["user_market_bool"][user_id] = False
+            server_data[server_id]["user_refund"][user_id] = 0
             try:
                 user_transfer_tasks[user_id].cancel()
                 try:

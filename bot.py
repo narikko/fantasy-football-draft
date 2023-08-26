@@ -1094,8 +1094,10 @@ def run_discord_bot():
             loaded_data = load_server_data(server_id)
             
             if loaded_data:
+                print("this happened")
                 server_data[server_id] = loaded_data
             else:
+                print("this happened instead")
                 server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},

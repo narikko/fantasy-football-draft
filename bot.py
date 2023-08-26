@@ -1000,9 +1000,11 @@ async def trade_player(user, msg, player, mention):
                         other_embed_trade = embed
                         repeat = False
                         break
-                    else:
-                        await msg.channel.send(f"<@{other_id}> Could not find that player in your collection. Please try again.")
+                        
                     other_i += 1
+                    
+                if not other_embed_trade:
+                    await msg.channel.send(f"<@{other_id}> Could not find that player in your collection. Please try again.")
                           
         except asyncio.TimeoutError:
             await msg.channel.send(f"<@{other_id}> You took too long to respond. Trade cancelled.")

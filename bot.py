@@ -1063,6 +1063,14 @@ async def trade_player(user, msg, player, mention):
                     server_data[server_id]["user_collections"][user_id].append(other_removed)
                     server_data[server_id]["user_collections"][other_id].append(user_removed)
                     
+                    for player in user_collection:
+                        if player[0].lower() == user_removed[0].lower():
+                            await responses.handle_responses(msg, f"%t rm {player[0]}", msg.author)
+                            
+                    for player in other_collection:
+                        if player[0].lower() == other_removed[0].lower():
+                            await responses.handle_responses(msg, f"%t rm {player[0]}", other_user) 
+                    
                     await msg.channel.send("Trade successful!")
                     
                     if not server_data[server_id]["user_tutorial_completion"][user_id][6][0]:
@@ -1200,6 +1208,11 @@ def run_discord_bot():
         
         if not user_refund_bool[str(msg.author.id)]:
             server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)]
+            
+            if server_data[server_id]["user_refund"][str(msg.author.id)] != 0:
+                await msg.channel.send(f"{msg.author.mention} You have been refunded {server_data[server_id]['user_refund'][str(msg.author.id)]} \U0001f4a0 from the transfer market!") 
+            
+            server_data[server_id]["user_refund"][str(msg.author.id)] = 0
             user_refund_bool[str(msg.author.id)] = True
         
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:

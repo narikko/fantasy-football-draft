@@ -959,7 +959,7 @@ async def trade_player(user, msg, player, mention):
     user_id = str(user.id)
     other_id = await extract_user_id(mention)
     
-    other_user = client.get_user(other_id)
+    other_user = client.get_user(int(other_id))
     
     user_collection = server_data[server_id]["user_collections"][user_id]
     other_collection = server_data[server_id]["user_collections"][other_id]

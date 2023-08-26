@@ -1014,7 +1014,7 @@ async def trade_player(user, msg, player, mention):
             confirmation_msg = await msg.channel.send(f"{user.mention} You are trading {user_embed_trade[0]} for {other_embed_trade[0]}. Do you confirm this trade? (y/n/yes/no)")
             
             def check_user_response(m):
-                    return m.author.id == user_id and m.channel == msg.channel
+                    return m.author.id == int(user_id) and m.channel == msg.channel
             
             try:
                 response = await client.wait_for('message', timeout=100, check=check_user_response)

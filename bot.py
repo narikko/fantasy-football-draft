@@ -498,7 +498,7 @@ async def claim_timer():
             for key in server_data[server_id]["user_can_claim"]:
                 server_data[server_id]["user_can_claim"][key] = True
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(10800)
 
 async def roll_timer():
     while True:
@@ -819,7 +819,7 @@ async def display_profile(msg, user):
     profile = f"**{user.name}'s Profile**\n"
     curr_time = time.time()
     
-    time_left_claim = format_time(10 - (curr_time - server_data[server_id]["claim_reset_time"]))
+    time_left_claim = format_time(10800 - (curr_time - server_data[server_id]["claim_reset_time"]))
     if server_data[server_id]["user_can_claim"][user_id]:
         profile += f"You can __claim__ now! Claim reset is in **{time_left_claim}**.\n"
     else:
@@ -1130,6 +1130,11 @@ def run_discord_bot():
                     "user_current_tutorial": {}
             })
         
+        client.loop.create_task(clean_up_rolled_times())
+        client.loop.create_task(roll_timer())
+        client.loop.create_task(claim_timer())
+        
+        
     @client.event
     async def on_message(msg):
         
@@ -1305,10 +1310,6 @@ def run_discord_bot():
         else:
             save_server_data(server_id, server_data[server_id])
             return
-            
-    client.loop.create_task(clean_up_rolled_times())
-    client.loop.create_task(roll_timer())
-    client.loop.create_task(claim_timer())
             
     client.run(TOKEN)
             

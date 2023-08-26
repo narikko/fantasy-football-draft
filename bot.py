@@ -1145,37 +1145,37 @@ def run_discord_bot():
         global collection_messages
         
         if server_id not in server_data:
-        server_data[server_id] = {
-            "user_collections": {},
-            "user_current_page": {},
-            "user_coins": {},
-            "user_favorite_club": {},
-            "user_free_claims": {},
-            "user_club_name": {},
-            "mentioned_user": {},
-            "user_daily_wait": {},
-            "user_daily_bool": {},
-            "user_market": {},
-            "user_market_player": {},
-            "user_market_bool": {},
-            "user_refund": {},
-            "user_market_wait": {},
-            "playerids": [],
-            "usernames": [],
-            "roll_reset_time": time.time(),
-            "claim_reset_time": time.time(),
-            "user_teams": {},
-            "user_team_players": {},
-            "user_upgrades": {},
-            "user_team_rewards": {},
-            "rolled_times": {},
-            "user_max_rolls": {},
-            "user_rolls": {},
-            "user_can_claim": {},
-            "user_tutorial": {},
-            "user_tutorial_completion": {},
-            "user_current_tutorial": {}
-        }
+            server_data[server_id] = {
+                "user_collections": {},
+                "user_current_page": {},
+                "user_coins": {},
+                "user_favorite_club": {},
+                "user_free_claims": {},
+                "user_club_name": {},
+                "mentioned_user": {},
+                "user_daily_wait": {},
+                "user_daily_bool": {},
+                "user_market": {},
+                "user_market_player": {},
+                "user_market_bool": {},
+                "user_refund": {},
+                "user_market_wait": {},
+                "playerids": [],
+                "usernames": [],
+                "roll_reset_time": time.time(),
+                "claim_reset_time": time.time(),
+                "user_teams": {},
+                "user_team_players": {},
+                "user_upgrades": {},
+                "user_team_rewards": {},
+                "rolled_times": {},
+                "user_max_rolls": {},
+                "user_rolls": {},
+                "user_can_claim": {},
+                "user_tutorial": {},
+                "user_tutorial_completion": {},
+                "user_current_tutorial": {}
+            }
         
         save_server_data(server_id, server_data[server_id])
         

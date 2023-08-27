@@ -1005,28 +1005,58 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             color=0x00008B
         )
         
+        stadium_value = ""
+        print(user_upgrades[user_id][0])
+        if user_upgrades[user_id][0] == 5:
+            print("max happened")
+            stadium_value = "**Max reached!** The chances of rolling a player from your favorite team are increased by **8%**."
+        else:
+            print("max didnt happen")
+            stadium_value = f"Your current level is {user_upgrades[user_id][0]}. Next level: **{stadium_prices[user_upgrades[user_id][0]]} \U0001f4a0** "
+            stadium_value += f"- The chances of rolling a player from your favorite team will increase by **{stadium_upgrades[user_upgrades[user_id][0]]}%**."
+        
         embed.add_field(
         name="Stadium \U0001f3df",
-        value=f"Your current level is {user_upgrades[user_id][0]}. Next level: **{stadium_prices[user_upgrades[user_id][0]]} \U0001f4a0** "
-              f"- The chances of rolling a player from your favorite team will increase by **{stadium_upgrades[user_upgrades[user_id][0]]}%**.",
+        value=stadium_value,
         inline=False
         )
+        
+        board_value = ""
+        if user_upgrades[user_id][1] == 5:
+            board_value = "**Max reached!** Your overall income is boosted by **25%**."
+        else:
+            board_value = f"Your current level is {user_upgrades[user_id][1]}. Next level: **{board_prices[user_upgrades[user_id][1]]} \U0001f4a0** "
+            board_value += f"- Your overall income will be boosted by **{board_upgrades[user_upgrades[user_id][1]]}%**."
+            
         embed.add_field(
             name="Board \U0001f454",
-            value=f"Your current level is {user_upgrades[user_id][1]}. Next level: **{board_prices[user_upgrades[user_id][1]]} \U0001f4a0** "
-                  f"- Your overall income will be boosted by **{board_upgrades[user_upgrades[user_id][1]]}%**.",
+            value=board_value,
             inline=False
         )
+        
+        training_value = ""
+        if user_upgrades[user_id][2] == 5:
+            training_value = "**Max reached!** Your starting XI's overall value is boosted by **5%**."
+        else:
+            training_value = f"Your current level is {user_upgrades[user_id][2]}. Next level: **{training_prices[user_upgrades[user_id][2]]} \U0001f4a0** "
+            training_value += f"- Your starting XI's overall value will be boosted by **{training_upgrades[user_upgrades[user_id][2]]}%**."
+        
         embed.add_field(
             name="Training Facility \U0001f3cb\u200d\u2642\ufe0f",
-            value=f"Your current level is {user_upgrades[user_id][2]}. Next level: **{training_prices[user_upgrades[user_id][2]]} \U0001f4a0** "
-                  f"- Your starting XI's overall value will be boosted by **{training_upgrades[user_upgrades[user_id][2]]}%**.",
+            value=training_value,
             inline=False
         )
+        
+        transfer_value = ""
+        if user_upgrades[user_id][3] == 5:
+            transfer_value = "**Max reached!** You are able to complete a transfer every **6 hours**."
+        else:
+            transfer_value = f"Your current level is {user_upgrades[user_id][3]}. Next level: **{transfer_prices[user_upgrades[user_id][3]]} \U0001f4a0** "
+            transfer_value += f"- You will be able to complete a transfer every **{transfer_upgrades[user_upgrades[user_id][3]]}**." 
+        
         embed.add_field(
             name="Transfer Market \U0001f4dc",
-            value=f"Your current level is {user_upgrades[user_id][3]}. Next level: **{transfer_prices[user_upgrades[user_id][3]]} \U0001f4a0** "
-                  f"- You will be able to complete a transfer every **{transfer_upgrades[user_upgrades[user_id][3]]}**.",
+            value=transfer_value,
             inline=False
         )
         embed.add_field(

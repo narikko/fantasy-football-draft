@@ -17,6 +17,7 @@ server_data = {}
 collection_messages = {}
 user_transfer_tasks = {}
 user_refund_bool = {}
+user_daily = {}
 
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
@@ -1196,9 +1197,6 @@ def run_discord_bot():
                 "user_tutorial_completion": {},
                 "user_current_tutorial": {},
             }
-            
-        for user in server_data[server_id]["user_daily_bool"]:
-            server_data[server_id]["user_daily_bool"][user] = True
         
         save_server_data(server_id, server_data[server_id])
         
@@ -1211,7 +1209,10 @@ def run_discord_bot():
             server_data[server_id]["user_refund"][str(msg.author.id)] = 0
             
         if str(msg.author.id) not in user_refund_bool:
-            user_refund_bool[str(msg.author.id)] = False 
+            user_refund_bool[str(msg.author.id)] = False
+            
+        if str(msg.author.id) not in user_daily:
+            user_daily[str(msg.author.id)] = False 
         
         if not user_refund_bool[str(msg.author.id)]:
             server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)]
@@ -1222,6 +1223,10 @@ def run_discord_bot():
             server_data[server_id]["user_refund"][str(msg.author.id)] = 0
             user_refund_bool[str(msg.author.id)] = True
         
+        if not user_daily[str(msg.author.id)]:
+            server_data[server_id]["user_daily_bool"][str(msg.author.id)] = True
+            user_daily[str(msg.author.id)] = True
+            
         if str(msg.author.id) not in server_data[server_id]["user_tutorial_completion"]:
             server_data[server_id]["user_tutorial_completion"][str(msg.author.id)] = [[False], [False, False, False], [False, False, False, False, False, False], [False, False], [False, False, False, False, False], [False, False, False], [False, False, False, False], [False]]
         

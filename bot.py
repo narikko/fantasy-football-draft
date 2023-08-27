@@ -332,7 +332,7 @@ async def dailies(msg, user):
         await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}** \U0001f4a0!")
         server_data[server_id]["user_coins"][user_id] += int(daily_reward)
         server_data[server_id]["user_daily_bool"][user_id] = False
-        server_data[server_id]["user_daily_wait"][user_id] = time.time() + 10
+        server_data[server_id]["user_daily_wait"][user_id] = time.time() + 86400
         
         if not server_data[server_id]["user_tutorial_completion"][user_id][1][2]:
             server_data[server_id]["user_tutorial_completion"][user_id][1][2] = True
@@ -347,7 +347,7 @@ async def dailies(msg, user):
                 server_data[server_id]["user_current_tutorial"][user_id] = 2
                 await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
         try:
-            await asyncio.sleep(10)
+            await asyncio.sleep(86400)
             server_data[server_id]["user_daily_bool"][user_id] = True
         except Exception as e:
             print("not working")
@@ -1111,7 +1111,6 @@ def run_discord_bot():
             if loaded_data:
                 print("this happened")
                 server_data[server_id] = loaded_data
-                server_data[server_id]["user_daily_bool"] = {}
             else:
                 print("this happened instead")
                 server_data.setdefault(server_id, {
@@ -1197,6 +1196,9 @@ def run_discord_bot():
                 "user_tutorial_completion": {},
                 "user_current_tutorial": {},
             }
+            
+        for user in server_data[server_id]["user_daily_bool"]:
+            server_data[server_id]["user_daily_bool"][user] = True
         
         save_server_data(server_id, server_data[server_id])
         

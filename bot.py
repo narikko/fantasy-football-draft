@@ -346,9 +346,12 @@ async def dailies(msg, user):
                 server_data[server_id]["user_coins"][user_id] += 250
                 server_data[server_id]["user_current_tutorial"][user_id] = 2
                 await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
-        
-        await asyncio.sleep(10)
-        server_data[server_id]["user_daily_bool"][user_id] = True
+        try:
+            await asyncio.sleep(10)
+            server_data[server_id]["user_daily_bool"][user_id] = True
+        except Exception as e:
+            print("not working")
+            
     else:
         time_left = format_time(server_data[server_id]["user_daily_wait"][user_id] - time.time())
         await msg.channel.send(f"Your daily reward is not available yet. Please wait **{time_left}**.")
@@ -1108,6 +1111,7 @@ def run_discord_bot():
             if loaded_data:
                 print("this happened")
                 server_data[server_id] = loaded_data
+                server_data[server_id]["user_daily_bool"] = {}
             else:
                 print("this happened instead")
                 server_data.setdefault(server_id, {

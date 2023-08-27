@@ -332,7 +332,7 @@ async def dailies(msg, user):
         await msg.channel.send(f"{user.mention} You have been given **+{int(daily_reward)}** \U0001f4a0!")
         server_data[server_id]["user_coins"][user_id] += int(daily_reward)
         server_data[server_id]["user_daily_bool"][user_id] = False
-        server_data[server_id]["user_daily_wait"][user_id] = time.time() + 86400
+        server_data[server_id]["user_daily_wait"][user_id] = time.time() + 10
         
         if not server_data[server_id]["user_tutorial_completion"][user_id][1][2]:
             server_data[server_id]["user_tutorial_completion"][user_id][1][2] = True
@@ -347,7 +347,7 @@ async def dailies(msg, user):
                 server_data[server_id]["user_current_tutorial"][user_id] = 2
                 await msg.channel.send("Tutorial 2 complete! You have been rewarded **250 \U0001f4a0**! Type %tuto for the next steps!")
         
-        await asyncio.sleep(86400)
+        await asyncio.sleep(10)
         server_data[server_id]["user_daily_bool"][user_id] = True
     else:
         time_left = format_time(server_data[server_id]["user_daily_wait"][user_id] - time.time())

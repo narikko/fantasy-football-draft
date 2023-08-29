@@ -592,7 +592,7 @@ async def transfer_market(msg, user, player_to_list, command):
         server_data[server_id]["user_refund"][user_id] = 0
                                 
         server_data[server_id]["user_coins"][user_id] += int(new_value)
-            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
+        await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
             
         for player in server_data[server_id]["user_team_players"][user_id]:
             if player[0].lower() == server_data[server_id]["user_market"][user_id].lower():

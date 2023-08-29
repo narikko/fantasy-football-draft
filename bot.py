@@ -18,6 +18,7 @@ collection_messages = {}
 user_transfer_tasks = {}
 user_refund_bool = {}
 user_daily = {}
+user_claim_count = {}
 
 TOKEN = os.environ.get('TOKEN')
 intents = discord.Intents.default()
@@ -1386,6 +1387,9 @@ async def on_reaction_add(reaction, user):
         print("Bot message.")
         return
     
+    if user_id not in user_claim_count:
+        user_claim_count[user_id] = 0
+    
     if user_id not in server_data[str(user.guild.id)]["mentioned_user"]:
         server_data[str(user.guild.id)]["mentioned_user"][user_id] = ""
     
@@ -1488,6 +1492,7 @@ async def on_reaction_add(reaction, user):
             
         if (not claimed) and ("**React with any emoji to claim!**" in player_embed.description) and can_claim and server_data[server_id]["user_can_claim"][user_id]:
             print("Player claimed:", player_embed.title)
+            user_claim_count[user_id] += 1
 
             if user_id not in server_data[server_id]["user_collections"]:
                 server_data[server_id]["user_collections"][user_id] = []
@@ -1523,7 +1528,7 @@ async def on_reaction_add(reaction, user):
                 server_data[server_id]["user_current_tutorial"][user_id] = 1
                 await reaction.message.channel.send("Tutorial 1 complete! You have been rewarded **1 free claim**! Type %tuto for the next steps!")
                 
-            if len(server_data[server_id]["user_collections"][user_id]) == 2:
+            if len(server_data[server_id]["user_collections"][user_id]) == 2 or user_claim_count[user_id] == 2:
                 if not server_data[server_id]["user_tutorial_completion"][user_id][2][0]:
                     server_data[server_id]["user_tutorial_completion"][user_id][2][0] = True
                     

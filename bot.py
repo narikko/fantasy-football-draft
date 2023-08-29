@@ -1133,14 +1133,14 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            loaded_data = load_server_data(server_id)
+            #loaded_data = load_server_data(server_id)
             
-            if loaded_data:
-                print("this happened")
-                server_data[server_id] = loaded_data
-            else:
-                print("this happened instead")
-                server_data.setdefault(server_id, {
+            #if loaded_data:
+                #print("this happened")
+                #server_data[server_id] = loaded_data
+            #else:
+                #print("this happened instead")
+            server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
                     "user_coins": {},

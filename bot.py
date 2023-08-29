@@ -586,8 +586,8 @@ async def transfer_market(msg, user, player_to_list, command):
     
     async def transfer_complete(player):
         new_value = float(server_data[server_id]["user_market"][user_id] * 1.5)
-            if server_data[server_id]["user_upgrades"][user_id][1] != 0:
-                new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
+        if server_data[server_id]["user_upgrades"][user_id][1] != 0:
+            new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
         
         server_data[server_id]["user_refund"][user_id] = 0
                                 

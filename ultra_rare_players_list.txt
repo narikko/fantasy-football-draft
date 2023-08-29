@@ -2,7 +2,7 @@ Kylian Mbappé, ST/LW, Paris SG, France, Value: 950, https://fifastatic.fifainde
 Kevin De Bruyne, CM/CAM, Manchester City, Belgium, Value: 910, https://fifastatic.fifaindex.com/FIFA23/players/192985.png, 00002
 Robert Lewandowski, ST, FC Barcelona, Poland, Value: 910, https://fifastatic.fifaindex.com/FIFA23/players/188545.png, 00003
 Karim Benzema, CF/ST, Real Madrid, France, Value: 910, https://fifastatic.fifaindex.com/FIFA23/players/165153.png, 00004
-Lionel Messi, RW, Paris SG, Argentina, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/158023.png, 00005
+Lionel Messi (Current), RW, Paris SG, Argentina, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/158023.png, 00005
 Thibaut Courtois, GK, Real Madrid, Belgium, Value: 902, https://fifastatic.fifaindex.com/FIFA23/players/192119.png, 00006
 Erling Haaland, ST, Manchester City, Norway, Value: 950, https://fifastatic.fifaindex.com/FIFA23/players/239085.png, 00007
 Alisson, GK, Liverpool, Brazil, Value: 892, https://fifastatic.fifaindex.com/FIFA23/players/212831.png, 00008
@@ -25,7 +25,7 @@ Heung Min Son, LW/LM/ST, Spurs, Korea Republic, Value: 880, https://fifastatic.f
 Marc-André ter Stegen, GK, FC Barcelona, Germany, Value: 882, https://fifastatic.fifaindex.com/FIFA23/players/192448.png, 00025
 Toni Kroos, CM/CDM, Real Madrid, Germany, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/182521.png, 00026
 Luka Modrić, CM, Real Madrid, Croatia, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/177003.png, 00027
-Cristiano Ronaldo, ST, Al Nassr, Portugal, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/20801.png, 00028
+Cristiano Ronaldo (Current), ST, Al Nassr, Portugal, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/20801.png, 00028
 Rodri, CDM, Manchester City, Spain, Value: 874, https://fifastatic.fifaindex.com/FIFA23/players/231866.png, 00029
 Frenkie de Jong, CM, FC Barcelona, Netherlands, Value: 880, https://fifastatic.fifaindex.com/FIFA23/players/228702.png, 00030
 Mike Maignan, GK, Milan, France, Value: 876, https://fifastatic.fifaindex.com/FIFA23/players/215698.png, 00031

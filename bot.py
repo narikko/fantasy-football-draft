@@ -1251,6 +1251,10 @@ def run_discord_bot():
         
         if not user_refund_bool[str(msg.author.id)]:
             server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)]
+            server_data[server_id]["user_market_player"][str(msg.author.id)] = ""
+            server_data[server_id]["user_market"][str(msg.author.id)] = 0
+            server_data[server_id]["user_market_bool"][str(msg.author.id)] = False
+            server_data[server_id]["user_market_wait"][str(msg.author.id)] = 0
             
             if server_data[server_id]["user_refund"][str(msg.author.id)] != 0:
                 await msg.channel.send(f"{msg.author.mention} You have been refunded {server_data[server_id]['user_refund'][str(msg.author.id)]} \U0001f4a0 from the transfer market!") 

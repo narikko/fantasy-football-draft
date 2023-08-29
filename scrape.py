@@ -4,9 +4,11 @@ from bs4 import BeautifulSoup
 def scrape_fifa_players():
     base_url = 'https://www.fifaindex.com/players/'
     players_data = []
+    ultra_rare = 0
     rare = 0
     semi_rare = 0
-
+    uncommon = 0
+    
     num_pages = 605
 
     for page_num in range(1, num_pages + 1):
@@ -40,15 +42,21 @@ def scrape_fifa_players():
                     
                 overall_value = int(((0.8 * current_overall_rating) + (0.2 * potential_overall_rating)) * 10)
                 
-                if overall_value < 830 and overall_value >= 790:
+                if overall_value < 850 and overall_value >= 820:
+                    overall_value -= 120
+                    rare += 1
+                elif overall_value < 820 and overall_value >= 790:
                     overall_value -= 280
                     semi_rare += 1
-                elif overall_value < 790 and overall_value >= 590:
+                elif overall_value < 790 and overall_value >= 750:
+                    overall_value -= 375
+                    uncommon += 1
+                elif overall_value < 750 and overall_value >= 590:
                     overall_value -= 580
                 elif overall_value < 590:
                     overall_value = 10
                 else:
-                    rare += 1
+                    ultra_rare += 1
 
                 try:
                     nationality_element = row.find('td', {'data-title': 'Nationality'}).find('a', class_='link-nation')
@@ -97,6 +105,8 @@ def scrape_fifa_players():
             print(f'Failed to fetch data from page {page_num}.')
 
     print(f"Total players scraped: {len(players_data)}")
+    print(str(ultra_rare) + " ultra-rare players.")
     print(str(rare) + " rare players.")
     print(str(semi_rare) + " semi-rare players.")
+    print(str(uncommon) + " uncommon rare players.")
     return players_data

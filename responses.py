@@ -8,7 +8,7 @@ import time
 import unicodedata
 import tutorial
 
-stadium_upgrades = [0.5, 1, 2, 4, 8]
+stadium_upgrades = [0.5, 1, 2, 3, 5]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
         
 board_upgrades = [5, 10, 15, 20, 25]
@@ -17,8 +17,8 @@ board_prices = [3000, 9000, 27000, 50000, 81000]
 training_upgrades = [3, 3.5, 4, 4.5, 5]
 training_prices = [500, 1000, 2000, 4000, 8000]
         
-transfer_upgrades = ["3 days", "2 days", "1 day", "12 hours", "6 hours"]
-transfer_prices = [2000, 5000, 8000, 12000, 24000]
+transfer_upgrades = ["2 days", "1 day", "12 hours", "6 hours", "3 hours"]
+transfer_prices = [2000, 5000, 8000, 18000, 32000]
 
 async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
@@ -47,8 +47,12 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
     f = open('players_list.txt', 'r', encoding='utf-8')
     g = open('legends_list.txt', 'r', encoding='utf-8')
+    h = open('ultra_rare_players_list.txt', 'r', encoding='utf-8')
+    e = open('rare_players.txt', 'r', encoding='utf-8')
     players_list = f.readlines()
     legends_list = g.readlines()
+    ultra_list = h.readlines()
+    rare_list = e.readlines()
     
     p_msg = user_msg.lower()
     print(p_msg)
@@ -93,6 +97,16 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 if user_favorite_club[user_id] in line:
                     num_player_club += 1
                     favorite_club_list.append(line)
+                    
+            for line in ultra_list:
+                if user_favorite_club[user_id] in line:
+                    num_player_club += 1
+                    favorite_club_list.append(line)
+            
+            for line in rare_list:
+                if user_favorite_club[user_id] in line:
+                    num_player_club += 1
+                    favorite_club_list.append(line)
             
             if user_upgrades[user_id][0] != 0:
                 club_upgrade_chance = round(((num_player_club / 18141) * 10000) + (stadium_upgrades[user_upgrades[user_id][0] - 1] * 100))
@@ -114,7 +128,13 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 rolled_player = random.choice(legends_list)
                 legend = True
             else:
-                rolled_player = random.choice(players_list)
+                chance_1 = random.randint(0, 100)
+                if chance_1 == 0:
+                    rolled_player = random.choice(ultra_list)
+                elif chance_1 < 3 and chance_1 >= 1:
+                    rolled_player = random.choice(rare_list)
+                else:
+                    rolled_player = random.choice(players_list)
         
         player_info = rolled_player.strip().split(", ")
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
@@ -180,27 +200,60 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                if all(term == normalized_line.split(", ")[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("not legend")
                     players_found.append(player_info)
                     break
-            
+                elif all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
+                    
+            for line in ultra_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term == normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
+                    break
+                elif all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
+                    
+            for line in rare_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term == normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
+                    break
+                elif all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("not legend")
+                    players_found.append(player_info)
+
             for line in legends_list:
                 normalized_line = unidecode.unidecode(line.lower())
-                if all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                if all(term == normalized_line.split(", ")[0] for term in normalized_search_terms):
                     player_info = line.strip().split(", ")
                     player_info.append("legend")
                     players_found.append(player_info)
                     break
-                
+                elif all(term in normalized_line.split(", ")[0] for term in normalized_search_terms):
+                    player_info = line.strip().split(", ")
+                    player_info.append("legend")
+                    players_found.append(player_info)
+
             return players_found
+
         
         players_found = search_player(search_terms)
         print("Players found:", players_found)
 
         if len(players_found) != 1:
-            players_found_msg = f"{len(players_found)} matches:\n"
+            players_found_msg = f"{len(players_found)} matches.\n"
             for players in players_found:
                 players_found_msg += players[0] + " " + players[4] + "\n"
             
@@ -310,6 +363,22 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
             found = []
             players_found = []
             ids_found = []
+            
+            for line in ultra_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
+                    player_name = line.strip().split(", ")[0]
+                    id_found = line.strip().split(", ")[6]
+                    players_found.append(player_name)
+                    ids_found.append(id_found)
+                    
+            for line in rare_list:
+                normalized_line = unidecode.unidecode(line.lower())
+                if all(term in normalized_line.split(", ")[2] for term in normalized_search_terms):
+                    player_name = line.strip().split(", ")[0]
+                    id_found = line.strip().split(", ")[6]
+                    players_found.append(player_name)
+                    ids_found.append(id_found)
 
             for line in players_list:
                 normalized_line = unidecode.unidecode(line.lower())

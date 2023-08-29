@@ -322,8 +322,8 @@ async def dailies(msg, user):
         chance = random.randint(0, 100)
         daily_reward = 0
         
-        if chance < 10:
-            daily_reward = float(random.randint(700, 1100))
+        if chance < 7:
+            daily_reward = float(random.randint(700, 900))
         else:
             daily_reward = float(random.randint(300, 550))
             
@@ -1124,14 +1124,14 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            #loaded_data = load_server_data(server_id)
+            loaded_data = load_server_data(server_id)
             
-            #if loaded_data:
-                #print("this happened")
-                #server_data[server_id] = loaded_data
-            #else:
-                #print("this happened instead")
-            server_data.setdefault(server_id, {
+            if loaded_data:
+                print("this happened")
+                server_data[server_id] = loaded_data
+            else:
+                print("this happened instead")
+                server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
                     "user_coins": {},

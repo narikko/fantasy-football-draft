@@ -109,15 +109,7 @@ def format_time(seconds):
     minutes, seconds = divmod(remainder, 60)
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-def get_time_remaining(server_id, user):
-    user_id = str(user.id)
-    
-    if user_id in user_transfer_tasks:
-        task = user_transfer_tasks[user_id]
-        if task is not None and not task.done():
-            time_remaining = server_data[server_id]["user_market_wait"][user_id] - time.time()
-            return format_time(time_remaining)
-    return ""
+  
 
 async def show_collection(user, msg, page_num, mention):
     server_id = str(msg.guild.id)
@@ -984,13 +976,13 @@ async def remove_player(user, msg, player):
         await msg.channel.send("Error: No players found in your collection.")
         
 async def trade_player(user, msg, player, mention):
-    if user_id not in server_data[server_id]["user_team_players"]:
-        server_data[server_id]["user_team_players"][user_id] = []
-    
     server_id = str(msg.guild.id)
     
     user_id = str(user.id)
     other_id = await extract_user_id(mention)
+    
+    if user_id not in server_data[server_id]["user_team_players"]:
+        server_data[server_id]["user_team_players"][user_id] = []
     
     other_user = client.get_user(int(other_id))
     

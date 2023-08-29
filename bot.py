@@ -1234,7 +1234,9 @@ def run_discord_bot():
             user_refund_bool[str(msg.author.id)] = False
             
         if str(msg.author.id) not in user_daily:
-            user_daily[str(msg.author.id)] = False 
+            user_daily[str(msg.author.id)] = False
+            
+        print(user_refund_bool[str(msg.author.id)])
         
         if not user_refund_bool[str(msg.author.id)]:
             server_data[server_id]["user_coins"][str(msg.author.id)] += server_data[server_id]["user_refund"][str(msg.author.id)]

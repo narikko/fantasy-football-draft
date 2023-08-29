@@ -1022,6 +1022,8 @@ async def trade_player(user, msg, player, mention):
             else:
                 for embed in other_collection:
                     if embed[0].lower() == response_content:
+                        print(embed[0].lower())
+                        print(other_i)
                         other_embed_trade = embed
                         repeat = False
                         break
@@ -1067,6 +1069,7 @@ async def trade_player(user, msg, player, mention):
                     j = 0
                     
                     user_removed = user_collection.pop(user_i)
+                    print(other_i)
                     other_removed = other_collection.pop(other_i)
                     
                     user_removed_playerid = user_removed[4].split(", ")[1]

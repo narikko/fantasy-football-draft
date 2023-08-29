@@ -109,7 +109,15 @@ def format_time(seconds):
     minutes, seconds = divmod(remainder, 60)
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
-  
+def get_time_remaining(server_id, user):
+    user_id = str(user.id)
+    
+    if user_id in user_transfer_tasks:
+        task = user_transfer_tasks[user_id]
+        if task is not None and not task.done():
+            time_remaining = server_data[server_id]["user_market_wait"][user_id] - time.time()
+            return format_time(time_remaining)
+    return ""  
 
 async def show_collection(user, msg, page_num, mention):
     server_id = str(msg.guild.id)

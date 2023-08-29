@@ -560,8 +560,10 @@ async def transfer_market(msg, user, player_to_list, command):
         
     if user_id not in server_data[server_id]["user_refund"]:
         server_data[server_id]["user_refund"][user_id] = 0
+        
+    if user_id not in server_data[server_id]["user_team_players"]:
+        server_data[server_id]["user_team_players"][user_id] = []
     
-    task = None
     print(command)
     
     async def transfer_time(time_to_wait, player):
@@ -578,44 +580,57 @@ async def transfer_market(msg, user, player_to_list, command):
                                 
             server_data[server_id]["user_refund"][user_id] += int(new_value)
                             
-            return task
-        
+            await task
+            
+            server_data[server_id]["user_refund"][user_id] = 0
+                                
+            server_data[server_id]["user_coins"][user_id] += int(new_value)
+            await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
+                
+            for player in server_data[server_id]["user_team_players"][user_id]:
+                if player[0].lower() == server_data[server_id]["user_market"][user_id].lower():
+                    await responses.handle_responses(msg, f"%t rm {player[0]}", msg.author)
+                
+            server_data[server_id]["user_market_player"][user_id] = ""
+            server_data[server_id]["user_market"][user_id] = 0
+            server_data[server_id]["user_market_bool"][user_id] = False
+            server_data[server_id]["user_market_wait"][user_id] = 0
+            
+            collection = server_data[server_id]["user_collections"][user_id]
+            found_player = None
+            i = 0
+            for embed in collection:
+                if embed[0].lower() == player[0].lower():
+                    found_player = embed
+                    break
+                i += 1
+            
+            removed_embed = collection.pop(i)
+           
+            removed_player_id = removed_embed[4].split(", ")[1]
+            j = 0
+            for player_id in server_data[server_id]["playerids"]:
+                if removed_player_id == player_id:
+                    server_data[server_id]["playerids"].pop(j)
+                    server_data[server_id]["usernames"].pop(j)
+                j += 1 
+                                
+            if not server_data[server_id]["user_tutorial_completion"][user_id][6][3]:
+                server_data[server_id]["user_tutorial_completion"][user_id][6][3] = True
+                                                        
+                if user_id not in server_data[server_id]["user_coins"]:
+                    server_data[server_id]["user_coins"][user_id] = 0
+                                                        
+                await msg.channel.send("Substep complete! Type %tuto for the next steps!")
+                                                        
+                if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
+                    server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
+                    server_data[server_id]["user_coins"][user_id] += 750
+                    server_data[server_id]["user_current_tutorial"][user_id] = 7
+                    await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
         except Exception as e:
             await msg.channel.send("Failed to list player.")
-            return
-    
-    async def transfer_complete(player):
-        new_value = float(server_data[server_id]["user_market"][user_id] * 1.5)
-        if server_data[server_id]["user_upgrades"][user_id][1] != 0:
-            new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
-        
-        server_data[server_id]["user_refund"][user_id] = 0
-                                
-        server_data[server_id]["user_coins"][user_id] += int(new_value)
-        await msg.channel.send(f"{user.mention} {player[0]} has been sold for {int(new_value)} \U0001f4a0 !")
-            
-        for player in server_data[server_id]["user_team_players"][user_id]:
-            if player[0].lower() == server_data[server_id]["user_market"][user_id].lower():
-                await responses.handle_responses(msg, f"%t rm {player[0]}", msg.author)
-            
-        server_data[server_id]["user_market_player"][user_id] = ""
-        server_data[server_id]["user_market"][user_id] = 0
-        server_data[server_id]["user_market_bool"][user_id] = False
-        server_data[server_id]["user_market_wait"][user_id] = 0
-                            
-        if not server_data[server_id]["user_tutorial_completion"][user_id][6][3]:
-            server_data[server_id]["user_tutorial_completion"][user_id][6][3] = True
-                                                    
-            if user_id not in server_data[server_id]["user_coins"]:
-                server_data[server_id]["user_coins"][user_id] = 0
-                                                    
-            await msg.channel.send("Substep complete! Type %tuto for the next steps!")
-                                                    
-            if False not in server_data[server_id]["user_tutorial_completion"][user_id][6]:
-                server_data[server_id]["user_tutorial_completion"][user_id][7][0] = True
-                server_data[server_id]["user_coins"][user_id] += 750
-                server_data[server_id]["user_current_tutorial"][user_id] = 7
-                await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
+            return        
                         
     if command == "add":
         print("this happened")
@@ -650,25 +665,16 @@ async def transfer_market(msg, user, player_to_list, command):
                             await msg.channel.send("Tutorial 7 complete! You have been rewarded **750 \U0001f4a0**! Type %tuto for the next steps!")
                     
                     if server_data[server_id]["user_upgrades"][user_id][3] == 1:
-                        task = transfer_time(172800, player)
-                        await task
-                        await transfer_complete(player)
+                        await transfer_time(172800, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 2:
-                        task = transfer_time(86400, player)
-                        await task
-                        await transfer_complete(player)
+                        await transfer_time(86400, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 3:
-                        task = transfer_time(43200, player)
-                        await task
-                        await transfer_complete(player)
+                        await transfer_time(43200, player)
                     elif server_data[server_id]["user_upgrades"][user_id][3] == 4:
-                        task = transfer_time(10800, player)
-                        await task
-                        await transfer_complete(player)
+                        await transfer_time(10800, player)
                     else:
-                        task = transfer_time(259200, player)
-                        await task
-                        await transfer_complete(player)
+                        await transfer_time(259200, player)
+       
                 
         else:
             await msg.channel.send(f"Error. You already have a player listed in the transfer market.")
@@ -977,6 +983,9 @@ async def remove_player(user, msg, player):
         await msg.channel.send("Error: No players found in your collection.")
         
 async def trade_player(user, msg, player, mention):
+    if user_id not in server_data[server_id]["user_team_players"]:
+        server_data[server_id]["user_team_players"][user_id] = []
+    
     server_id = str(msg.guild.id)
     
     user_id = str(user.id)
@@ -1124,14 +1133,14 @@ def run_discord_bot():
         
         for guild in client.guilds:
             server_id = str(guild.id)
-            loaded_data = load_server_data(server_id)
+            #loaded_data = load_server_data(server_id)
             
-            if loaded_data:
-                print("this happened")
-                server_data[server_id] = loaded_data
-            else:
-                print("this happened instead")
-                server_data.setdefault(server_id, {
+            #if loaded_data:
+                #print("this happened")
+                #server_data[server_id] = loaded_data
+            #else:
+                #print("this happened instead")
+            server_data.setdefault(server_id, {
                     "user_collections": {},
                     "user_current_page": {},
                     "user_coins": {},

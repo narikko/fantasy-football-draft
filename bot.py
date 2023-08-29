@@ -572,8 +572,11 @@ async def transfer_market(msg, user, player_to_list, command):
                 new_value += new_value * (responses.board_upgrades[server_data[server_id]["user_upgrades"][user_id][1] - 1] / 100)
                                 
             server_data[server_id]["user_refund"][user_id] += int(new_value)
-                            
-            await task
+            
+            try:
+                await task
+            except Exception as e:
+                print(e)
             
             server_data[server_id]["user_refund"][user_id] = 0
                                 

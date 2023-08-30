@@ -6024,7 +6024,7 @@ Allahyar Sayyadmanesh, LW/ST/RW, Hull City, Iran, Value: 122, https://fifastatic
 Frederik Jäkel, CB, Arminia Bielefeld, Germany, Value: 122, https://fifastatic.fifaindex.com/FIFA23/players/251451.png, 06318
 Enea Mihaj, CB, FC Famalicão, Albania, Value: 114, https://fifastatic.fifaindex.com/FIFA23/players/251446.png, 06319
 Tiago Dantas, CM/CAM, PAOK FC, Portugal, Value: 122, https://fifastatic.fifaindex.com/FIFA23/players/251436.png, 06320
-Luis Díaz, RM, Columbus Crew, Costa Rica, Value: 110, https://fifastatic.fifaindex.com/FIFA23/players/251387.png, 06321
+Luis Díaz (Costa Rica), RM, Columbus Crew, Costa Rica, Value: 110, https://fifastatic.fifaindex.com/FIFA23/players/251387.png, 06321
 Kai Klefisch, CDM/CM, SC Paderborn 07, Germany, Value: 112, https://fifastatic.fifaindex.com/FIFA23/players/251373.png, 06322
 Benedikt Pichler, ST/LM/RM, Holstein Kiel, Austria, Value: 108, https://fifastatic.fifaindex.com/FIFA23/players/251342.png, 06323
 Alex Suárez, CB/RB, UD Las Palmas, Spain, Value: 102, https://fifastatic.fifaindex.com/FIFA23/players/251337.png, 06324

@@ -899,8 +899,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                           "• Level 1: 1000 \U0001f4a0, 0.5% increase.\n"
                           "• Level 2: 2000 \U0001f4a0, 1% increase.\n"
                           "• Level 3: 4000 \U0001f4a0, 2% increase.\n"
-                          "• Level 4: 8000 \U0001f4a0, 4% increase.\n"
-                          "• Level 5 (MAX): 16000 \U0001f4a0, 8% increase.",
+                          "• Level 4: 8000 \U0001f4a0, 3% increase.\n"
+                          "• Level 5 (MAX): 16000 \U0001f4a0, 5% increase.",
                     inline=False
                 )
                 embed.add_field(

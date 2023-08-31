@@ -1458,6 +1458,7 @@ async def on_reaction_add(reaction, user):
                 return
             
             elif reaction.emoji == "\u2b05":
+                print(server_data[server_id]["user_tutorial_completion"][user_id][server_data[server_id]["user_current_page"][user_id] - 1])
                 if False not in server_data[server_id]["user_tutorial_completion"][user_id][server_data[server_id]["user_current_page"][user_id] - 1]: 
                     if server_data[server_id]["user_current_page"][user_id] == 0:
                         server_data[server_id]["user_current_page"][user_id] = len(server_data[server_id]["user_tutorial"][user_id]) - 1

@@ -981,6 +981,7 @@ async def remove_player(user, msg, player):
                         await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                     
                         if False not in server_data[server_id]["user_tutorial_completion"][user_id][2]:
+                            print("works")
                             server_data[server_id]["user_max_rolls"][user_id] += 1
                             server_data[server_id]["user_current_tutorial"][user_id] = 3
                             await msg.channel.send("Tutorial 3 complete! You have been rewarded **+1 roll/hour**! Type %tuto for the next steps!")

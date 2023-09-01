@@ -960,13 +960,15 @@ async def remove_player(user, msg, player):
                     if user_id not in server_data[server_id]["user_team_players"]:
                         server_data[server_id]["user_team_players"][user_id] = []
                     
-                    for player in server_data[server_id]["user_team_players"][user_id]:
-                        if player[0] == removed_embed[0]:
+                    for players in server_data[server_id]["user_team_players"][user_id]:
+                        if players[0] == removed_embed[0]:
                             await responses.handle_responses(msg, f"%t rm {removed_embed[0]}", msg.author)
                             
                     if user_id not in server_data[server_id]["user_market_player"]:
                         server_data[server_id]["user_market_player"][user_id] = ""
-                            
+                        
+                    print(player)
+                    print(server_data[server_id]["user_market_player"][user_id])        
                     if player.lower() == server_data[server_id]["user_market_player"][user_id].lower():
                         await transfer_market(msg, user, player, "rm")
                     

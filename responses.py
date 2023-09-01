@@ -556,7 +556,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 
                 if False not in user_tutorial_completion[user_id][4]:
                     user_coins[user_id] += 500
-                    
+                    user_current_tutorial[user_id] = 5
                     await msg.channel.send("Tutorial 5 complete! You have been rewarded **500 \U0001f4a0**! Type %tuto for the next steps!")
             
             return new_embed

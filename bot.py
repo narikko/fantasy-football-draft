@@ -1041,7 +1041,8 @@ async def trade_player(user, msg, player, mention):
             if response_content == "n" or response_content == "no":
                 await msg.channel.send("Trade cancelled.")
                 repeat = False
-            elif response_content == "y" or response_content == "yes":
+            else:
+                other_i = 0
                 for embed in other_collection:
                     if embed[0].lower() == response_content:
                         print(embed[0].lower())

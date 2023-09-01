@@ -1041,7 +1041,7 @@ async def trade_player(user, msg, player, mention):
             if response_content == "n" or response_content == "no":
                 await msg.channel.send("Trade cancelled.")
                 repeat = False
-            else:
+            elif response_content == "y" or response_content == "yes":
                 for embed in other_collection:
                     if embed[0].lower() == response_content:
                         print(embed[0].lower())
@@ -1246,8 +1246,6 @@ def run_discord_bot():
         
         print(f"{username} said: '{user_msg}' ({channel})")
         
-        print(server_data[server_id]["user_tutorial_completion"]["456861613966884866"])
-        print(server_data[server_id]["user_current_tutorial"]["456861613966884866"])
         
         if str(msg.author.id) not in server_data[server_id]["user_coins"]:
             server_data[server_id]["user_coins"][str(msg.author.id)] = 0
@@ -1421,6 +1419,8 @@ async def on_reaction_add(reaction, user):
     
     if reaction.message.author == client.user:
         server_id = str(user.guild.id)
+        server_data[server_id]["user_current_page"]
+            
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
                 if server_data[server_id]["mentioned_user"][user_id] != "":

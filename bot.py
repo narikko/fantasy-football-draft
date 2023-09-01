@@ -1419,7 +1419,7 @@ async def on_reaction_add(reaction, user):
     
     if reaction.message.author == client.user:
         server_id = str(user.guild.id)
-        server_data[server_id]["user_current_page"]
+
             
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":

@@ -57,7 +57,7 @@ Alan Shearer, ST, Newcastle Utd, England, Value: 1050, https://assets.goal.com/v
 Roberto Carlos (Brazil), LB, Real Madrid, Brazil, Value: 1050, https://cdn.mos.cms.futurecdn.net/iqHNxkUb9Le5bsRYiNXvNo.jpg, 18202
 Peter Schmeichel, GK, Manchester Utd, Denmark, Value: 1050, https://www.thesun.co.uk/wp-content/uploads/2023/04/times-photograph-marc-aspland-21-1167049.jpg, 18203
 Javier Zanetti, RB/RM/CM, Inter, Argentina, Value: 1050, https://tmssl.akamaized.net/images/foto/galerie/javier-zanetti-jubel-inter-2009-1592311048-41572.jpg, 18204
-Kaká, CAM, Milan/Real Madrid, Brazil, Value: 1050, https://i.pinimg.com/1200x/22/3a/46/223a46e33bff808b6411caa3b27c4b9e.jpg, 18205
+Kaká (Brazil), CAM, Milan/Real Madrid, Brazil, Value: 1050, https://i.pinimg.com/1200x/22/3a/46/223a46e33bff808b6411caa3b27c4b9e.jpg, 18205
 Iker Casillas, GK, Real Madrid, Spain, Value: 1100, https://images2.minutemediacdn.com/image/fetch/c_fill,g_auto,f_auto,h_2242,w_3200/https%3A%2F%2Ftherealchamps.com%2Fwp-content%2Fuploads%2Fgetty-images%2F2018%2F08%2F493648555.jpeg, 18206
 Luis Suárez (Uruguay), ST, FC Barcelona, Uruguay, Value: 1050, https://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2015%2F0607%2Fsoc_g_suarez_b1_1296x729.jpg, 18207
 Zlatan Ibrahimović, ST, Paris SG, Sweden, Value: 1050, https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2015/08/12/1658908-35176086-2560-1440.jpg, 18207

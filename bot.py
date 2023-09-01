@@ -970,7 +970,9 @@ async def remove_player(user, msg, player):
                     if player.lower() == server_data[server_id]["user_market_player"][user_id].lower():
                         await transfer_market(msg, user, player, "rm")
                     
+                    print(server_data[server_id]["user_tutorial_completion"][user_id][2][4])
                     if not server_data[server_id]["user_tutorial_completion"][user_id][2][4]:
+                        print("remove step worked")
                         server_data[server_id]["user_tutorial_completion"][user_id][2][4] = True
                         
                         if user_id not in server_data[server_id]["user_max_rolls"]:

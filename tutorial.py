@@ -286,7 +286,6 @@ async def tutorial(msg, user, page_num):
             color=page[2]
             )
         for field in page[3]:
-            print(user_tutorial_completion[user_id][i][j])
             if user_tutorial_completion[user_id][i][j]:
                 new_page.add_field(name=field[0].split(":")[0] + ": " + "\u2705", value=field[1], inline=field[2])
             else:
@@ -305,6 +304,7 @@ async def tutorial(msg, user, page_num):
         i += 1
 
     if page_num > user_current_tutorial[user_id]:
+        print(user_tutorial_completion[user_id][page_num])
         if False in user_tutorial_completion[user_id][page_num]:
             await msg.channel.send("Please complete the current tutorial before moving onto another one.")
             return

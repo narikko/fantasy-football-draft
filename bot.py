@@ -1241,8 +1241,6 @@ def run_discord_bot():
         
         print(f"{username} said: '{user_msg}' ({channel})")
         
-        server_data[server_id]["user_current_tutorial"]["683832344452399201"] = 4
-        
         if str(msg.author.id) not in server_data[server_id]["user_coins"]:
             server_data[server_id]["user_coins"][str(msg.author.id)] = 0
             

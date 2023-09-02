@@ -1426,6 +1426,8 @@ async def on_reaction_add(reaction, user):
         
         user_embed = discord.utils.get(client.get_all_members(), name=username)
         
+        print(user_embed.id)
+        
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
   

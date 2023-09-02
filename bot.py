@@ -1424,6 +1424,8 @@ async def on_reaction_add(reaction, user):
         player_embed = reaction.message.embeds[0]
         username = player_embed.description.split()[-1]
         
+        print(username)
+        
         user_embed = discord.utils.get(client.get_all_members(), name=username)
         
         print(user_embed.id)

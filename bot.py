@@ -1422,7 +1422,7 @@ async def on_reaction_add(reaction, user):
         server_id = str(user.guild.id)
         
         player_embed = reaction.message.embeds[0]
-        username = player_embed.description.split()[-1]
+        username = player_embed.description.split()[-1].strip("*")
         
         print(username)
         

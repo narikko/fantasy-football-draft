@@ -1433,12 +1433,12 @@ async def on_reaction_add(reaction, user):
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
   
-                if server_data[server_id]["user_current_page"][user_embed.id] == 0:
-                    server_data[server_id]["user_current_page"][user_embed.id] = len(server_data[server_id]["user_collections"][user_embed.id]) - 1
+                if server_data[server_id]["user_current_page"][str(user_embed.id)] == 0:
+                    server_data[server_id]["user_current_page"][str(user_embed.id)] = len(server_data[server_id]["user_collections"][str(user_embed.id)) - 1
                 else:
-                    server_data[server_id]["user_current_page"][user_embed.id] -= 1
+                    server_data[server_id]["user_current_page"][str(user_embed.id)] -= 1
                 
-                current_page = server_data[server_id]["user_current_page"][user_embed.id]
+                current_page = server_data[server_id]["user_current_page"][str(user_embed.id)]
                 await show_collection(user, reaction.message, current_page, user_embed.mention)
                 
                 save_server_data(server_id, server_data[server_id])
@@ -1447,12 +1447,12 @@ async def on_reaction_add(reaction, user):
                 
             elif reaction.emoji == "➡️":
                 
-                if server_data[server_id]["user_current_page"][user_embed.id] == len(server_data[server_id]["user_collections"][user_embed.id]) - 1:
-                    server_data[server_id]["user_current_page"][user_embed.id] = 0
+                if server_data[server_id]["user_current_page"][str(user_embed.id)] == len(server_data[server_id]["user_collections"][str(user_embed.id)]) - 1:
+                    server_data[server_id]["user_current_page"][str(user_embed.id)] = 0
                 else:
-                    server_data[server_id]["user_current_page"][user_embed.id] += 1
+                    server_data[server_id]["user_current_page"][str(user_embed.id)] += 1
                     
-                current_page = server_data[server_id]["user_current_page"][user_embed.id]
+                current_page = server_data[server_id]["user_current_page"][str(user_embed.id)]
                 await show_collection(user, reaction.message, current_page, user_embed.mention)
                 
                 save_server_data(server_id, server_data[server_id])

@@ -1434,7 +1434,7 @@ async def on_reaction_add(reaction, user):
             if reaction.emoji == "⬅️":
   
                 if server_data[server_id]["user_current_page"][str(user_embed.id)] == 0:
-                    server_data[server_id]["user_current_page"][str(user_embed.id)] = len(server_data[server_id]["user_collections"][str(user_embed.id)) - 1
+                    server_data[server_id]["user_current_page"][str(user_embed.id)] = len(server_data[server_id]["user_collections"][str(user_embed.id)] - 1
                 else:
                     server_data[server_id]["user_current_page"][str(user_embed.id)] -= 1
                 

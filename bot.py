@@ -1420,45 +1420,36 @@ async def on_reaction_add(reaction, user):
     
     if reaction.message.author == client.user:
         server_id = str(user.guild.id)
-
-            
+        
+        player_embed = reaction.message.embeds[0]
+        username = player_embed.description.split()[-1]
+        
+        user_embed = discord.utils.get(client.get_all_members(), name=username)
+        
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
-                if server_data[server_id]["mentioned_user"][user_id] != "":
-                    mention_id = await extract_user_id(server_data[server_id]["mentioned_user"][user_id])
-                    if server_data[server_id]["user_current_page"][user_id] == 0:
-                        server_data[server_id]["user_current_page"][user_id] = len(server_data[server_id]["user_collections"][user_id]) - 1
-                    else:
-                        server_data[server_id]["user_current_page"][user_id] -= 1
-                    
+  
+                if server_data[server_id]["user_current_page"][user_embed.id] == 0:
+                    server_data[server_id]["user_current_page"][user_embed.id] = len(server_data[server_id]["user_collections"][user_embed.id]) - 1
                 else:
-                    if server_data[server_id]["user_current_page"][user_id] == 0:
-                        server_data[server_id]["user_current_page"][user_id] = len(server_data[server_id]["user_collections"][user_id]) - 1
-                    else:
-                        server_data[server_id]["user_current_page"][user_id] -= 1
+                    server_data[server_id]["user_current_page"][user_embed.id] -= 1
                 
-                current_page = server_data[server_id]["user_current_page"][user_id]
-                await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user_id])
+                current_page = server_data[server_id]["user_current_page"][user_embed.id]
+                await show_collection(user, reaction.message, current_page, user_embed.mention)
                 
                 save_server_data(server_id, server_data[server_id])
                 
                 return
                 
             elif reaction.emoji == "➡️":
-                if server_data[server_id]["mentioned_user"][user_id] != "":
-                    mention_id = await extract_user_id(server_data[server_id]["mentioned_user"][user_id])
-                    if server_data[server_id]["user_current_page"][user_id] == len(server_data[server_id]["user_collections"][mention_id]) - 1:
-                        server_data[server_id]["user_current_page"][user_id] = 0
-                    else:
-                        server_data[server_id]["user_current_page"][user_id] += 1
+                
+                if server_data[server_id]["user_current_page"][user_embed.id] == len(server_data[server_id]["user_collections"][user_embed.id]) - 1:
+                    server_data[server_id]["user_current_page"][user_embed.id] = 0
                 else:
-                    if server_data[server_id]["user_current_page"][user_id] == len(server_data[server_id]["user_collections"][user_id]) - 1:
-                        server_data[server_id]["user_current_page"][user_id] = 0
-                    else:
-                        server_data[server_id]["user_current_page"][user_id] += 1
+                    server_data[server_id]["user_current_page"][user_embed.id] += 1
                     
-                current_page = server_data[server_id]["user_current_page"][user_id]
-                await show_collection(user, reaction.message, current_page, server_data[server_id]["mentioned_user"][user_id])
+                current_page = server_data[server_id]["user_current_page"][user_embed.id]
+                await show_collection(user, reaction.message, current_page, user_embed.mention)
                 
                 save_server_data(server_id, server_data[server_id])
                 

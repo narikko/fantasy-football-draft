@@ -1428,6 +1428,8 @@ async def on_reaction_add(reaction, user):
         
         if user_id in server_data[server_id]["user_current_page"]:
             if reaction.emoji == "⬅️":
+                
+                collection_messages[user_id] = reaction.message
   
                 if server_data[server_id]["user_current_page"][str(user_embed.id)] == 0:
                     server_data[server_id]["user_current_page"][str(user_embed.id)] = len(server_data[server_id]["user_collections"][str(user_embed.id)]) - 1
@@ -1442,6 +1444,8 @@ async def on_reaction_add(reaction, user):
                 return
                 
             elif reaction.emoji == "➡️":
+                
+                collection_messages[user_id] = reaction.message
                 
                 if server_data[server_id]["user_current_page"][str(user_embed.id)] == len(server_data[server_id]["user_collections"][str(user_embed.id)]) - 1:
                     server_data[server_id]["user_current_page"][str(user_embed.id)] = 0

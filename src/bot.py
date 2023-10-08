@@ -997,7 +997,7 @@ async def remove_player(user, msg, player):
     else:
         await msg.channel.send("Error: No players found in your collection.")
         
-async def match(user, msg):
+"""async def match(user, msg):
     wager_msg = await msg.channel.send(f"{user.mention} Enter how many coins you would like to wager")
     
     repeat = True
@@ -1007,7 +1007,7 @@ async def match(user, msg):
             response_content = response.content.lower()
             
             if int(response_content) 
-        
+"""       
 async def trade_player(user, msg, player, mention):
     server_id = str(msg.guild.id)
     

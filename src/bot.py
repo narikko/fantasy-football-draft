@@ -1275,6 +1275,7 @@ def run_discord_bot():
         
     @client.event
     async def on_message(msg):
+        print("bruh")
         
         if msg.author == client.user:
             return

@@ -1457,6 +1457,7 @@ def run_discord_bot():
                 save_server_data(server_id, server_data[server_id])
         
         elif user_msg.startswith("%give"):
+            print("happening")
             mention = user_msg.split()[1]
             player = " ".join(user_msg.split()[2:])
             await give_player(msg.author, msg, player, mention)

@@ -7,6 +7,9 @@ import asyncio
 import time
 import unicodedata
 import tutorial
+import os
+
+print(os.getcwd())
 
 stadium_upgrades = [0.5, 1, 2, 3, 5]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]

@@ -9,8 +9,6 @@ import unicodedata
 import tutorial
 import os
 
-print(os.getcwd())
-
 stadium_upgrades = [0.5, 1, 2, 3, 5]
 stadium_prices = [1000, 2000, 4000, 8000, 16000]
         
@@ -47,6 +45,8 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     user_collections = server_data.get('user_collections', {})
     user_free_claims = server_data.get('user_free_claims', {})
     roll_reset_time = server_data.get('roll_reset_time', time.time())
+    
+    print(os.getcwd())
     
     f = open('../data/players_list.txt', 'r', encoding='utf-8')
     g = open('../data/legends_list.txt', 'r', encoding='utf-8')

@@ -1712,7 +1712,7 @@ def run_discord_bot():
             await sort_collection(msg, msg.author)
             save_server_data(server_id, server_data[server_id])
             
-        elif user_msg.startswith("%m"):
+        elif user_msg.startswith("%m") and user_msg != "%match":
             position = int(user_msg.split()[1])
             player_to_move = user_msg.split()[2:]
             await move_player(msg, msg.author, player_to_move, position)

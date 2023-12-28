@@ -1743,6 +1743,10 @@ def run_discord_bot():
                 await tutorial.tutorial(msg, msg.author, page_num)
                 save_server_data(server_id, server_data[server_id])
                 
+        elif user_msg == "%match":
+            await match(msg.author, msg)
+            save_server_data(server_id, server_data[server_id])
+                
         elif user_msg == "%r" or user_msg.startswith("%v") or user_msg.startswith("%lc") or user_msg.startswith("%t") or user_msg.startswith("%u") or user_msg == "%index":
             await send_message(msg, user_msg, is_private=False)
             save_server_data(server_id, server_data[server_id])

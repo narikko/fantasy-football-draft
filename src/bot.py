@@ -38,26 +38,69 @@ def replace_quotes(data):
         return data
 
 def create_tables():
+    """
+    Create database tables if they don't exist.
+
+    This function connects to the database using the DATABASE_URL environment variable,
+    creates the 'server_data' table if it doesn't exist, and commits the changes.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    
+    # Connect to the database
     conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
     cursor = conn.cursor()
 
-    # Create the server_data table
+    # Create the server_data table if it doesn't exist
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS server_data (
             server_id TEXT PRIMARY KEY,
             data JSONB
         )
     ''')
-
+    
+    # Commit the changes
     conn.commit()
+    
+    # Close the cursor and connection
     cursor.close()
     conn.close()
 
 def connect_to_database():
+    """
+    Establish a connection to the PostgreSQL database.
+
+    This function retrieves the database connection information from the DATABASE_URL environment variable
+    and returns a connection object to the database.
+
+    Args:
+        None
+
+    Returns:
+        psycopg2.extensions.connection: A connection object to the PostgreSQL database.
+    """
     # Connect to the database
     return psycopg2.connect(os.environ.get('DATABASE_URL'))
 
 def save_server_data(server_id, data_to_store):
+    """
+    Save server-specific data to the database.
+
+    This function connects to the database, serializes the data, and inserts or updates
+    the data in the 'server_data' table based on the server_id. It handles conflicts by updating
+    the existing data.
+
+    Args:
+        server_id (str): The ID of the server (guild) for which data is being saved.
+        data_to_store (dict): The data to be saved for the server.
+
+    Returns:
+        None
+    """
     conn = connect_to_database()
     cursor = conn.cursor()
     
@@ -67,7 +110,7 @@ def save_server_data(server_id, data_to_store):
     # Convert the dictionary to JSON-encoded string
     data_to_store_json = json.dumps(new_data_to_store)
 
-    # Insert or replace the server data
+    # Insert or replace the server data using an upsert (ON CONFLICT) query
     insert_query = sql.SQL('''
         INSERT INTO server_data (server_id, data)
         VALUES (%s, %s)
@@ -81,6 +124,18 @@ def save_server_data(server_id, data_to_store):
     conn.close()
 
 def load_server_data(server_id):
+    """
+    Load server-specific data from the database.
+
+    This function connects to the database, retrieves the data associated with the specified server_id,
+    and returns it as a Python dictionary. If the data does not exist, it returns None.
+
+    Args:
+        server_id (str): The ID of the server (guild) for which data is being loaded.
+
+    Returns:
+        dict or None: The loaded server data as a dictionary, or None if no data is found.
+    """
     conn = connect_to_database()
     cursor = conn.cursor()
 
@@ -92,6 +147,7 @@ def load_server_data(server_id):
         data = cursor.fetchone()
 
         if data:
+            # Parse the JSON-encoded data into a dictionary
             return json.loads(json.dumps(data[0]))
         else:
             return None
@@ -103,26 +159,71 @@ def load_server_data(server_id):
     finally:
         conn.close()
 
-
 def format_time(seconds):
+    """
+    Format a duration in seconds into a string representing hours, minutes, and seconds.
+
+    Args:
+        seconds (int): The duration in seconds to be formatted.
+
+    Returns:
+        str: A formatted string representing the duration in the format "Xh Ym Zs".
+    """
+    # Calculate hours, minutes, and remaining seconds
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
+    
+    # Create a formatted string
     return f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
         
 def get_time_remaining(server_id, user):
+    """
+    Get the remaining time for a specific user's task.
+
+    This function checks if the user has an ongoing task and calculates the remaining time
+    until completion. If there is no ongoing task, it returns an empty string.
+
+    Args:
+        server_id (str): The ID of the server (guild) where the user's task is occurring.
+        user (discord.User): The user for whom to check the remaining time.
+
+    Returns:
+        str: A formatted string representing the remaining time in the format "Xh Ym Zs", or an empty string if no task is ongoing.
+    """
     user_id = str(user.id)
     
+    # Check if the user has an ongoing task
     if user_id in user_transfer_tasks:
         task = user_transfer_tasks[user_id]
         if task is not None and not task.done():
+            # Calculate the remaining time
             time_remaining = server_data[server_id]["user_market_wait"][user_id] - time.time()
+            
+            # Format the remaining time as a string
             return format_time(time_remaining)
+    
+    # Return an empty string if no task is ongoing
     return ""  
 
 async def show_collection(user, msg, page_num, mention):
+    """
+    Show a user's collection of players at a specific page.
+    
+    This function allows the user to show a user's collection of players at a specific page and updates the server data accordingly.
+    
+    Args:
+        user (discord.User): The user for whom to display the collection.
+        msg (discord.Message): The message that triggered the command.
+        page_num (int): The page number of the collection to display.
+        mention (str): Mentioned user to display their collection (empty string if none).
+        
+    Returns:
+        None
+    """
     server_id = str(msg.guild.id)
     user_id = str(user.id)
     
+    # Check if user's current page is initialized; if not, initialize it to 0
     if user_id not in server_data[server_id]["user_current_page"]:
         server_data[server_id]["user_current_page"][user_id] = 0
         
@@ -132,11 +233,16 @@ async def show_collection(user, msg, page_num, mention):
         mention_id = str(user_id)
     else:
         mention_id = await extract_user_id(mention)
-
+    
+    # Check if the mentioned user has a collection
     if mention_id in server_data[server_id]["user_collections"]:
         collection = server_data[server_id]["user_collections"][mention_id]
+        
+        # Check if the requested page number is within bounds
         if 0 <= page_num < len(collection):
             server_data[server_id]["user_current_page"][mention_id] = page_num
+            
+            #Retrieve user's collection
             embed_data = collection[page_num]
             
             embed_to_show = discord.Embed(
@@ -145,25 +251,32 @@ async def show_collection(user, msg, page_num, mention):
                 color=discord.Colour(int(embed_data[2]))
             )
             
+            # Add fields to the embed
             for field in embed_data[3]:
                 embed_to_show.add_field(name=field[0], value=field[1], inline=field[2])
             
             if embed_data[5] is not None:
                 embed_to_show.set_image(url=embed_data[5])
+                
+            # Set the footer with page information
             embed_to_show.set_footer(text=embed_data[4].split(", ")[0] + ", " + embed_data[4].split(", ")[1][0:5] + " --- " + f"{server_data[server_id]['user_current_page'][user_id] + 1}/{len(server_data[server_id]['user_collections'][mention_id])}")
         
             if user_id in collection_messages:
+                #Edit previous collection message
                 collection_msg = collection_messages[user_id]
                 await collection_msg.clear_reactions()
-                await collection_msg.edit(embed=embed_to_show)
+                await collection_msg.edit(embed=embed_to_show)     
             else:
+                # Create new message to display collection
                 collection_msg = await msg.channel.send(embed=embed_to_show)
                 await collection_msg.clear_reactions()
                 collection_messages[user_id] = collection_msg
-
+                
+            # Add navigation reactions
             await collection_msg.add_reaction("⬅️")
             await collection_msg.add_reaction("➡️")
             
+            # Check if it's a tutorial completion
             if mention == "":    
                 if not server_data[server_id]["user_tutorial_completion"][user_id][2][1]:
                     server_data[server_id]["user_tutorial_completion"][user_id][2][1] = True
@@ -171,7 +284,8 @@ async def show_collection(user, msg, page_num, mention):
                     await msg.channel.send("Substep complete! Type %tuto for the next steps!")
                     
                     print(server_data[server_id]["user_tutorial_completion"][user_id][2])
-                            
+                    
+                    # Reward the user and update tutorial progress
                     if user_id not in server_data[server_id]["user_max_rolls"]:
                         server_data[server_id]["user_max_rolls"][user_id] = 9
                             
@@ -187,6 +301,7 @@ async def show_collection(user, msg, page_num, mention):
                     
                     print(server_data[server_id]["user_tutorial_completion"][user_id][2])
                     
+                    # Reward the user and update tutorial progress
                     if user_id not in server_data[server_id]["user_max_rolls"]:
                         server_data[server_id]["user_max_rolls"][user_id] = 9
                             
@@ -200,6 +315,19 @@ async def show_collection(user, msg, page_num, mention):
         await msg.channel.send("Error : No players found in your collection.")
 
 async def rename_club(msg, user, name):
+    """
+    Rename the user's club.
+
+    This function allows the user to rename their club and updates the server data accordingly.
+
+    Args:
+        msg (discord.Message): The Discord message object that triggered the command.
+        user (discord.User): The user who is renaming their club.
+        name (list): A list of strings representing the new club name (or an empty list to reset).
+
+    Returns:
+        None
+    """
     server_id = str(msg.guild.id)
     user_id = str(user.id)
     
@@ -997,8 +1125,21 @@ async def remove_player(user, msg, player):
     else:
         await msg.channel.send("Error: No players found in your collection.")
         
-"""async def match(user, msg):
-    wager_msg = await msg.channel.send(f"{user.mention} Enter how many coins you would like to wager")
+async def match(user, msg):
+    server_id = str(msg.guild.id)
+    user_id = str(user.id)
+    
+    if user_id not in server_data[server_id]["user_team_players"]:
+        server_data[server_id]["user_team_players"][user_id] = []
+        
+    user_team = server_data[server_id]["user_team_players"][user_id]
+    
+    if len(user_team) != 11:
+        await msg.channel.send("Not enough players on your team.")
+        return
+    
+    
+    wager_msg = await msg.channel.send(f"{user.mention} Enter how many coins you would like to wager (500 coins minimum). Type c to cancel.")
     
     repeat = True
     while repeat:
@@ -1006,8 +1147,137 @@ async def remove_player(user, msg, player):
             response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()
             
-            if int(response_content) 
-"""       
+            if response_content == "c".lower():
+                repeat = False
+                await msg.channel.send(f"Match cancelled.")
+                continue
+            
+            try:
+                if int(response_content) < 500 or int(response_content) > server_data[server_id]["user_coins"][user_id]:
+                    second_wager_msg = await msg.channel.send(f"{user.mention} Mention the user you would like to play against. Type c to cancel.")
+                    repeat_2 = True
+                    while repeat_2:
+                        try:
+                            response_2 = await client.wait_for('message', timeout=60, check=lambda m: m.author == msg.author and m.channel == msg.channel)
+                            response_content_2 = response_2.content.lower()
+                    
+                            other_id = await extract_user_id(response_content_2)
+                            
+                            if other_id not in server_data[server_id]["user_team_players"]:
+                                server_data[server_id]["user_team_players"][other_id] = []
+                                
+                            other_team = server_data[server_id]["user_team_players"][other_id]
+                            
+                            if response_content_2 == "c":
+                                repeat_2 = False
+                                continue
+                            
+                            if len(other_team) != 11:
+                                await msg.channel.send("Not enough players on opponent's team.")
+                                repeat_2 = False
+                                continue
+                                
+                            try:
+                                if int(response_content) > server_data[server_id]["user_coins"][other_id]:
+                                    confirm_msg = await msg.channel.send(f"<@{other_id}> Do you agree to initiate this match? ({response_content} coins) (y/n/yes/no).")
+                                    
+                                    response_3 = await client.wait_for('message', timeout=300, check=lambda m: m.author == client.get_user(int(other_id)) and m.channel == msg.channel)
+                                    response_content_3 = response_3.content.lower()
+                                    
+                                    if response_content_3 == "yes" or response_content_3 == "y":
+                                        await match_start(user, msg, other_id)
+                                        repeat = False
+                                        repeat_2 = False
+                                    elif response_content_3 == "no" or response_content_3 == "n":
+                                        await msg.channel.send(f"Match cancelled.")
+                                        repeat = False
+                                        repeat_2 = False
+                                else:
+                                    await msg.channel.send(f"Opponent does not have enough coins. Match cancelled.")
+                                    return
+                            except KeyError:
+                                await msg.channel.send(f"No coins found. Match cancelled.")
+                                return
+                                            
+                        except asyncio.TimeoutError:
+                            await msg.channel.send(f"<@{other_id}> You took too long to respond. Match cancelled.")
+                            return
+                            
+                else:
+                    await msg.channel.send(f"Unsufficent coins. Match cancelled.")
+                    return
+                    
+            except KeyError:
+                await msg.channel.send(f"No coins found. Match cancelled.")
+                return
+                
+                
+                                    
+        except asyncio.TimeoutError:
+            await msg.channel.send(f"<@{user_id}> You took too long to respond. Match cancelled.")
+            return
+            
+
+
+async def match_start(user, msg, other_id):
+    
+    await msg.channel.send("Test worked")
+    return
+    
+    """
+    await msg.channel.send("Match rules:" + "\n" + "Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "/n" + "Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting blocked, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and offense.")
+    
+    user_team_players = server_data[server_id]["user_team_players"][user_id] 
+    other_team_players = server_data[server_id]["user_team_players"][other_id]
+    
+    user_team = server_data[server_id]["user_teams"][user_id] 
+    other_team = server_data[server_id]["user_teams"][other_id]
+    
+    forward_pos = ["LW", "ST", "RW", "CF"]
+    midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
+    defense_pos = ["LWB", "RWB", "LB", "RB", "CB", "SW", "GK"]
+    
+    fpos = ["F1", "F2", "F3"]
+    mpos = ["M1", "M2", "M3", "M4"]
+    dpos = ["D1", "D2", "D3", "GK"]
+    
+    user_f_count = []
+    user_m_count = []
+    user_d_count = []
+    
+    other_f_count = []
+    other_m_count = []
+    other_d_count = []
+    
+    for player in user_team[3]:
+        for player_to_compare in user_team_players:
+            if player[1].trim() == player_to_compare[0].trim():
+                if player[0].trim() in fpos:
+                    user_f_count.append(int(player_to_compare[3][1][0].split()[1]))
+                if player[0].trim() in mpos:
+                    user_m_count.append(int(player_to_compare[3][1][0].split()[1]))
+                if player[0].trim() in dpos:
+                    user_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    
+    for player in other_team[3]:
+        for player_to_compare in other_team_players:
+            if player[1].trim() == player_to_compare[0].trim():
+                if player[0].trim() in fpos:
+                    other_f_count.append(int(player_to_compare[3][1][0].split()[1]))
+                if player[0].trim() in mpos:
+                    other_m_count.append(int(player_to_compare[3][1][0].split()[1]))
+                if player[0].trim() in dpos:
+                    other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+    
+    """       
+        
+    
+    
+                            
+                            
+                    
+                    
+ 
 async def trade_player(user, msg, player, mention):
     server_id = str(msg.guild.id)
     

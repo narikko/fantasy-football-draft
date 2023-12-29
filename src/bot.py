@@ -1252,22 +1252,22 @@ async def match_start(user, msg, other_id):
     
     for player in user_team[3]:
         for player_to_compare in user_team_players:
-            if player[1].trim() == player_to_compare[0].trim():
-                if player[0].trim() in fpos:
+            if player[1].strip() == player_to_compare[0].strip():
+                if player[0].strip() in fpos:
                     user_f_count.append(int(player_to_compare[3][1][0].split()[1]))
-                if player[0].trim() in mpos:
+                if player[0].strip() in mpos:
                     user_m_count.append(int(player_to_compare[3][1][0].split()[1]))
-                if player[0].trim() in dpos:
+                if player[0].strip() in dpos:
                     user_d_count.append(int(player_to_compare[3][1][0].split()[1]))
                     
     for player in other_team[3]:
         for player_to_compare in other_team_players:
-            if player[1].trim() == player_to_compare[0].trim():
-                if player[0].trim() in fpos:
+            if player[1].strip() == player_to_compare[0].strip():
+                if player[0].strip() in fpos:
                     other_f_count.append(int(player_to_compare[3][1][0].split()[1]))
-                if player[0].trim() in mpos:
+                if player[0].strip() in mpos:
                     other_m_count.append(int(player_to_compare[3][1][0].split()[1]))
-                if player[0].trim() in dpos:
+                if player[0].strip() in dpos:
                     other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
                     
     user_f = int(sum(user_f_count) / len(user_f_count))

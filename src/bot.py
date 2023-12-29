@@ -1135,7 +1135,7 @@ async def match(user, msg):
     user_team = server_data[server_id]["user_team_players"][user_id]
     
     for player in user_team[3]:
-        print(player[1].strip())
+        print(player)
     
     print(len(user_team))
     

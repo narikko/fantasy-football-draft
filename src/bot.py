@@ -1175,7 +1175,7 @@ async def match(user, msg):
                                 repeat_2 = False
                                 continue
                             
-                            if len(other_team) != 11:
+                            if len(other_team) < 11:
                                 await msg.channel.send("Not enough players on opponent's team.")
                                 repeat_2 = False
                                 continue

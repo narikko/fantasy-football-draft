@@ -1224,11 +1224,7 @@ async def match(user, msg):
 
 async def match_start(user, msg, other_id):
     
-    await msg.channel.send("Test worked")
-    return
-    
-    """
-    await msg.channel.send("Match rules:" + "\n" + "Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "/n" + "Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting blocked, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and offense.")
+    await msg.channel.send("Match rules:" + "\n" + "Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "/n" + "Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting saved, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and attack.")
     
     user_team_players = server_data[server_id]["user_team_players"][user_id] 
     other_team_players = server_data[server_id]["user_team_players"][other_id]
@@ -1271,13 +1267,13 @@ async def match_start(user, msg, other_id):
                     other_m_count.append(int(player_to_compare[3][1][0].split()[1]))
                 if player[0].trim() in dpos:
                     other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    
+    user_f = int(sum(user_f_count) / len(user_f_count))
+    user_m = int(sum(user_m_count) / len(user_m_count))
+    user_d = int(sum(user_d_count) / len(user_d_count))
     
-    """       
-        
-    
-    
-                            
-                            
+    await asyncio.sleep(2)
+    await msg.channel.send(f"{user.name}'s team overall:" + "/n" + f"Attack: {user_f}" + "/n" + f"Midfield: {user_m}" + "/n" + f"Defence: {user_d}")
                     
                     
  

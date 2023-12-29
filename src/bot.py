@@ -1158,7 +1158,7 @@ async def match(user, msg):
                 continue
             
             try:
-                if int(response_content) > 500 or int(response_content) < server_data[server_id]["user_coins"][user_id]:
+                if int(response_content) >= 500 or int(response_content) <= server_data[server_id]["user_coins"][user_id]:
                     second_wager_msg = await msg.channel.send(f"{user.mention} Mention the user you would like to play against. Type c to cancel.")
                     repeat_2 = True
                     while repeat_2:

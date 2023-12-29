@@ -1181,7 +1181,7 @@ async def match(user, msg):
                                 continue
                                 
                             try:
-                                if int(response_content) > server_data[server_id]["user_coins"][other_id]:
+                                if int(response_content) <= server_data[server_id]["user_coins"][other_id]:
                                     confirm_msg = await msg.channel.send(f"<@{other_id}> Do you agree to initiate this match? ({response_content} coins) (y/n/yes/no).")
                                     
                                     response_3 = await client.wait_for('message', timeout=300, check=lambda m: m.author == client.get_user(int(other_id)) and m.channel == msg.channel)

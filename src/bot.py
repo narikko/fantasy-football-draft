@@ -1134,6 +1134,11 @@ async def match(user, msg):
         
     user_team = server_data[server_id]["user_team_players"][user_id]
     
+    for player in user_team[3]:
+        print(player[1].trim())
+    
+    print(len(user_team))
+    
     if len(user_team) != 11:
         await msg.channel.send("Not enough players on your team.")
         return

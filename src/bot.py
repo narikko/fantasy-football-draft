@@ -1143,11 +1143,9 @@ async def match(user, msg):
         await msg.channel.send("Not enough players on your team.")
         return
     
-    
-    wager_msg = await msg.channel.send(f"{user.mention} Enter how many coins you would like to wager (500 coins minimum). Type c to cancel.")
-    
     repeat = True
     while repeat:
+        wager_msg = await msg.channel.send(f"{user.mention} Enter how many coins you would like to wager (500 coins minimum). Type c to cancel.")
         try:
             response = await client.wait_for('message', timeout=30, check=lambda m: m.author == msg.author and m.channel == msg.channel)
             response_content = response.content.lower()

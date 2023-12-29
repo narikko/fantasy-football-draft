@@ -1223,9 +1223,11 @@ async def match(user, msg):
 
 
 async def match_start(user, msg, other_id):
+    server_id = str(msg.guild.id)
+    user_id = str(user.id)
     
-    await msg.channel.send("Match rules:" + "\n" + "Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "/n" + "Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting saved, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and attack.")
-    
+    await msg.channel.send("Match rules:" + "\n" + "Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "\n" + "Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting saved, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and attack.")
+    await msg.channel.send("Players participating in the match will be notified whenever one a player scores a goal or saves a shot.")
     user_team_players = server_data[server_id]["user_team_players"][user_id] 
     other_team_players = server_data[server_id]["user_team_players"][other_id]
     
@@ -1273,7 +1275,7 @@ async def match_start(user, msg, other_id):
     user_d = int(sum(user_d_count) / len(user_d_count))
     
     await asyncio.sleep(2)
-    await msg.channel.send(f"{user.name}'s team overall:" + "/n" + f"Attack: {user_f}" + "/n" + f"Midfield: {user_m}" + "/n" + f"Defence: {user_d}")
+    await msg.channel.send(f"{user.name}'s team overall:" + "\n" + f"Attack: {user_f}" + "\n" + f"Midfield: {user_m}" + "\n" + f"Defence: {user_d}")
                     
                     
  

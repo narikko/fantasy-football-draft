@@ -1331,13 +1331,13 @@ async def match_start(user, msg, other_id, total_coins):
     await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> has started!")
     
     start_time = time.time()
-    end_time = start_time + 120
+    end_time = start_time + 60
     
     timer = start_time
     
-    a1 = random.randint(0, 40)
-    a2 = random.randint(40, 80)
-    a3 = random.randint(80, 120)
+    a1 = random.randint(0, 20)
+    a2 = random.randint(20, 40)
+    a3 = random.randint(40, 60)
     #a4 = random.randint(1800, 2400)
     #a5 = random.randint(2400, 3000)
     #a6 = random.randint(3000, 3600)
@@ -1345,145 +1345,163 @@ async def match_start(user, msg, other_id, total_coins):
     #a8 = random.randint(4200, 4800)
     #a9 = random.randint(4800, 5400)
     
-    print(a1 + start_time)
-    print(a2 + start_time)
-    print(a3 + start_time)
+    print(int(a1 + start_time))
+    print(int(a2 + start_time))
+    print(int(a3 + start_time))
     await asyncio.sleep(10)
     
     user_score = 0
     other_score = 0
     
-    while timer < end_time:
-        timer = time.time()
-        print(timer)
-        
-        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer: #or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
-            print("its time")
-            total = user_avg + other_avg
-            user_prob = user_avg / total
+    def score():
+        print("its time")
+        total = user_avg + other_avg
+        user_prob = user_avg / total
             
-            user_attacks = False
+        user_attacks = False
             
-            random_num = random.random()
+        random_num = random.random()
             
-            if random_num < user_prob:
-                user_attacks = True
+        if random_num < user_prob:
+            user_attacks = True
                 
-            if user_attacks:
-                total_s = user_f + user_m + other_m + other_d
-                user_score_prob = (user_f + user_m) / total_s
+        if user_attacks:
+            total_s = user_f + user_m + other_m + other_d
+            user_score_prob = (user_f + user_m) / total_s
                 
-                random_num2 = random.random()
+            random_num2 = random.random()
                 
-                if random_num2 < user_score_prob:
-                    player_prob = random.randint(0,10)
-                    scorer = ""
+            if random_num2 < user_score_prob:
+                player_prob = random.randint(0,10)
+                scorer = ""
                     
-                    if player_prob < 6:
-                        scorer = random.choice(user_f_players)
-                    if player_prob >= 6 and player_prob < 9:
-                        scorer = random.choice(user_m_players)
-                    if player_prob == 9:
-                        scorer = random.choice(user_d_players)
+                if player_prob < 6:
+                    scorer = random.choice(user_f_players)
+                if player_prob >= 6 and player_prob < 9:
+                    scorer = random.choice(user_m_players)
+                if player_prob == 9:
+                    scorer = random.choice(user_d_players)
                 
-                    goal_line = random.choice(goal_lines)
-                    goal_line = goal_line.rstrip("\n")
-                    goal_line = goal_line.replace("[Player]", scorer)
+                goal_line = random.choice(goal_lines)
+                goal_line = goal_line.rstrip("\n")
+                goal_line = goal_line.replace("[Player]", scorer)
                     
-                    user_score += 1
+                user_score += 1
                     
-                    if user_team_name != "":
+                if user_team_name != "":
                         await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
-                    else:
-                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
-                    
                 else:
-                    player_prob = random.randint(0,10)
-                    saver = ""
+                    await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
                     
-                    if player_prob < 8:
-                        saver = other_gk
+            else:
+                player_prob = random.randint(0,10)
+                saver = ""
+                    
+                if player_prob < 8:
+                    saver = other_gk
                         
-                        save_line = random.choice(save_lines)
-                        save_line = save_line.rstrip("\n")
-                        save_line = save_line.replace("[Player]", saver)
+                    save_line = random.choice(save_lines)
+                    save_line = save_line.rstrip("\n")
+                    save_line = save_line.replace("[Player]", saver)
                         
-                        if user_team_name != "":
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
-                        else:
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
-                        
-                        
+                    if user_team_name != "":
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
                     else:
-                        saver = random.choice(other_d_players)
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
                         
-                        save_line = random.choice(block_lines)
-                        save_line = save_line.rstrip("\n")
-                        save_line = save_line.replace("[Player]", saver)
                         
-                        if user_team_name != "":
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
-                        else:
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                else:
+                    saver = random.choice(other_d_players)
+                        
+                    save_line = random.choice(block_lines)
+                    save_line = save_line.rstrip("\n")
+                    save_line = save_line.replace("[Player]", saver)
+                        
+                    if user_team_name != "":
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                    else:
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                        
+        else:
+            total_s2 = other_f + other_m + user_m + user_d
+            other_score_prob = (other_f + other_m) / total_s2
+                
+            random_num3 = random.random()
+                
+            if random_num3 < other_score_prob:
+                player_prob = random.randint(0,10)
+                scorer = ""
+                    
+                if player_prob < 6:
+                    scorer = random.choice(other_f_players)
+                if player_prob >= 6 and player_prob < 9:
+                    scorer = random.choice(other_m_players)
+                if player_prob == 9:
+                    scorer = random.choice(other_d_players)
+                    
+                goal_line = random.choice(goal_lines)
+                goal_line = goal_line.rstrip("\n")
+                goal_line = goal_line.replace("[Player]", scorer)
+                    
+                other_score += 1
+                    
+                if other_team_name != "":
+                    await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                else:
+                    await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
                         
             else:
-                total_s2 = other_f + other_m + user_m + user_d
-                other_score_prob = (other_f + other_m) / total_s2
-                
-                random_num3 = random.random()
-                
-                if random_num3 < other_score_prob:
-                    player_prob = random.randint(0,10)
-                    scorer = ""
+                player_prob = random.randint(0,10)
+                saver = ""
                     
-                    if player_prob < 6:
-                        scorer = random.choice(other_f_players)
-                    if player_prob >= 6 and player_prob < 9:
-                        scorer = random.choice(other_m_players)
-                    if player_prob == 9:
-                        scorer = random.choice(other_d_players)
-                    
-                    goal_line = random.choice(goal_lines)
-                    goal_line = goal_line.rstrip("\n")
-                    goal_line = goal_line.replace("[Player]", scorer)
-                    
-                    other_score += 1
-                    
+                if player_prob < 8:
+                    saver = user_gk
+                        
+                    save_line = random.choice(save_lines)
+                    save_line = save_line.rstrip("\n")
+                    save_line = save_line.replace("[Player]", saver)
+                        
                     if other_team_name != "":
-                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
                     else:
-                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
-                        
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
                 else:
-                    player_prob = random.randint(0,10)
-                    saver = ""
-                    
-                    if player_prob < 8:
-                        saver = user_gk
+                    saver = random.choice(user_d_players)
                         
-                        save_line = random.choice(save_lines)
-                        save_line = save_line.rstrip("\n")
-                        save_line = save_line.replace("[Player]", saver)
+                    save_line = random.choice(block_lines)
+                    save_line = save_line.rstrip("\n")
+                    save_line = save_line.replace("[Player]", saver)
                         
-                        if other_team_name != "":
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
-                        else:
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                    if other_team_name != "":
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
                     else:
-                        saver = random.choice(user_d_players)
-                        
-                        save_line = random.choice(block_lines)
-                        save_line = save_line.rstrip("\n")
-                        save_line = save_line.replace("[Player]", saver)
-                        
-                        if other_team_name != "":
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
-                        else:
-                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+    
+        
+    time1 = 0
+    time2 = 0
+    time3 = 0
+    while timer < end_time:
+        timer = time.time()
+        
+        if (int(start_time + a1) == int(timer)):
+            time1 += 1
+        if (int(start_time + a2) == int(timer)):
+            time2 += 1
+        if (int(start_time + a3) == int(timer)):
+            time3 += 1
+            
+        if time1 == 1:
+            score()
+        if time2 == 1:
+            score()
+        if time3 == 1:
+            score()
+            
                 
     if user_score > other_score:
         reward = total_coins * 2
-        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
         await msg.channel.send(f"Congrats <@{user_id}>! You have been rewarded **{reward}** \U0001f4a0!")
         
         server_data[server_id]["user_coins"][user_id] += reward
@@ -1491,14 +1509,14 @@ async def match_start(user, msg, other_id, total_coins):
         
     if other_score > user_score:
         reward = total_coins * 2
-        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
         await msg.channel.send(f"Congrats <@{other_id}>! You have been rewarded **{reward}** \U0001f4a0!")
         
         server_data[server_id]["user_coins"][other_id] += reward
         server_data[server_id]["user_coins"][user_id] -= total_coins
     
     if other_score == user_score:
-        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
         await msg.channel.send(f"Match ended in a draw.")
         
         

@@ -1290,7 +1290,7 @@ async def match_start(user, msg, other_id, total_coins):
                     user_d_players.append(player[1].strip())
                 if player[0].strip() == "GK":
                     user_d_count.append(int(player_to_compare[3][1][0].split()[1]))
-                    user_gk = player[0].strip()
+                    user_gk = player[1].strip()
                     
                     
     for player in other_team[3]:
@@ -1307,7 +1307,7 @@ async def match_start(user, msg, other_id, total_coins):
                     other_d_players.append(player[1].strip())
                 if player[0].strip() == "GK":
                     other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
-                    other_gk = player[0].strip()
+                    other_gk = player[1].strip()
                     
     user_f = int(sum(user_f_count) / len(user_f_count))
     user_m = int(sum(user_m_count) / len(user_m_count))
@@ -1326,29 +1326,21 @@ async def match_start(user, msg, other_id, total_coins):
     await asyncio.sleep(1)
     await msg.channel.send(f"**{client.get_user(int(other_id)).name}'s Team Overall**:" + "\n" + f"__Attack__ \u2694\ufe0f : **{other_f}**" + "\n" + f"__Midfield__ \u2694\ufe0f \U0001f6e1\ufe0f : **{other_m}**" + "\n" + f"__Defence__ \U0001f6e1\ufe0f : **{other_d}**")                
     
-    await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> will start in 10 seconds. The match will be exactly 90 minutes long.")
+    await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> will start in 10 seconds. The match will be exactly 30 minutes long.")
     await asyncio.sleep(10)
     await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> has started!")
     
     start_time = time.time()
-    end_time = start_time + 60
+    end_time = start_time + 1800
     
     timer = start_time
     
-    a1 = random.randint(0, 20)
-    a2 = random.randint(20, 40)
-    a3 = random.randint(40, 60)
-    #a4 = random.randint(1800, 2400)
-    #a5 = random.randint(2400, 3000)
-    #a6 = random.randint(3000, 3600)
-    #a7 = random.randint(3600, 4200)
-    #a8 = random.randint(4200, 4800)
-    #a9 = random.randint(4800, 5400)
-    
-    print(int(a1 + start_time))
-    print(int(a2 + start_time))
-    print(int(a3 + start_time))
-    await asyncio.sleep(10)
+    a1 = random.randint(0, 300)
+    a2 = random.randint(300, 600)
+    a3 = random.randint(600, 900)
+    a4 = random.randint(900, 1200)
+    a5 = random.randint(1200, 1500)
+    a6 = random.randint(1500, 1800)
     
     user_score = 0
     other_score = 0
@@ -1488,6 +1480,9 @@ async def match_start(user, msg, other_id, total_coins):
     time1 = 0
     time2 = 0
     time3 = 0
+    time4 = 0
+    time5 = 0
+    time6 = 0
     while timer < end_time:
         timer = time.time()
         
@@ -1497,6 +1492,12 @@ async def match_start(user, msg, other_id, total_coins):
             time2 += 1
         if (int(start_time + a3) == int(timer)):
             time3 += 1
+        if (int(start_time + a4) == int(timer)):
+            time4 += 1
+        if (int(start_time + a5) == int(timer)):
+            time5 += 1
+        if (int(start_time + a6) == int(timer)):
+            time6 += 1
         
         scores = []
         if time1 == 1:
@@ -1508,6 +1509,18 @@ async def match_start(user, msg, other_id, total_coins):
             user_score = scores[0]
             other_score = scores[1]
         if time3 == 1:
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
+        if time4 == 1:
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
+        if time5 == 1:
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
+        if time6 == 1:
             scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
             user_score = scores[0]
             other_score = scores[1]

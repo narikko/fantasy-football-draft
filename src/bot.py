@@ -1353,7 +1353,7 @@ async def match_start(user, msg, other_id, total_coins):
     user_score = 0
     other_score = 0
     
-    async def score():
+    async def score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name):
         print("its time")
         total = user_avg + other_avg
         user_prob = user_avg / total
@@ -1492,11 +1492,11 @@ async def match_start(user, msg, other_id, total_coins):
             time3 += 1
             
         if time1 == 1:
-            await score()
+            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
         if time2 == 1:
-            await score()
+            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
         if time3 == 1:
-            await score()
+            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
             
                 
     if user_score > other_score:

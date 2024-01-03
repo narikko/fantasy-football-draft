@@ -1353,7 +1353,7 @@ async def match_start(user, msg, other_id, total_coins):
     user_score = 0
     other_score = 0
     
-    def score():
+    async def score():
         print("its time")
         total = user_avg + other_avg
         user_prob = user_avg / total
@@ -1492,11 +1492,11 @@ async def match_start(user, msg, other_id, total_coins):
             time3 += 1
             
         if time1 == 1:
-            score()
+            await score()
         if time2 == 1:
-            score()
+            await score()
         if time3 == 1:
-            score()
+            await score()
             
                 
     if user_score > other_score:

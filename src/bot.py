@@ -1261,6 +1261,7 @@ async def match_start(user, msg, other_id, total_coins):
     other_d_players = []
     other_gk = ""
     
+    current_directory = os.getcwd()
     file_path_0 = os.path.join(current_directory, 'data', 'goal_lines.txt')
     file_path_1 = os.path.join(current_directory, 'data', 'save_lines.txt')
     file_path_2 = os.path.join(current_directory, 'data', 'block_lines.txt')

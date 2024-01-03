@@ -1348,7 +1348,7 @@ async def match_start(user, msg, other_id, total_coins):
     print(a1 + start_time)
     print(a2 + start_time)
     print(a3 + start_time)
-    await asyncio.sleep(5)
+    await asyncio.sleep(10)
     
     user_score = 0
     other_score = 0

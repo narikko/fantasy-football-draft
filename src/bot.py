@@ -1328,6 +1328,7 @@ async def match_start(user, msg, other_id, total_coins):
     
     await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> will start in 10 seconds. The match will be exactly 90 minutes long.")
     await asyncio.sleep(10)
+    await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> has started!")
     
     start_time = time.time()
     end_time = start_time + 5400
@@ -1344,11 +1345,15 @@ async def match_start(user, msg, other_id, total_coins):
     a8 = random.randint(4200, 4800)
     a9 = random.randint(4800, 5400)
     
+    print(a1 + start_time)
+    await asyncio.sleep(5)
+    
     user_score = 0
     other_score = 0
     
     while timer < end_time:
         timer = time.time()
+        print(timer)
         
         if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
             total = user_avg + other_avg

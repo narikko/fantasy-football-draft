@@ -1357,7 +1357,7 @@ async def match_start(user, msg, other_id, total_coins):
         timer = time.time()
         print(timer)
         
-        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer #or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
+        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer: #or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
             print("its time")
             total = user_avg + other_avg
             user_prob = user_avg / total

@@ -1355,6 +1355,8 @@ async def match_start(user, msg, other_id, total_coins):
     
     async def score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name):
         print("its time")
+        scores = []
+        
         total = user_avg + other_avg
         user_prob = user_avg / total
             
@@ -1476,6 +1478,11 @@ async def match_start(user, msg, other_id, total_coins):
                         await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
                     else:
                         await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        
+        scores.append(user_score)
+        scores.append(other_score)
+        
+        return scores   
     
         
     time1 = 0
@@ -1490,14 +1497,20 @@ async def match_start(user, msg, other_id, total_coins):
             time2 += 1
         if (int(start_time + a3) == int(timer)):
             time3 += 1
-            
+        
+        scores = []
         if time1 == 1:
-            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
         if time2 == 1:
-            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
         if time3 == 1:
-            await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
-            
+            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            user_score = scores[0]
+            other_score = scores[1]
                 
     if user_score > other_score:
         reward = total_coins * 2

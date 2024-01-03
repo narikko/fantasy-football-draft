@@ -1331,21 +1331,23 @@ async def match_start(user, msg, other_id, total_coins):
     await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> has started!")
     
     start_time = time.time()
-    end_time = start_time + 5400
+    end_time = start_time + 120
     
     timer = start_time
     
-    a1 = random.randint(0, 600)
-    a2 = random.randint(600, 1200)
-    a3 = random.randint(1200, 1800)
-    a4 = random.randint(1800, 2400)
-    a5 = random.randint(2400, 3000)
-    a6 = random.randint(3000, 3600)
-    a7 = random.randint(3600, 4200)
-    a8 = random.randint(4200, 4800)
-    a9 = random.randint(4800, 5400)
+    a1 = random.randint(0, 40)
+    a2 = random.randint(40, 80)
+    a3 = random.randint(80, 120)
+    #a4 = random.randint(1800, 2400)
+    #a5 = random.randint(2400, 3000)
+    #a6 = random.randint(3000, 3600)
+    #a7 = random.randint(3600, 4200)
+    #a8 = random.randint(4200, 4800)
+    #a9 = random.randint(4800, 5400)
     
     print(a1 + start_time)
+    print(a2 + start_time)
+    print(a3 + start_time)
     await asyncio.sleep(5)
     
     user_score = 0
@@ -1355,7 +1357,8 @@ async def match_start(user, msg, other_id, total_coins):
         timer = time.time()
         print(timer)
         
-        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
+        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer #or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
+            print("its time")
             total = user_avg + other_avg
             user_prob = user_avg / total
             

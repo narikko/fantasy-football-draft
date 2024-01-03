@@ -1134,11 +1134,8 @@ async def match(user, msg):
         
     user_team = server_data[server_id]["user_team_players"][user_id]
     
-    for player in user_team:
-        print(player)
-    
-    print(len(user_team))
-    
+    total_coins = 0
+
     if len(user_team) < 11:
         await msg.channel.send("Not enough players on your team.")
         return
@@ -1188,7 +1185,8 @@ async def match(user, msg):
                                     response_content_3 = response_3.content.lower()
                                     
                                     if response_content_3 == "yes" or response_content_3 == "y":
-                                        await match_start(user, msg, other_id)
+                                        total_coins = int(response_content)
+                                        await match_start(user, msg, other_id, total_coins)
                                         repeat = False
                                         repeat_2 = False
                                     elif response_content_3 == "no" or response_content_3 == "n":
@@ -1222,16 +1220,20 @@ async def match(user, msg):
             
 
 
-async def match_start(user, msg, other_id):
+async def match_start(user, msg, other_id, total_coins):
     server_id = str(msg.guild.id)
     user_id = str(user.id)
     
-    await msg.channel.send("Match Rules \u2611\ufe0f :" + "\n\n" + " • Winner takes all the money wagered. If the game ends in a draw, both players will receive back the money they wagered." + "\n\n" + " • Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting saved, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and attack." + "\n\n" + " • Players participating in the match will be notified whenever a player scores a goal or saves a shot.")
+    await msg.channel.send("Match Rules \u2611\ufe0f :" + "\n\n" + " • Winner takes all the money wagered. If the game ends in a draw, no players will lose money." + "\n\n" + " • Both teams will have shots on goal randomly throughout the match. A stronger defense and goalkeeper will increase the chances of a shot getting saved, while stronger forwards will contributing to higher goal scoring chance. Midfielders contribute both to defense and attack." + "\n\n" + " • Players participating in the match will be notified whenever a player scores a goal or saves a shot.")
+    
     user_team_players = server_data[server_id]["user_team_players"][user_id] 
     other_team_players = server_data[server_id]["user_team_players"][other_id]
     
     user_team = server_data[server_id]["user_teams"][user_id] 
     other_team = server_data[server_id]["user_teams"][other_id]
+    
+    user_team_name = server_data[server_id]["user_club_name"][user_id]
+    other_team_name = server_data[server_id]["user_club_name"][other_id]
     
     forward_pos = ["LW", "ST", "RW", "CF"]
     midfield_pos = ["CAM", "LM", "RM", "CM", "CDM"]
@@ -1239,49 +1241,266 @@ async def match_start(user, msg, other_id):
     
     fpos = ["F1", "F2", "F3"]
     mpos = ["M1", "M2", "M3", "M4"]
-    dpos = ["D1", "D2", "D3", "GK"]
+    dpos = ["D1", "D2", "D3"]
     
     user_f_count = []
     user_m_count = []
     user_d_count = []
     
+    user_f_players = []
+    user_m_players = []
+    user_d_players = []
+    user_gk = ""
+    
     other_f_count = []
     other_m_count = []
     other_d_count = []
+    
+    other_f_players = []
+    other_m_players = []
+    other_d_players = []
+    other_gk = ""
+    
+    file_path_0 = os.path.join(current_directory, 'data', 'goal_lines.txt')
+    file_path_1 = os.path.join(current_directory, 'data', 'save_lines.txt')
+    file_path_2 = os.path.join(current_directory, 'data', 'block_lines.txt')
+    
+    f = open(file_path_0, 'r', encoding='utf-8')
+    g = open(file_path_1, 'r', encoding='utf-8')
+    h = open(file_path_2, 'r', encoding='utf-8')
+    
+    goal_lines = f.readlines()
+    save_lines = g.readlines()
+    block_lines = h.readlines()
+    
+    print("worked")
     
     for player in user_team[3]:
         for player_to_compare in user_team_players:
             if player[1].strip() == player_to_compare[0].strip():
                 if player[0].strip() in fpos:
                     user_f_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    user_f_players.append(player[1].strip())
                 if player[0].strip() in mpos:
                     user_m_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    user_m_players.append(player[1].strip())
                 if player[0].strip() in dpos:
                     user_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    user_d_players.append(player[1].strip())
+                if player[0].strip() == "GK":
+                    user_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    user_gk = player[0].strip()
+                    
                     
     for player in other_team[3]:
         for player_to_compare in other_team_players:
             if player[1].strip() == player_to_compare[0].strip():
                 if player[0].strip() in fpos:
                     other_f_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    other_f_players.append(player[1].strip())
                 if player[0].strip() in mpos:
                     other_m_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    other_m_players.append(player[1].strip())
                 if player[0].strip() in dpos:
                     other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    other_d_players.append(player[1].strip())
+                if player[0].strip() == "GK":
+                    other_d_count.append(int(player_to_compare[3][1][0].split()[1]))
+                    other_gk = player[0].strip()
                     
     user_f = int(sum(user_f_count) / len(user_f_count))
     user_m = int(sum(user_m_count) / len(user_m_count))
     user_d = int(sum(user_d_count) / len(user_d_count))
     
+    user_avg = int((user_f + user_m + user_d) / 3)
+    
     other_f = int(sum(other_f_count) / len(other_f_count))
     other_m = int(sum(other_m_count) / len(other_m_count))
     other_d = int(sum(other_d_count) / len(other_d_count))
+    
+    other_avg = int((other_f + other_m + other_d) / 3)
     
     await asyncio.sleep(1)
     await msg.channel.send(f"**{user.name}'s Team Overall**:" + "\n" + f"__Attack__ \u2694\ufe0f : **{user_f}**" + "\n" + f"__Midfield__ \u2694\ufe0f \U0001f6e1\ufe0f : **{user_m}**" + "\n" + f"__Defence__ \U0001f6e1\ufe0f : **{user_d}**")
     await asyncio.sleep(1)
     await msg.channel.send(f"**{client.get_user(int(other_id)).name}'s Team Overall**:" + "\n" + f"__Attack__ \u2694\ufe0f : **{other_f}**" + "\n" + f"__Midfield__ \u2694\ufe0f \U0001f6e1\ufe0f : **{other_m}**" + "\n" + f"__Defence__ \U0001f6e1\ufe0f : **{other_d}**")                
+    
+    await msg.channel.send(f"Match between <@{user_id}> and <@{other_id}> will start in 10 seconds. The match will be exactly 90 minutes long.")
+    await asyncio.sleep(10)
+    
+    start_time = time.time()
+    end_time = start_time + 5400
+    
+    timer = start_time
+    
+    a1 = random.randint(0, 600)
+    a2 = random.randint(600, 1200)
+    a3 = random.randint(1200, 1800)
+    a4 = random.randint(1800, 2400)
+    a5 = random.randint(2400, 3000)
+    a6 = random.randint(3000, 3600)
+    a7 = random.randint(3600, 4200)
+    a8 = random.randint(4200, 4800)
+    a9 = random.randint(4800, 5400)
+    
+    user_score = 0
+    other_score = 0
+    
+    while timer < end_time:
+        timer = time.time()
+        
+        if start_time + a1 == timer or start_time + a2 == timer or start_time + a3 == timer or start_time + a4 == timer or start_time + a5 == timer or start_time + a6 == timer or start_time + a7 == timer or start_time + a8 == timer or start_time + a9 == timer:
+            total = user_avg + other_avg
+            user_prob = user_avg / total
+            
+            user_attacks = False
+            
+            random_num = random.random()
+            
+            if random_num < user_prob:
+                user_attacks = True
+                
+            if user_attacks:
+                total_s = user_f + user_m + other_m + other_d
+                user_score_prob = (user_f + user_m) / total_s
+                
+                random_num2 = random.random()
+                
+                if random_num2 < user_score_prob:
+                    player_prob = random.randint(0,10)
+                    scorer = ""
                     
+                    if player_prob < 6:
+                        scorer = random.choice(user_f_players)
+                    if player_prob >= 6 and player_prob < 9:
+                        scorer = random.choice(user_m_players)
+                    if player_prob == 9:
+                        scorer = random.choice(user_d_players)
+                
+                    goal_line = random.choice(goal_lines)
+                    goal_line = goal_line.rstrip("\n")
+                    goal_line = goal_line.replace("[Player]", scorer)
+                    
+                    user_score += 1
+                    
+                    if user_team_name != "":
+                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                    else:
+                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                    
+                else:
+                    player_prob = random.randint(0,10)
+                    saver = ""
+                    
+                    if player_prob < 8:
+                        saver = other_gk
+                        
+                        save_line = random.choice(save_lines)
+                        save_line = save_line.rstrip("\n")
+                        save_line = save_line.replace("[Player]", saver)
+                        
+                        if user_team_name != "":
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                        else:
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                        
+                        
+                    else:
+                        saver = random.choice(other_d_players)
+                        
+                        save_line = random.choice(block_lines)
+                        save_line = save_line.rstrip("\n")
+                        save_line = save_line.replace("[Player]", saver)
+                        
+                        if user_team_name != "":
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}> and {user_team_name}. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                        else:
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{user_id}>. Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+                        
+            else:
+                total_s2 = other_f + other_m + user_m + user_d
+                other_score_prob = (other_f + other_m) / total_s2
+                
+                random_num3 = random.random()
+                
+                if random_num3 < other_score_prob:
+                    player_prob = random.randint(0,10)
+                    scorer = ""
+                    
+                    if player_prob < 6:
+                        scorer = random.choice(other_f_players)
+                    if player_prob >= 6 and player_prob < 9:
+                        scorer = random.choice(other_m_players)
+                    if player_prob == 9:
+                        scorer = random.choice(other_d_players)
+                    
+                    goal_line = random.choice(goal_lines)
+                    goal_line = goal_line.rstrip("\n")
+                    goal_line = goal_line.replace("[Player]", scorer)
+                    
+                    other_score += 1
+                    
+                    if other_team_name != "":
+                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                    else:
+                        await msg.channel.send("\u26bd " + goal_line + f" Goal for <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        
+                else:
+                    player_prob = random.randint(0,10)
+                    saver = ""
+                    
+                    if player_prob < 8:
+                        saver = user_gk
+                        
+                        save_line = random.choice(save_lines)
+                        save_line = save_line.rstrip("\n")
+                        save_line = save_line.replace("[Player]", saver)
+                        
+                        if other_team_name != "":
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        else:
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                    else:
+                        saver = random.choice(user_d_players)
+                        
+                        save_line = random.choice(block_lines)
+                        save_line = save_line.rstrip("\n")
+                        save_line = save_line.replace("[Player]", saver)
+                        
+                        if other_team_name != "":
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}> and {other_team_name}. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                        else:
+                            await msg.channel.send("\U0001f9e4 " + save_line + f" Saved by <@{other_id}>. Score: <@{other_id}> **{other_score}** -- <@{user_id}> **{user_score}**")
+                
+    if user_score > other_score:
+        reward = total_coins * 2
+        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"Congrats <@{user_id}>! You have been rewarded **{reward}** \U0001f4a0!")
+        
+        server_data[server_id]["user_coins"][user_id] += reward
+        server_data[server_id]["user_coins"][other_id] -= total_coins
+        
+    if other_score > user_score:
+        reward = total_coins * 2
+        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"Congrats <@{other_id}>! You have been rewarded **{reward}** \U0001f4a0!")
+        
+        server_data[server_id]["user_coins"][other_id] += reward
+        server_data[server_id]["user_coins"][user_id] -= total_coins
+    
+    if other_score == user_score:
+        await msg.channel.send("\u26bd FT. Match between <@{user_id}> and <@{other_id}> is over! Score: <@{user_id}> **{user_score}** -- <@{other_id}> **{other_score}**")
+        await msg.channel.send(f"Match ended in a draw.")
+        
+        
+
+            
+        
+        
+        
+    
+    
+    
  
 async def trade_player(user, msg, player, mention):
     server_id = str(msg.guild.id)

@@ -1500,15 +1500,15 @@ async def match_start(user, msg, other_id, total_coins):
         
         scores = []
         if time1 == 1:
-            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
             user_score = scores[0]
             other_score = scores[1]
         if time2 == 1:
-            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
             user_score = scores[0]
             other_score = scores[1]
         if time3 == 1:
-            await scores = score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
+            scores = await score(user_id, other_id, user_avg, other_avg, user_f, user_m, user_d, other_f, other_m, other_d, user_score, other_score, user_f_players, user_m_players, user_d_players, other_f_players, other_m_players, other_d_players, goal_lines, save_lines, block_lines, user_team_name, other_team_name)
             user_score = scores[0]
             other_score = scores[1]
                 

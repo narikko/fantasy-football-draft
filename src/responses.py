@@ -172,7 +172,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         embed.set_image(url=player_imageURL)
         embed.set_footer(text="Fantasy Football Draft, " + player_id)
         
-        player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
+        player_status = f"**Claimed by {claimed_user}**" if claimed_user != "" else "**React with any emoji to claim!**"
         embed.description += ("\n" + player_status)
         
         if claimed_user != "":

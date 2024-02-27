@@ -203,7 +203,58 @@ def get_time_remaining(server_id, user):
             return format_time(time_remaining)
     
     # Return an empty string if no task is ongoing
-    return ""  
+    return ""
+
+def update_collections(server_id):
+    collections = server_data[server_id]["user_collections"]
+    f = open("D:\\Soccer Discord Bot\\data\\new_players_list.txt", 'r', encoding='utf-8')
+    
+    players_list = f.readlines()
+    
+    for line in players_list:
+        for collection in collections:
+            i = 0
+            for player in collection:
+                    player_info = line.strip().split(", ")
+                    player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+                    
+                    if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
+                        
+                        embed = discord.Embed(
+                            title=player_name,
+                            description=player_club + "\n" + player_nationality,
+                            color=discord.Colour(int(player[2]))
+                        )
+                        
+                        embed.add_field(name=player_positions, value="", inline=False)
+                        embed.add_field(name= player_value, value="", inline=False)
+                        embed.set_image(url=player_imageURL)
+                        embed.set_footer(text="Fantasy Football Draft, " + player_id)
+                        
+                        player_status = player[1].split("\n")[2]
+                        embed.description += ("\n" + player_status)
+                        
+                        
+                        player_embed_data = [
+                            embed.title,
+                            embed.description,
+                            embed.color.value,
+                            [(field.name, field.value, field.inline) for field in embed.fields],
+                            embed.footer.text,
+                            embed.image.url if embed.image else None
+                        ] 
+                        
+                        collection[i] = player_embed_data
+                    
+                    i += 1
+    
+    
+                    
+    print("Update done")
+    
+    
+    
+    
 
 async def show_collection(user, msg, page_num, mention):
     """
@@ -1813,6 +1864,7 @@ def run_discord_bot():
                     "user_tutorial": {},
                     "user_tutorial_completion": {},
                     "user_current_tutorial": {},
+                    "claimed_players": {},
             })
         
         client.loop.create_task(clean_up_rolled_times())
@@ -1866,6 +1918,7 @@ def run_discord_bot():
                 "user_tutorial": {},
                 "user_tutorial_completion": {},
                 "user_current_tutorial": {},
+                "claimed_players": {},
             }
         
         save_server_data(server_id, server_data[server_id])
@@ -2171,8 +2224,10 @@ async def on_reaction_add(reaction, user):
             server_data[server_id]["user_collections"][user_id].append(player_embed_data)
 
             player_id = player_embed.footer.text.split(", ")[1]
-            server_data[server_id]["playerids"].append(player_id)
-            server_data[server_id]["usernames"].append(user.name)
+            #server_data[server_id]["playerids"].append(player_id)
+            #server_data[server_id]["usernames"].append(user.name)
+            print(player_embed.description.split("\n")[1])
+            server_data[server_id]["claimed_players"][(player_embed.title, player_embed.description.split("\n")[1])] = user.name
             server_data[server_id]["user_can_claim"][user_id] = False
 
             await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")

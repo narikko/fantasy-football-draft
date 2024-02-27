@@ -45,10 +45,11 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     user_collections = server_data.get('user_collections', {})
     user_free_claims = server_data.get('user_free_claims', {})
     roll_reset_time = server_data.get('roll_reset_time', time.time())
+    claimed_players = server_data.get('claimed_players', {})
     
     print(os.getcwd())
     current_directory = os.getcwd()
-    file_path_0 = os.path.join(current_directory, 'data', 'players_list.txt')
+    file_path_0 = os.path.join(current_directory, 'data', 'common_players.txt')
     file_path_1 = os.path.join(current_directory, 'data', 'legends_list.txt')
     file_path_2 = os.path.join(current_directory, 'data', 'ultra_rare_players_list.txt')
     file_path_3 = os.path.join(current_directory, 'data', 'rare_players.txt')
@@ -64,8 +65,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
     
     p_msg = user_msg.lower()
     print(p_msg)
-    
-    claimed = False
+
     legend = False
     
     if p_msg == "%r":
@@ -148,6 +148,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
         player_value += " " + emoji.emojize(":diamond_with_a_dot:")
         
+        """
         i = 0
         claimed_user = ""
         for playerid in playerids:
@@ -156,6 +157,9 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
                 claimed_user = usernames[i]
                 break
             i += 1
+        """
+        
+        claimed_user = claimed_players.get((player_name, player_nationality), "")
         
         embed = discord.Embed(
             title=player_name,
@@ -171,7 +175,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         player_status = f"**Claimed by {claimed_user}**" if claimed else "**React with any emoji to claim!**"
         embed.description += ("\n" + player_status)
         
-        if claimed:
+        if claimed_user != "":
             dup_coins = float(player_value.split()[1].strip())
             
             if user_upgrades[user_id][1] != 0:

@@ -160,6 +160,7 @@ async def handle_responses(msg, user_msg, user) -> discord.Embed:
         """
         
         claimed_user = claimed_players.get((player_name, player_nationality), "")
+        print(claimed_user)
         
         embed = discord.Embed(
             title=player_name,

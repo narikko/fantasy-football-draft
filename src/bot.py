@@ -1888,7 +1888,7 @@ def run_discord_bot():
         global collection_messages
         
         #if server_id not in server_data:
-            server_data[server_id] = {
+        server_data[server_id] = {
                 "user_collections": {},
                 "user_current_page": {},
                 "user_coins": {},

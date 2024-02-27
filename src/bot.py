@@ -2227,7 +2227,7 @@ async def on_reaction_add(reaction, user):
             #server_data[server_id]["playerids"].append(player_id)
             #server_data[server_id]["usernames"].append(user.name)
             print(player_embed.description.split("\n")[1])
-            server_data[server_id]["claimed_players"][(player_embed.title, player_embed.description.split("\n")[1])] = user.name
+            server_data[server_id]["claimed_players"][player_embed.title + player_embed.description.split("\n")[1])] = user.name
             server_data[server_id]["user_can_claim"][user_id] = False
 
             await reaction.message.channel.send(f"{user.mention} has added {player_embed.title} to their collection!")

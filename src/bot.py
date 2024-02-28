@@ -226,7 +226,7 @@ def update_collections(server_id):
                         #print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
                         
                         if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
-                            print("happened")
+                            #print("happened")
                             
                             embed = discord.Embed(
                                 title=player_name,
@@ -251,10 +251,10 @@ def update_collections(server_id):
                                 embed.footer.text,
                                 embed.image.url if embed.image else None
                             ]
-                            print(player_embed_data[1])
-                            print(collection[i])
+                            #print(player_embed_data[1])
+                            #print(collection[i])
                             collection[i] = player_embed_data
-                            print(collection[i])
+                            #print(collection[i])
                         
                         i += 1
                     except Exception as e:

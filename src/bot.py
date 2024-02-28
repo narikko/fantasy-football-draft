@@ -215,7 +215,7 @@ def update_collections(server_id):
     players_list = f.readlines()
     
     for line in players_list:
-        for collection in collections:
+        for collection in collections.values():
             i = 0
             for player in collection:
                     print(player)

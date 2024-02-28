@@ -222,7 +222,7 @@ def update_collections(server_id):
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
                     try:
-                        print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
+                        #print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
                         
                         if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
                             print("happened")

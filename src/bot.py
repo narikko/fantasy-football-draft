@@ -209,7 +209,7 @@ def update_collections(server_id):
     print("Update started")
     collections = server_data[server_id]["user_collections"]
     current_directory = os.getcwd()
-    file_path_0 = os.path.join(current_directory, 'data', 'new_players_list.txt')
+    file_path_0 = os.path.join(current_directory, 'data', 'common_players.txt')
     f = open(file_path_0, 'r', encoding='utf-8')
     
     players_list = f.readlines()
@@ -221,9 +221,10 @@ def update_collections(server_id):
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
-                    print(player_name)
+                    print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
                     
                     if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
+                        print("happened")
                         
                         embed = discord.Embed(
                             title=player_name,

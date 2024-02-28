@@ -220,6 +220,7 @@ def update_collections(server_id):
             for player in collection:
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
+                    print(player_info)
                     
                     try:
                         #print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())

@@ -218,7 +218,6 @@ def update_collections(server_id):
         for collection in collections.values():
             i = 0
             for player in collection:
-                    print(player)
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
@@ -251,8 +250,9 @@ def update_collections(server_id):
                                 embed.footer.text,
                                 embed.image.url if embed.image else None
                             ] 
-                            
+                            print(collection[i])
                             collection[i] = player_embed_data
+                            print(collection[i])
                         
                         i += 1
                     except Exception as e:

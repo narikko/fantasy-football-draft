@@ -249,7 +249,8 @@ def update_collections(server_id):
                                 [(field.name, field.value, field.inline) for field in embed.fields],
                                 embed.footer.text,
                                 embed.image.url if embed.image else None
-                            ] 
+                            ]
+                            print(player_embed_data[1])
                             print(collection[i])
                             collection[i] = player_embed_data
                             print(collection[i])

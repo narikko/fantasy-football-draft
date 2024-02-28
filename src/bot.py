@@ -221,38 +221,41 @@ def update_collections(server_id):
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
-                    print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
-                    
-                    if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
-                        print("happened")
+                    try:
+                        print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
                         
-                        embed = discord.Embed(
-                            title=player_name,
-                            description=player_club + "\n" + player_nationality,
-                            color=discord.Colour(int(player[2]))
-                        )
+                        if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
+                            print("happened")
+                            
+                            embed = discord.Embed(
+                                title=player_name,
+                                description=player_club + "\n" + player_nationality,
+                                color=discord.Colour(int(player[2]))
+                            )
+                            
+                            embed.add_field(name=player_positions, value="", inline=False)
+                            embed.add_field(name= player_value, value="", inline=False)
+                            embed.set_image(url=player_imageURL)
+                            embed.set_footer(text="Fantasy Football Draft, " + player_id)
+                            
+                            player_status = player[1].split("\n")[2]
+                            embed.description += ("\n" + player_status)
+                            
+                            
+                            player_embed_data = [
+                                embed.title,
+                                embed.description,
+                                embed.color.value,
+                                [(field.name, field.value, field.inline) for field in embed.fields],
+                                embed.footer.text,
+                                embed.image.url if embed.image else None
+                            ] 
+                            
+                            collection[i] = player_embed_data
                         
-                        embed.add_field(name=player_positions, value="", inline=False)
-                        embed.add_field(name= player_value, value="", inline=False)
-                        embed.set_image(url=player_imageURL)
-                        embed.set_footer(text="Fantasy Football Draft, " + player_id)
-                        
-                        player_status = player[1].split("\n")[2]
-                        embed.description += ("\n" + player_status)
-                        
-                        
-                        player_embed_data = [
-                            embed.title,
-                            embed.description,
-                            embed.color.value,
-                            [(field.name, field.value, field.inline) for field in embed.fields],
-                            embed.footer.text,
-                            embed.image.url if embed.image else None
-                        ] 
-                        
-                        collection[i] = player_embed_data
-                    
-                    i += 1
+                        i += 1
+                    except Exception as e:
+                        print("skip")
     
     
                     

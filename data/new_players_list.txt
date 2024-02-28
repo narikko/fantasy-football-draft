@@ -288,6 +288,7 @@ João Félix, CF/ST/LW, FC Barcelona, Portugal, Value: 702, https://fifastatic.f
 Nicolás González, RW/LW, Fiorentina, Argentina, Value: 536, https://fifastatic.fifaindex.com/FIFA24/players/240690.png, 00288
 Jonathan Clauss, RWB/RM/RB, Olympique de Marseille, France, Value: 530, https://fifastatic.fifaindex.com/FIFA24/players/239093.png, 00289
 Ibrahima Konaté, CB, Liverpool, France, Value: 702, https://fifastatic.fifaindex.com/FIFA24/players/237678.png, 00290
+
 Martin Terrier, LM/ST, Stade Rennais, France, Value: 532, https://fifastatic.fifaindex.com/FIFA24/players/236786.png, 00291
 Arnaut Danjuma, ST/LM, Everton, Netherlands, Value: 532, https://fifastatic.fifaindex.com/FIFA24/players/236276.png, 00292
 Reinildo, LB/CB, Atlético de Madrid, Mozambique, Value: 530, https://fifastatic.fifaindex.com/FIFA24/players/236045.png, 00293

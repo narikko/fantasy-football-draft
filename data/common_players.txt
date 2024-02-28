@@ -1,1 +1,12 @@
-Lionel Messi (Current), RW, Paris SG, Argentina, Value: 1000, https://fifastatic.fifaindex.com/FIFA23/players/158023.png, 00005
+Erling Haaland, ST, Manchester City, Norway, Value: 916, https://fifastatic.fifaindex.com/FIFA24/players/239085.png, 00001
+Kylian Mbappé, ST/LW, Paris Saint-Germain, France, Value: 916, https://fifastatic.fifaindex.com/FIFA24/players/231747.png, 00002
+Kevin De Bruyne, CM/CAM, Manchester City, Belgium, Value: 910, https://fifastatic.fifaindex.com/FIFA24/players/192985.png, 00003
+Harry Kane, ST, Bayern München, England, Value: 900, https://fifastatic.fifaindex.com/FIFA24/players/202126.png, 00004
+Thibaut Courtois, GK, Real Madrid, Belgium, Value: 900, https://fifastatic.fifaindex.com/FIFA24/players/192119.png, 00005
+Robert Lewandowski, ST, FC Barcelona, Poland, Value: 900, https://fifastatic.fifaindex.com/FIFA24/players/188545.png, 00006
+Karim Benzema, CF/ST, Al Ittihad, France, Value: 900, https://fifastatic.fifaindex.com/FIFA24/players/165153.png, 00007
+Lionel Messi (Current), CF/CAM, Inter Miami, Argentina, Value: 950, https://fifastatic.fifaindex.com/FIFA24/players/158023.png, 00008
+Rúben Dias, CB, Manchester City, Portugal, Value: 892, https://fifastatic.fifaindex.com/FIFA24/players/239818.png, 00009
+Vini Jr., LW, Real Madrid, Brazil, Value: 900, https://fifastatic.fifaindex.com/FIFA24/players/238794.png, 00010
+Rodri, CDM/CM, Manchester City, Spain, Value: 892, https://fifastatic.fifaindex.com/FIFA24/players/231866.png, 00011
+Alisson, GK, Liverpool, Brazil, Value: 892, https://fifastatic.fifaindex.com/FIFA24/players/212831.png, 00012

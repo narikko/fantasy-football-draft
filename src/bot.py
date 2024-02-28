@@ -215,19 +215,17 @@ def update_collections(server_id):
     players_list = f.readlines()
     
     for line in players_list:
-        print(line)
         for collection in collections.values():
             i = 0
             for player in collection:
                     player_info = line.strip().split(", ")
-                    print(player_info)
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
                     try:
                         #print(player[0].lower().strip() + " " + player[1].split("\n")[1].lower().strip())
                         
                         if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
-                            #print("happened")
+                            print("happened")
                             
                             embed = discord.Embed(
                                 title=player_name,
@@ -252,10 +250,10 @@ def update_collections(server_id):
                                 embed.footer.text,
                                 embed.image.url if embed.image else None
                             ]
-                            #print(player_embed_data[1])
-                            #print(collection[i])
+                            print(player_embed_data[1])
+                            print(collection[i])
                             collection[i] = player_embed_data
-                            #print(collection[i])
+                            print(collection[i])
                         
                         i += 1
                     except Exception as e:

@@ -208,7 +208,9 @@ def get_time_remaining(server_id, user):
 def update_collections(server_id):
     print("Update started")
     collections = server_data[server_id]["user_collections"]
-    f = open("D:\\Soccer Discord Bot\\data\\new_players_list.txt", 'r', encoding='utf-8')
+    current_directory = os.getcwd()
+    file_path_0 = os.path.join(current_directory, 'data', 'new_players_list.txt')
+    f = open(file_path_0, 'r', encoding='utf-8')
     
     players_list = f.readlines()
     

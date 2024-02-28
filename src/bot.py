@@ -221,6 +221,8 @@ def update_collections(server_id):
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     
+                    print(player_name)
+                    
                     if player[0].lower().strip() == player_name.lower().strip() and player[1].split("\n")[1].lower().strip() == player_nationality.lower():
                         
                         embed = discord.Embed(

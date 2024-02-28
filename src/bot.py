@@ -218,6 +218,7 @@ def update_collections(server_id):
         for collection in collections:
             i = 0
             for player in collection:
+                    print(player)
                     player_info = line.strip().split(", ")
                     player_name, player_positions, player_club, player_nationality, player_value, player_imageURL, player_id = player_info
                     

@@ -206,6 +206,7 @@ def get_time_remaining(server_id, user):
     return ""
 
 def update_collections(server_id):
+    print("Update started")
     collections = server_data[server_id]["user_collections"]
     f = open("D:\\Soccer Discord Bot\\data\\new_players_list.txt", 'r', encoding='utf-8')
     
@@ -1870,6 +1871,7 @@ def run_discord_bot():
         client.loop.create_task(clean_up_rolled_times())
         client.loop.create_task(roll_timer())
         client.loop.create_task(claim_timer())
+        update_collections(str(guild.id))
         
         
     @client.event

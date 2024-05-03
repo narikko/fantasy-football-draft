@@ -950,7 +950,7 @@ async def set_favorite_club(msg, user, club):
     if user_id not in server_data[server_id]["user_favorite_club"]:
         server_data[server_id]["user_favorite_club"][user_id] = ""
     
-    with open('../data/players_list.txt', 'r', encoding='utf-8') as f:
+    with open('../data/new_players_list.txt', 'r', encoding='utf-8') as f:
         players_list = f.readlines()
     
     search_terms = club 

@@ -1877,7 +1877,8 @@ def run_discord_bot():
         client.loop.create_task(clean_up_rolled_times())
         client.loop.create_task(roll_timer())
         client.loop.create_task(claim_timer())
-        update_collections(str(guild.id))
+        # --comment out to update
+        #update_collections(str(guild.id))
         
         
     @client.event

@@ -949,9 +949,12 @@ async def set_favorite_club(msg, user, club):
     
     if user_id not in server_data[server_id]["user_favorite_club"]:
         server_data[server_id]["user_favorite_club"][user_id] = ""
+        
+    current_directory = os.getcwd()
+    file_path_0 = os.path.join(current_directory, 'data', 'new_players_list.txt')
     
-    with open('../data/new_players_list.txt', 'r', encoding='utf-8') as f:
-        players_list = f.readlines()
+    f = open(file_path_0, 'r', encoding='utf-8')
+    players_list = f.readlines()
     
     search_terms = club 
     normalized_search_terms = [unidecode.unidecode(term.lower()) for term in search_terms]
